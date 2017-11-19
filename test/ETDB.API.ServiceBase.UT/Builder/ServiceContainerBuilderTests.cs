@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Autofac;
+﻿using Autofac;
 using ETDB.API.ServiceBase.Builder;
 using ETDB.API.ServiceBase.Generics.Base;
 using ETDB.API.ServiceBase.TestBase.Mocks;
@@ -9,7 +6,7 @@ using ETDB.API.ServiceBase.TestBase.TestClasses;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ETDB.API.ServiceBase.UnitTests.Builder
+namespace ETDB.API.ServiceBase.UT.Builder
 {
     [TestClass]
     public class ServiceContainerBuilderTests

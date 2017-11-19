@@ -15,11 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETDB.API.ServiceBase.Generi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETDB.API.ServiceBase.Constants", "src\ETDB.API.ServiceBase.Constants\ETDB.API.ServiceBase.Constants.csproj", "{4E6BA6DE-2AAC-46A7-87E0-D26D1F7C6F89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETDB.API.ServiceBase.UnitTests", "test\ETDB.API.ServiceBase.UnitTests\ETDB.API.ServiceBase.UnitTests.csproj", "{6FBFDAF2-D8DF-4F37-857F-E33F35864FE4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETDB.API.ServiceBase.UT", "test\ETDB.API.ServiceBase.UT\ETDB.API.ServiceBase.UT.csproj", "{6FBFDAF2-D8DF-4F37-857F-E33F35864FE4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETDB.API.ServiceBase.TestBase", "test\ETDB.API.ServiceBase.TestBase\ETDB.API.ServiceBase.TestBase.csproj", "{0B44A1D5-940F-4C6D-9126-DF9258A5208E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETDB.API.ServiceBase.Common.UnitTests", "test\ETDB.API.ServiceBase.Common.UnitTests\ETDB.API.ServiceBase.Common.UnitTests.csproj", "{2FD41D4C-B3B3-448A-AC85-51E7839DCAA9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETDB.API.ServiceBase.Common.UT", "test\ETDB.API.ServiceBase.Common.UT\ETDB.API.ServiceBase.Common.UT.csproj", "{2FD41D4C-B3B3-448A-AC85-51E7839DCAA9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

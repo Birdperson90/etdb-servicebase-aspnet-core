@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ETDB.API.ServiceBase.Common.Factory;
+﻿using ETDB.API.ServiceBase.Common.Factory;
 using ETDB.API.ServiceBase.Common.Hasher;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ETDB.API.ServiceBase.Common.UnitTests.Factory
+namespace ETDB.API.ServiceBase.Common.UT.Factory
 {
     [TestClass]
     public class HasherFactoryTests
