@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETDB.API.ServiceBase.Common
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETDB.API.ServiceBase.Generics", "src\ETDB.API.ServiceBase.Generics\ETDB.API.ServiceBase.Generics.csproj", "{A3C7AFFE-0791-4541-93F2-3964EC9DD995}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETDB.API.ServiceBase.Constants", "src\ETDB.API.ServiceBase.Constants\ETDB.API.ServiceBase.Constants.csproj", "{4E6BA6DE-2AAC-46A7-87E0-D26D1F7C6F89}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{A3C7AFFE-0791-4541-93F2-3964EC9DD995}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3C7AFFE-0791-4541-93F2-3964EC9DD995}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3C7AFFE-0791-4541-93F2-3964EC9DD995}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E6BA6DE-2AAC-46A7-87E0-D26D1F7C6F89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E6BA6DE-2AAC-46A7-87E0-D26D1F7C6F89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E6BA6DE-2AAC-46A7-87E0-D26D1F7C6F89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E6BA6DE-2AAC-46A7-87E0-D26D1F7C6F89}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +45,7 @@ Global
 		{A3CE3EC2-523F-44DB-8AE3-69A6BDECFC07} = {EC9EFBE9-B329-4C2D-935B-B2E2BEE02807}
 		{D1B1E72D-DDD8-4CBE-886F-B2C232CE4F6C} = {EC9EFBE9-B329-4C2D-935B-B2E2BEE02807}
 		{A3C7AFFE-0791-4541-93F2-3964EC9DD995} = {EC9EFBE9-B329-4C2D-935B-B2E2BEE02807}
+		{4E6BA6DE-2AAC-46A7-87E0-D26D1F7C6F89} = {EC9EFBE9-B329-4C2D-935B-B2E2BEE02807}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2A92CEFB-6720-4D1A-B5CD-C99E8EE59F9E}

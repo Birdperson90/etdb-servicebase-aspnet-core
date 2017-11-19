@@ -6,10 +6,11 @@
     <ApplicationIcon />
     <StartupObject />
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="2.0.1" />
   </ItemGroup>
 
 </Project>
