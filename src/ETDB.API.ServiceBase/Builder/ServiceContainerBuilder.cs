@@ -1,8 +1,8 @@
 ﻿using Autofac;
 using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
-using ETDB.API.ServiceBase.Generics.Base;
-using ETDB.API.ServiceBase.Generics.Repositories;
+using ETDB.API.ServiceBase.Abstractions.Repositories;
+using ETDB.API.ServiceBase.Repositories;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

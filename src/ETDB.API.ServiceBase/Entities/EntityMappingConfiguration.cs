@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ETDB.API.ServiceBase.Abstractions.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace ETDB.API.ServiceBase.Generics.Base
+namespace ETDB.API.ServiceBase.Entities
 {
     public abstract class EntityMappingConfiguration<TEntity> : IEntityMappingConfiguration where TEntity : class, IEntity, new()
     {

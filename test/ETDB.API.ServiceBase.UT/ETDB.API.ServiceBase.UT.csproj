@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\ETDB.API.ServiceBase\ETDB.API.ServiceBase.csproj" />
-    <ProjectReference Include="..\ETDB.API.ServiceBase.TestBase\ETDB.API.ServiceBase.TestBase.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Security.Cryptography;
-using ETDB.API.ServiceBase.Common.Base;
+using ETDB.API.ServiceBase.Abstractions.Hasher;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
-namespace ETDB.API.ServiceBase.Common.Hasher
+namespace ETDB.API.ServiceBase.Hasher
 {
-    public class Hmacsha1HashingStrategy : IHashingStrategy
+    public class Hasher : IHasher
     {
         public string CreateSaltedHash(string unhashed, byte[] salt)
         {

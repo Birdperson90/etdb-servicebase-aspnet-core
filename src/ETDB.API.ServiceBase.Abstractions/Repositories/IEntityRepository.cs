@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using ETDB.API.ServiceBase.Abstractions.Entities;
 
-namespace ETDB.API.ServiceBase.Generics.Base
+namespace ETDB.API.ServiceBase.Abstractions.Repositories
 {
     public interface IEntityRepository<TEntity> where TEntity: class, IEntity, new()
     {

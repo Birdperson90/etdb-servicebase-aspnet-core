@@ -1,6 +1,6 @@
-﻿namespace ETDB.API.ServiceBase.Common.Base
+﻿namespace ETDB.API.ServiceBase.Abstractions.Hasher
 {
-    public interface IHashingStrategy
+    public interface IHasher
     {
         byte[] GenerateSalt();
 

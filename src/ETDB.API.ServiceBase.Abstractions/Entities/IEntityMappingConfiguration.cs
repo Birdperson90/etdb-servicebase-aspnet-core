@@ -1,4 +1,4 @@
-﻿namespace ETDB.API.ServiceBase.Generics.Base
+﻿namespace ETDB.API.ServiceBase.Abstractions.Entities
 {
     public interface IEntityMappingConfiguration
     {

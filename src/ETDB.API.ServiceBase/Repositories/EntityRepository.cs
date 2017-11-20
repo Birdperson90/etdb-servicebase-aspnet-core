@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using ETDB.API.ServiceBase.Generics.Base;
+using ETDB.API.ServiceBase.Abstractions.Entities;
+using ETDB.API.ServiceBase.Abstractions.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace ETDB.API.ServiceBase.Generics.Repositories
+namespace ETDB.API.ServiceBase.Repositories
 {
     public class EntityRepository<TEntity> : IEntityRepository<TEntity> where TEntity: class, IEntity, new()
     {
