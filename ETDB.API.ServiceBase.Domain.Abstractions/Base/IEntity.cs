@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ETDB.API.ServiceBase.Abstractions.Entities
+namespace ETDB.API.ServiceBase.Domain.Abstractions.Base
 {
     public interface IEntity
     {

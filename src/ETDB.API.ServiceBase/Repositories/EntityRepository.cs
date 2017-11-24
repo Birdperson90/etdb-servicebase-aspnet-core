@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using ETDB.API.ServiceBase.Abstractions.Entities;
 using ETDB.API.ServiceBase.Abstractions.Repositories;
+using ETDB.API.ServiceBase.Domain.Abstractions.Base;
 using Microsoft.EntityFrameworkCore;
 
 namespace ETDB.API.ServiceBase.Repositories

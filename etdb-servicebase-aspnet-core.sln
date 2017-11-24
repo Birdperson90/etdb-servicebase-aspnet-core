@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETDB.API.ServiceBase", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETDB.API.ServiceBase.Constants", "src\ETDB.API.ServiceBase.Constants\ETDB.API.ServiceBase.Constants.csproj", "{4E6BA6DE-2AAC-46A7-87E0-D26D1F7C6F89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETDB.API.ServiceBase.Abstractions", "src\ETDB.API.ServiceBase.Abstractions\ETDB.API.ServiceBase.Abstractions.csproj", "{6CC37893-C137-4191-894A-FB6A6D9957B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETDB.API.ServiceBase.Abstractions", "src\ETDB.API.ServiceBase.Abstractions\ETDB.API.ServiceBase.Abstractions.csproj", "{6CC37893-C137-4191-894A-FB6A6D9957B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETDB.API.ServiceBase.Domain.Abstractions", "ETDB.API.ServiceBase.Domain.Abstractions\ETDB.API.ServiceBase.Domain.Abstractions.csproj", "{90A76F80-56D3-40F6-82A8-EAFE2AC8551B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,10 @@ Global
 		{6CC37893-C137-4191-894A-FB6A6D9957B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6CC37893-C137-4191-894A-FB6A6D9957B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6CC37893-C137-4191-894A-FB6A6D9957B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90A76F80-56D3-40F6-82A8-EAFE2AC8551B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90A76F80-56D3-40F6-82A8-EAFE2AC8551B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90A76F80-56D3-40F6-82A8-EAFE2AC8551B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90A76F80-56D3-40F6-82A8-EAFE2AC8551B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +45,7 @@ Global
 		{A3CE3EC2-523F-44DB-8AE3-69A6BDECFC07} = {EC9EFBE9-B329-4C2D-935B-B2E2BEE02807}
 		{4E6BA6DE-2AAC-46A7-87E0-D26D1F7C6F89} = {EC9EFBE9-B329-4C2D-935B-B2E2BEE02807}
 		{6CC37893-C137-4191-894A-FB6A6D9957B3} = {EC9EFBE9-B329-4C2D-935B-B2E2BEE02807}
+		{90A76F80-56D3-40F6-82A8-EAFE2AC8551B} = {EC9EFBE9-B329-4C2D-935B-B2E2BEE02807}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2A92CEFB-6720-4D1A-B5CD-C99E8EE59F9E}
