@@ -6,7 +6,7 @@ namespace ETDB.API.ServiceBase.Domain.Abstractions.Events
 {
     public abstract class Event : Message
     {
-        public DateTime Timestamp { get; }
+        public DateTime Timestamp { get; private set; }
 
         protected Event()
         {

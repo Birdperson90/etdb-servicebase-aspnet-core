@@ -6,21 +6,22 @@ using MediatR;
 
 namespace ETDB.API.ServiceBase.Domain.Abstractions.Notifications
 {
-    public class DomainNotificationHandler : INotificationHandler<DomainNotification>
+    public class DomainNotificationHandler<TNotification> : INotificationHandler<TNotification> 
+        where TNotification: DomainNotification
     {
-        private List<DomainNotification> notifications;
+        private List<TNotification> notifications;
 
         public DomainNotificationHandler()
         {
-            notifications = new List<DomainNotification>();
+            notifications = new List<TNotification>();
         }
 
-        public void Handle(DomainNotification message)
+        public void Handle(TNotification message)
         {
             notifications.Add(message);
         }
 
-        public virtual List<DomainNotification> GetNotifications()
+        public virtual List<TNotification> GetNotifications()
         {
             return notifications;
         }
@@ -32,7 +33,7 @@ namespace ETDB.API.ServiceBase.Domain.Abstractions.Notifications
 
         public void Dispose()
         {
-            notifications = new List<DomainNotification>();
+            notifications = new List<TNotification>();
         }
     }
 }

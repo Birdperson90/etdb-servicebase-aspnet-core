@@ -13,12 +13,12 @@ namespace ETDB.API.ServiceBase.Handler
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IMediatorHandler bus;
-        private readonly DomainNotificationHandler notificationsHandler;
+        private readonly INotificationHandler<DomainNotification> notificationsHandler;
 
-        public CommandHandler(IUnitOfWork unitOfWork, IMediatorHandler bus, INotificationHandler<DomainNotification> notifications)
+        public CommandHandler(IUnitOfWork unitOfWork, IMediatorHandler bus, INotificationHandler<DomainNotification> notificationsHandler)
         {
             this.unitOfWork = unitOfWork;
-            notificationsHandler = (DomainNotificationHandler)notifications;
+            this.notificationsHandler = notificationsHandler;
             this.bus = bus;
         }
 
@@ -32,7 +32,7 @@ namespace ETDB.API.ServiceBase.Handler
 
         public bool Commit()
         {
-            if (notificationsHandler.HasNotifications()) return false;
+            if (((DomainNotificationHandler<DomainNotification>)notificationsHandler).HasNotifications()) return false;
             var commandResponse = unitOfWork.Commit();
             if (commandResponse.Success) return true;
 

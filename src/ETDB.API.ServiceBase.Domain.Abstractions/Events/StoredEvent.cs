@@ -15,8 +15,9 @@ namespace ETDB.API.ServiceBase.Domain.Abstractions.Events
             User = user;
         }
 
-        // EF Constructor
-        protected StoredEvent() { }
+        // EF Core needs this
+        // TODO: fix this at some point
+        public StoredEvent() { }
 
         public Guid Id { get; private set; }
 

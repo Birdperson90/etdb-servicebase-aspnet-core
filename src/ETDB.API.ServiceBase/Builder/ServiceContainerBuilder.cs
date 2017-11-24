@@ -59,7 +59,7 @@ namespace ETDB.API.ServiceBase.Builder
                 .As<IHttpContextAccessor>()
                 .SingleInstance();
 
-            this.containerBuilder.RegisterGeneric(typeof(DomainNotificationHandler))
+            this.containerBuilder.RegisterGeneric(typeof(DomainNotificationHandler<>))
                 .As(typeof(INotificationHandler<>));
 
             this.containerBuilder.RegisterType<InMemoryBus>()
