@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ETDB.API.ServiceBase.Abstractions\ETDB.API.ServiceBase.Abstractions.csproj" />
+    <ProjectReference Include="..\ETDB.API.ServiceBase.Domain.Abstractions\ETDB.API.ServiceBase.Domain.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

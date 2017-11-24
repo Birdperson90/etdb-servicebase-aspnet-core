@@ -5,6 +5,7 @@ using ETDB.API.ServiceBase.Domain.Abstractions.Bus;
 using ETDB.API.ServiceBase.Domain.Abstractions.Commands;
 using ETDB.API.ServiceBase.Domain.Abstractions.Events;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace ETDB.API.ServiceBase.Bus
 {
@@ -27,9 +28,9 @@ namespace ETDB.API.ServiceBase.Bus
 
         public Task RaiseEvent<T>(T @event) where T : Event
         {
-            if (!@event.MessageType.Equals(InMemoryBus.DomainNotification))
+            if (!@event.MessageType.Equals(nameof(DomainNotification)))
             {
-                eventStore?.Save(@event);
+                eventStore.Save(@event);
             }
 
             return Publish(@event);
