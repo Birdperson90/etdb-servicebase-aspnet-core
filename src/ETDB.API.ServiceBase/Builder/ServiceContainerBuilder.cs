@@ -55,25 +55,28 @@ namespace ETDB.API.ServiceBase.Builder
 
         public ServiceContainerBuilder UseEventSourcing<TDbContext>() where TDbContext : DbContext
         {
-            this.containerBuilder.RegisterType<IHttpContextAccessor>()
-                .As<HttpContextAccessor>()
+            this.containerBuilder.RegisterType<HttpContextAccessor>()
+                .As<IHttpContextAccessor>()
                 .SingleInstance();
 
-            this.containerBuilder.RegisterType<IMediatorHandler>()
-                .As<InMemoryBus>()
+            this.containerBuilder.RegisterGeneric(typeof(DomainNotificationHandler))
+                .As(typeof(INotificationHandler<>));
+
+            this.containerBuilder.RegisterType<InMemoryBus>()
+                .As<IMediatorHandler>()
                 .InstancePerLifetimeScope();
 
-            this.containerBuilder.RegisterType<IEventStoreRepository>()
-                .As<EventStoreRepository>()
+            this.containerBuilder.RegisterType<EventStoreRepository>()
+                .As<IEventStoreRepository>()
                 .InstancePerRequest()
                 .WithParameter(this.GetDbContextResolvedParameter<TDbContext>())
                 .InstancePerLifetimeScope();
 
-            this.containerBuilder.RegisterType<IEventUser>()
-                .As<EventUser>()
+            this.containerBuilder.RegisterType<EventUser>()
+                .As<IEventUser>()
                 .InstancePerRequest();
 
-            this.containerBuilder.RegisterType<IUnitOfWork>()
+            this.containerBuilder.RegisterType<UnitOfWork>()
                 .As<IUnitOfWork>()
                 .InstancePerRequest()
                 .WithParameter(this.GetDbContextResolvedParameter<TDbContext>())
