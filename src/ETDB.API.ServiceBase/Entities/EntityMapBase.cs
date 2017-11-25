@@ -8,18 +8,9 @@ namespace ETDB.API.ServiceBase.Entities
     {
         public virtual void Configure(EntityTypeBuilder<TEntity> builder)
         {
-            this.AutoAddGuidPrimaryKey(builder);
-            this.EnableConccurentTracking(builder);
             var name = typeof(TEntity).Name;
             builder.ToTable($"{name}s");
-        }
-
-        protected virtual void AutoAddGuidPrimaryKey(EntityTypeBuilder<TEntity> builder)
-        {
-            builder.HasKey(entity => entity.Id);
-
-            builder.Property(entity => entity.Id)
-                .HasDefaultValueSql("newid()");
+            this.EnableConccurentTracking(builder);
         }
 
         protected virtual void EnableConccurentTracking(EntityTypeBuilder<TEntity> builder)

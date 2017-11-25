@@ -7,7 +7,6 @@ namespace ETDB.API.ServiceBase.Domain.Abstractions.Base
         Guid Id
         {
             get;
-            set;
         }
 
         byte[] RowVersion

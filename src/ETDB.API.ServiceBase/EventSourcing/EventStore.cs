@@ -26,7 +26,7 @@ namespace ETDB.API.ServiceBase.EventSourcing
                 serializedData,
                 this.eventUser.UserName);
 
-            eventStoreRepository.Store(storedEvent);
+            this.eventStoreRepository.Store(storedEvent);
         }
     }
 }

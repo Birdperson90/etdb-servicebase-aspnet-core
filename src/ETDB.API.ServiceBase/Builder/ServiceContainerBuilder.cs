@@ -1,12 +1,14 @@
 ﻿using Autofac;
 using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
+using ETDB.API.ServiceBase.Abstractions.EventSourcing;
 using ETDB.API.ServiceBase.Abstractions.Repositories;
 using ETDB.API.ServiceBase.Bus;
 using ETDB.API.ServiceBase.Domain.Abstractions.Base;
 using ETDB.API.ServiceBase.Domain.Abstractions.Bus;
 using ETDB.API.ServiceBase.Domain.Abstractions.Notifications;
 using ETDB.API.ServiceBase.Entities;
+using ETDB.API.ServiceBase.EventSourcing;
 using ETDB.API.ServiceBase.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
@@ -57,27 +59,37 @@ namespace ETDB.API.ServiceBase.Builder
         {
             this.containerBuilder.RegisterType<HttpContextAccessor>()
                 .As<IHttpContextAccessor>()
-                .SingleInstance();
+                .InstancePerLifetimeScope();
+
+            this.containerBuilder.RegisterType<EventStore>()
+                .As<IEventStore>()
+                .AsSelf()
+                .InstancePerLifetimeScope();
 
             this.containerBuilder.RegisterGeneric(typeof(DomainNotificationHandler<>))
+                .AsSelf()
                 .As(typeof(INotificationHandler<>));
 
             this.containerBuilder.RegisterType<InMemoryBus>()
                 .As<IMediatorHandler>()
+                .AsSelf()
                 .InstancePerLifetimeScope();
 
             this.containerBuilder.RegisterType<EventStoreRepository>()
                 .As<IEventStoreRepository>()
+                .AsSelf()
                 .InstancePerRequest()
                 .WithParameter(this.GetDbContextResolvedParameter<TDbContext>())
                 .InstancePerLifetimeScope();
 
             this.containerBuilder.RegisterType<EventUser>()
                 .As<IEventUser>()
-                .InstancePerRequest();
+                .AsSelf()
+                .InstancePerLifetimeScope();
 
             this.containerBuilder.RegisterType<UnitOfWork>()
                 .As<IUnitOfWork>()
+                .AsSelf()
                 .InstancePerRequest()
                 .WithParameter(this.GetDbContextResolvedParameter<TDbContext>())
                 .InstancePerLifetimeScope();
