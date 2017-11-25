@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MediatR;
 
 namespace ETDB.API.ServiceBase.Domain.Abstractions.Events
 {
-    public interface IHandler<in T> where T : Message
+    public interface IDomainEventHandler<in TEvent> : INotificationHandler<TEvent> where TEvent : Message
     {
-        void Handle(T message);
+        
     }
 }

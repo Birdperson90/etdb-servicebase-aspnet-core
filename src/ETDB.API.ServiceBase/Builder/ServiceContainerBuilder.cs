@@ -1,12 +1,18 @@
-﻿using Autofac;
+﻿using System;
+using System.Linq;
+using System.Reflection;
+using Autofac;
 using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
 using ETDB.API.ServiceBase.Abstractions.EventSourcing;
+using ETDB.API.ServiceBase.Abstractions.Handler;
 using ETDB.API.ServiceBase.Abstractions.Repositories;
 using ETDB.API.ServiceBase.Bus;
 using ETDB.API.ServiceBase.ContextBase;
 using ETDB.API.ServiceBase.Domain.Abstractions.Base;
 using ETDB.API.ServiceBase.Domain.Abstractions.Bus;
+using ETDB.API.ServiceBase.Domain.Abstractions.Commands;
+using ETDB.API.ServiceBase.Domain.Abstractions.Events;
 using ETDB.API.ServiceBase.Domain.Abstractions.Notifications;
 using ETDB.API.ServiceBase.Entities;
 using ETDB.API.ServiceBase.EventSourcing;
@@ -59,11 +65,29 @@ namespace ETDB.API.ServiceBase.Builder
             return this;
         }
 
-        public ServiceContainerBuilder UseEventSourcing<TDbContext>() where TDbContext : AppContextBase
+        public ServiceContainerBuilder UseEventSourcing<TAppDbContext, TEventStoreDbContext>(params Assembly[] assembliesToScan) 
+            where TAppDbContext : AppContextBase where TEventStoreDbContext: EventStoreContextBase
         {
-            this.containerBuilder.RegisterGeneric(typeof(DomainNotificationHandler<>))
+            if (!assembliesToScan.Any())
+            {
+                throw new ArgumentException(@"You need to provide assemblies in order to implement generic 
+                    Command- and DomainEventHandler!", nameof(assembliesToScan));
+            }
+
+            this.containerBuilder.RegisterAssemblyTypes(assembliesToScan)
+                .AsClosedTypesOf(typeof(ICommandHandler<>))
                 .AsSelf()
-                .As(typeof(INotificationHandler<>))
+                .InstancePerLifetimeScope();
+
+            this.containerBuilder.RegisterAssemblyTypes(assembliesToScan)
+                .AsClosedTypesOf(typeof(IDomainEventHandler<>))
+                .AsSelf()
+                .InstancePerMatchingLifetimeScope();
+
+            this.containerBuilder.RegisterGeneric(typeof(DomainNotificationHandler<>))
+                .As(typeof(IDomainNotificationHandler<>))
+                .AsImplementedInterfaces()
+                .AsSelf()
                 .InstancePerLifetimeScope();
 
             this.containerBuilder.RegisterType<InMemoryBus>()
@@ -77,14 +101,9 @@ namespace ETDB.API.ServiceBase.Builder
                 .InstancePerLifetimeScope()
                 .WithParameter(new ResolvedParameter(
                     (parameterInfo, componentContext) => parameterInfo.ParameterType == typeof(AppContextBase),
-                    (parameterInfo, componentContext) => componentContext.Resolve<TDbContext>()))
+                    (parameterInfo, componentContext) => componentContext.Resolve<TAppDbContext>()))
                 .InstancePerLifetimeScope();
 
-            return this;
-        }
-
-        public ServiceContainerBuilder UseEventStore<TDbContext>() where TDbContext : EventStoreContextBase
-        {
             this.containerBuilder.RegisterType<HttpContextAccessor>()
                 .As<IHttpContextAccessor>()
                 .AsSelf()
@@ -96,7 +115,7 @@ namespace ETDB.API.ServiceBase.Builder
                 .InstancePerLifetimeScope()
                 .WithParameter(new ResolvedParameter(
                     (parameterInfo, componentContext) => parameterInfo.ParameterType == typeof(EventStoreContextBase),
-                    (parameterInfo, componentContext) => componentContext.Resolve<TDbContext>()))
+                    (parameterInfo, componentContext) => componentContext.Resolve<TEventStoreDbContext>()))
                 .InstancePerLifetimeScope();
 
             this.containerBuilder.RegisterType<EventUser>()
