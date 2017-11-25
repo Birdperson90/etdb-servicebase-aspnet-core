@@ -19,7 +19,10 @@ namespace ETDB.API.ServiceBase.EventSourcing
 
         public void Save<T>(T theEvent) where T : Event
         {
-            var serializedData = JsonConvert.SerializeObject(theEvent);
+            var serializedData = JsonConvert.SerializeObject(theEvent, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
 
             var storedEvent = new StoredEvent(
                 theEvent,
