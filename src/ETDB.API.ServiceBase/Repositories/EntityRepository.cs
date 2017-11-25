@@ -4,16 +4,17 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using ETDB.API.ServiceBase.Abstractions.Repositories;
+using ETDB.API.ServiceBase.ContextBase;
 using ETDB.API.ServiceBase.Domain.Abstractions.Base;
 using Microsoft.EntityFrameworkCore;
 
 namespace ETDB.API.ServiceBase.Repositories
 {
-    public class EntityRepository<TEntity> : IEntityRepository<TEntity> where TEntity: class, IEntity, new()
+    public class EntityRepository<TEntity> : IDisposable, IEntityRepository<TEntity> where TEntity: class, IEntity, new()
     {
-        private readonly DbContext context;
+        private readonly AppContextBase context;
 
-        public EntityRepository(DbContext context)
+        public EntityRepository(AppContextBase context)
         {
             this.context = context;
         }
@@ -35,6 +36,70 @@ namespace ETDB.API.ServiceBase.Repositories
             entry.State = EntityState.Modified;
         }
 
+        public virtual TEntity Get(Guid id)
+        {
+            var entity = this
+                .GetQueryable()
+                .FirstOrDefault(data => data.Id == id);
+
+            return entity;
+        }
+
+        public virtual TEntity Get(Expression<Func<TEntity, bool>> predicate)
+        {
+            var entity = this.GetQueryable()
+                .Where(predicate)
+                .FirstOrDefault();
+
+            return entity;
+        }
+
+        public virtual TEntity GetIncluding(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
+        {
+            var entity = this.BuildQuery(includes)
+                .Where(predicate)
+                .FirstOrDefault();
+
+
+            return entity;
+        }
+
+        public virtual TEntity GetIncluding(Guid id, params Expression<Func<TEntity, object>>[] includes)
+        {
+            var entity = this.BuildQuery(includes)
+                .FirstOrDefault(data => data.Id == id);
+
+            return entity;
+        }
+
+        public virtual IEnumerable<TEntity> GetAll()
+        {
+            return this.GetQuery()
+                .ToArray();
+        }
+
+        public virtual IEnumerable<TEntity> GetAllIncluding(params Expression<Func<TEntity, object>>[] includes)
+        {
+            return this.BuildQuery(includes)
+                .ToArray();
+        }
+
+        public IEnumerable<TEntity> GetAllIncluding(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
+        {
+            return this.BuildQuery(includes)
+                .Where(predicate)
+                .ToArray();
+        }
+
+        public virtual IQueryable<TEntity> GetQueryable()
+        {
+            var query = this.context
+                .Set<TEntity>()
+                .AsQueryable();
+
+            return query;
+        }
+
         public virtual int EnsureChanges()
         {
             return this.context.SaveChanges();
@@ -45,61 +110,6 @@ namespace ETDB.API.ServiceBase.Repositories
             return await this.context.SaveChangesAsync();
         }
 
-        public virtual TEntity Get(Guid id)
-        {
-            return this.GetQuery()
-                .FirstOrDefault(entity => entity.Id == id);
-        }
-
-        public TEntity Get(Expression<Func<TEntity, bool>> predicate,
-            params Expression<Func<TEntity, object>>[] includes)
-        {
-            return this.BuildQuery(includes)
-                .FirstOrDefault(predicate);
-        }
-
-        public virtual TEntity Get(Expression<Func<TEntity, bool>> predicate)
-        {
-            return this.GetQuery()
-                .FirstOrDefault(predicate);
-        }
-
-        public virtual TEntity GetIncluding(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
-        {
-            return this.BuildQuery(includes)
-                .FirstOrDefault(predicate);
-        }
-
-        public virtual TEntity GetIncluding(Guid id, params Expression<Func<TEntity, object>>[] includes)
-        {
-            return this.BuildQuery(includes)
-                .FirstOrDefault(data => data.Id == id);
-        }
-
-        public virtual IEnumerable<TEntity> GetAll()
-        {
-            return this.GetQuery();
-        }
-
-        public virtual IEnumerable<TEntity> GetAllIncluding(params Expression<Func<TEntity, object>>[] includes)
-        {
-            return this.BuildQuery(includes)
-                .AsEnumerable();
-        }
-
-        public IEnumerable<TEntity> GetAllIncluding(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
-        {
-            return this.BuildQuery(includes)
-                .Where(predicate)
-                .AsEnumerable();
-        }
-
-        public virtual IQueryable<TEntity> GetQueryable()
-        {
-            return this.context
-                .Set<TEntity>()
-                .AsQueryable();
-        }
 
         private IQueryable<TEntity> BuildQuery(params Expression<Func<TEntity, object>>[] includes)
         {
@@ -110,9 +120,17 @@ namespace ETDB.API.ServiceBase.Repositories
 
         private IQueryable<TEntity> GetQuery()
         {
-            return this.context
+            var query = this.context
                 .Set<TEntity>()
                 .AsQueryable();
+
+            return query;
+        }
+
+        public void Dispose()
+        {
+            this.context?.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

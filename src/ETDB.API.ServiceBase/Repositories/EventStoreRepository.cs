@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ETDB.API.ServiceBase.Abstractions.Repositories;
+using ETDB.API.ServiceBase.ContextBase;
 using ETDB.API.ServiceBase.Domain.Abstractions.Events;
 using Microsoft.EntityFrameworkCore;
 
 namespace ETDB.API.ServiceBase.Repositories
 {
-    public class EventStoreRepository : IEventStoreRepository
+    public class EventStoreRepository : IEventStoreRepository, IDisposable
     {
-        private readonly DbContext context;
+        private readonly EventStoreContextBase context;
 
-        public EventStoreRepository(DbContext context)
+        public EventStoreRepository(EventStoreContextBase context)
         {
             this.context = context;
         }
@@ -29,6 +30,11 @@ namespace ETDB.API.ServiceBase.Repositories
         {
             context.Set<StoredEvent>().Add(theEvent);
             context.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            this.context?.Dispose();
         }
     }
 }

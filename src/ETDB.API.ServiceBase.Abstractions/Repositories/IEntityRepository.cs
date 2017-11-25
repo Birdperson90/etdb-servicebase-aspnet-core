@@ -14,7 +14,6 @@ namespace ETDB.API.ServiceBase.Abstractions.Repositories
         IEnumerable<TEntity> GetAllIncluding(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes);
         TEntity Get(Guid id);
         TEntity Get(Expression<Func<TEntity, bool>> predicate);
-        TEntity Get(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes);
         TEntity GetIncluding(Guid id, params Expression<Func<TEntity, object>>[] includes);
         TEntity GetIncluding(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes);
         IQueryable<TEntity> GetQueryable();
