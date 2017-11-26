@@ -1,4 +1,4 @@
-﻿namespace ETDB.API.ServiceBase.Controller.Abstractions.Response
+﻿namespace ETDB.API.ServiceBase.EventSourcing.Abstractions.Response
 {
     public class EventSourcedResponseFail : EventSourcedRepsonse
     {

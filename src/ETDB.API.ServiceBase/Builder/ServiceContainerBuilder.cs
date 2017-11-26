@@ -19,6 +19,7 @@ using ETDB.API.ServiceBase.EventSourcing.Validation;
 using ETDB.API.ServiceBase.Repositories;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -68,7 +69,7 @@ namespace ETDB.API.ServiceBase.Builder
             if (!assembliesToScan.Any())
             {
                 throw new ArgumentException(@"You need to provide assemblies in order to implement generic 
-                    SourcingCommand- and DomainEventHandler!", nameof(assembliesToScan));
+                    Command- and Domaineventhandlers!", nameof(assembliesToScan));
             }
 
             this.containerBuilder.RegisterType<TAppDbContext>()

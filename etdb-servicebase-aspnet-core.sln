@@ -19,8 +19,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETDB.API.ServiceBase.EventS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETDB.API.ServiceBase.EventSourcing", "src\ETDB.API.ServiceBase.EventSourcing\ETDB.API.ServiceBase.EventSourcing.csproj", "{FD46AD19-9314-4DE8-8533-2B1DF012D84F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETDB.API.ServiceBase.Controller.Abstractions", "src\ETDB.API.ServiceBase.Controller.Abstractions\ETDB.API.ServiceBase.Controller.Abstractions.csproj", "{EDF7A190-7935-4C03-8E89-EA1C55BE4234}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,10 +49,6 @@ Global
 		{FD46AD19-9314-4DE8-8533-2B1DF012D84F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD46AD19-9314-4DE8-8533-2B1DF012D84F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD46AD19-9314-4DE8-8533-2B1DF012D84F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EDF7A190-7935-4C03-8E89-EA1C55BE4234}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EDF7A190-7935-4C03-8E89-EA1C55BE4234}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EDF7A190-7935-4C03-8E89-EA1C55BE4234}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EDF7A190-7935-4C03-8E89-EA1C55BE4234}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,7 +60,6 @@ Global
 		{9C5C5DB8-A4F0-45FD-A37A-0A6096E9C303} = {EC9EFBE9-B329-4C2D-935B-B2E2BEE02807}
 		{D7FAEFFD-8B51-464A-BA05-142A17D57CC1} = {EC9EFBE9-B329-4C2D-935B-B2E2BEE02807}
 		{FD46AD19-9314-4DE8-8533-2B1DF012D84F} = {EC9EFBE9-B329-4C2D-935B-B2E2BEE02807}
-		{EDF7A190-7935-4C03-8E89-EA1C55BE4234} = {EC9EFBE9-B329-4C2D-935B-B2E2BEE02807}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2A92CEFB-6720-4D1A-B5CD-C99E8EE59F9E}

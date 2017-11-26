@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ETDB.API.ServiceBase.Controller.Abstractions.ActionResult;
-using ETDB.API.ServiceBase.Controller.Abstractions.Response;
-using ETDB.API.ServiceBase.EventSourcing.Abstractions.Base;
+using ETDB.API.ServiceBase.EventSourcing.Abstractions.ActionResult;
 using ETDB.API.ServiceBase.EventSourcing.Abstractions.Handler;
 using ETDB.API.ServiceBase.EventSourcing.Abstractions.Notifications;
+using ETDB.API.ServiceBase.EventSourcing.Abstractions.Response;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ETDB.API.ServiceBase.Controller.Abstractions.Base
+namespace ETDB.API.ServiceBase.EventSourcing.Abstractions.Base
 {
     public abstract class EventSourcedController : ControllerBase
     {

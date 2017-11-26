@@ -1,6 +1,6 @@
 ﻿using ETDB.API.ServiceBase.EventSourcing.Abstractions.Base;
 
-namespace ETDB.API.ServiceBase.Controller.Abstractions.Response
+namespace ETDB.API.ServiceBase.EventSourcing.Abstractions.Response
 {
     public class EventSourcedResponseSuccess : EventSourcedRepsonse
     {
