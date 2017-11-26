@@ -4,26 +4,22 @@ using System.Reflection;
 using Autofac;
 using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
-using ETDB.API.ServiceBase.Abstractions.EventSourcing;
-using ETDB.API.ServiceBase.Abstractions.Handler;
 using ETDB.API.ServiceBase.Abstractions.Repositories;
-using ETDB.API.ServiceBase.Bus;
-using ETDB.API.ServiceBase.ContextBase;
-using ETDB.API.ServiceBase.Domain.Abstractions.Base;
-using ETDB.API.ServiceBase.Domain.Abstractions.Bus;
-using ETDB.API.ServiceBase.Domain.Abstractions.Commands;
-using ETDB.API.ServiceBase.Domain.Abstractions.Events;
-using ETDB.API.ServiceBase.Domain.Abstractions.Notifications;
-using ETDB.API.ServiceBase.Entities;
 using ETDB.API.ServiceBase.EventSourcing;
+using ETDB.API.ServiceBase.EventSourcing.Abstractions.Base;
+using ETDB.API.ServiceBase.EventSourcing.Abstractions.Bus;
+using ETDB.API.ServiceBase.EventSourcing.Abstractions.Handler;
+using ETDB.API.ServiceBase.EventSourcing.Abstractions.Repositories;
+using ETDB.API.ServiceBase.EventSourcing.Base;
+using ETDB.API.ServiceBase.EventSourcing.Bus;
+using ETDB.API.ServiceBase.EventSourcing.ContextBase;
+using ETDB.API.ServiceBase.EventSourcing.Handler;
+using ETDB.API.ServiceBase.EventSourcing.Repositories;
 using ETDB.API.ServiceBase.Repositories;
-using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Remotion.Linq.Clauses;
 
 namespace ETDB.API.ServiceBase.Builder
 {
@@ -71,7 +67,7 @@ namespace ETDB.API.ServiceBase.Builder
             if (!assembliesToScan.Any())
             {
                 throw new ArgumentException(@"You need to provide assemblies in order to implement generic 
-                    Command- and DomainEventHandler!", nameof(assembliesToScan));
+                    SourcingCommand- and DomainEventHandler!", nameof(assembliesToScan));
             }
 
             this.containerBuilder.RegisterAssemblyTypes(assembliesToScan)

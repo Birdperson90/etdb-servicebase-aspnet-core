@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ETDB.API.ServiceBase.Constants
+﻿namespace ETDB.API.ServiceBase.Constants
 {
     public class RoleNames
     {

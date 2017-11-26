@@ -4,8 +4,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using ETDB.API.ServiceBase.Abstractions.Repositories;
-using ETDB.API.ServiceBase.ContextBase;
 using ETDB.API.ServiceBase.Domain.Abstractions.Base;
+using ETDB.API.ServiceBase.EventSourcing.ContextBase;
 using Microsoft.EntityFrameworkCore;
 
 namespace ETDB.API.ServiceBase.Repositories
