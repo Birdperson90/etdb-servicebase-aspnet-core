@@ -70,6 +70,12 @@ namespace ETDB.API.ServiceBase.Builder
                     SourcingCommand- and DomainEventHandler!", nameof(assembliesToScan));
             }
 
+            this.containerBuilder.RegisterType<TAppDbContext>()
+                .InstancePerLifetimeScope();
+
+            this.containerBuilder.RegisterType<TEventStoreDbContext>()
+                .InstancePerLifetimeScope();
+
             this.containerBuilder.RegisterAssemblyTypes(assembliesToScan)
                 .AsClosedTypesOf(typeof(ICommandHandler<>))
                 .AsSelf()
@@ -78,7 +84,8 @@ namespace ETDB.API.ServiceBase.Builder
             this.containerBuilder.RegisterAssemblyTypes(assembliesToScan)
                 .AsClosedTypesOf(typeof(IDomainEventHandler<>))
                 .AsSelf()
-                .InstancePerMatchingLifetimeScope();
+                //.InstancePerMatchingLifetimeScope()
+                .InstancePerLifetimeScope();
 
             this.containerBuilder.RegisterGeneric(typeof(DomainNotificationHandler<>))
                 .As(typeof(IDomainNotificationHandler<>))
