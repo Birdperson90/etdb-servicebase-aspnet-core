@@ -18,6 +18,8 @@ namespace ETDB.API.ServiceBase.EventSourcing.Base
             builder.Property(c => c.MessageType)
                 .HasColumnName("Action")
                 .HasColumnType("varchar(100)");
+
+            builder.Ignore(c => c.Type);
         }
     }
 }

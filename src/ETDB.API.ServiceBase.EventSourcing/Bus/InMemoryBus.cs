@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using ETDB.API.ServiceBase.EventSourcing.Abstractions.Bus;
 using ETDB.API.ServiceBase.EventSourcing.Abstractions.Commands;
 using ETDB.API.ServiceBase.EventSourcing.Abstractions.Events;
+using ETDB.API.ServiceBase.EventSourcing.Abstractions.Notifications;
 using ETDB.API.ServiceBase.EventSourcing.Abstractions.Repositories;
 using MediatR;
 
@@ -11,7 +12,7 @@ namespace ETDB.API.ServiceBase.EventSourcing.Bus
     {
         private readonly IMediator mediator;
         private readonly IEventStore eventStore;
-        private const string DomainNotification = "DomainNotification";
+        //private const string DomainNotification = "DomainNotification";
 
         public InMemoryBus(IEventStore eventStore, IMediator mediator)
         {
@@ -26,9 +27,14 @@ namespace ETDB.API.ServiceBase.EventSourcing.Bus
 
         public Task RaiseEvent<T>(T @event) where T : Event
         {
-            if (!@event.MessageType.Equals(nameof(DomainNotification)))
+            //if (!@event.MessageType.Equals(nameof(DomainNotification)))
+            //{
+            //    eventStore.Save(@event);
+            //}
+
+            if (!@event.Type.IsAssignableFrom(typeof(DomainNotification)))
             {
-                eventStore.Save(@event);
+                this.eventStore.Save(@event);
             }
 
             return Publish(@event);

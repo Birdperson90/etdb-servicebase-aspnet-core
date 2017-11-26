@@ -8,6 +8,7 @@ namespace ETDB.API.ServiceBase.EventSourcing.Abstractions.Events
 
         protected Event()
         {
+            // TODO MAKE THIS UTC
             Timestamp = DateTime.Now;
         }
     }
