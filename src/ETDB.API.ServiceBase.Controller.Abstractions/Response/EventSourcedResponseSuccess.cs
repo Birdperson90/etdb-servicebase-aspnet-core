@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ETDB.API.ServiceBase.EventSourcing.Abstractions.Base;
 
-namespace ETDB.API.ServiceBase.Controller.Abstractions
+namespace ETDB.API.ServiceBase.Controller.Abstractions.Response
 {
     public class EventSourcedResponseSuccess : EventSourcedRepsonse
     {
@@ -11,6 +9,6 @@ namespace ETDB.API.ServiceBase.Controller.Abstractions
             this.Success = true;
         }
 
-        public EventSourcedDTO Data { get; set; }
+        public IEventSourcedDTO Data { get; set; }
     }
 }

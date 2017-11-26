@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using ETDB.API.ServiceBase.Controller.Abstractions.ActionResult;
+using ETDB.API.ServiceBase.Controller.Abstractions.Response;
+using ETDB.API.ServiceBase.EventSourcing.Abstractions.Base;
 using ETDB.API.ServiceBase.EventSourcing.Abstractions.Handler;
-using Microsoft.AspNetCore.Mvc;
 using ETDB.API.ServiceBase.EventSourcing.Abstractions.Notifications;
+using Microsoft.AspNetCore.Mvc;
 
-namespace ETDB.API.ServiceBase.Controller.Abstractions
+namespace ETDB.API.ServiceBase.Controller.Abstractions.Base
 {
     public abstract class EventSourcedController : ControllerBase
     {
@@ -25,7 +26,7 @@ namespace ETDB.API.ServiceBase.Controller.Abstractions
             return !notificationHandler.HasNotifications();
         }
 
-        protected EventSourcedResult ExecuteResult(EventSourcedDTO result = null)
+        protected EventSourcedResult ExecuteResult(IEventSourcedDTO result = null)
         {
             if (this.IsValidOperation())
             {
@@ -43,25 +44,6 @@ namespace ETDB.API.ServiceBase.Controller.Abstractions
                     .ToArray()
             });
         }
-
-        //protected new EventSourcedResult Response(EventSourcedDTO result = null)
-        //{
-        //    if (this.IsValidOperation())
-        //    {
-        //        return new EventSourcedResult(new EventSourcedResponseSuccess
-        //        {
-        //            Data = result
-        //        });
-        //    }
-
-        //    return new EventSourcedResult(new EventSourcedResponseFail
-        //    {
-        //        Errors = this.notificationHandler
-        //            .GetNotifications()
-        //            .Select(error => error.Value)
-        //            .ToArray()
-        //    });
-        //}
 
         protected void NotifyModelStateErrors()
         {

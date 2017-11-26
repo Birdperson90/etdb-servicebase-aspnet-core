@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Text;
+﻿using System.Net;
 using System.Threading.Tasks;
+using ETDB.API.ServiceBase.Controller.Abstractions.Response;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ETDB.API.ServiceBase.Controller.Abstractions
+namespace ETDB.API.ServiceBase.Controller.Abstractions.ActionResult
 {
     public class EventSourcedResult : IActionResult
     {
@@ -22,8 +20,8 @@ namespace ETDB.API.ServiceBase.Controller.Abstractions
             {
                 StatusCode = this.eventSourcedRepsonse.Success
                     ? ((EventSourcedResponseSuccess) this.eventSourcedRepsonse).Data != null
-                        ? (int) HttpStatusCode.NoContent
-                        : (int) HttpStatusCode.OK
+                        ? (int) HttpStatusCode.OK
+                        : (int) HttpStatusCode.NoContent
                     : (int) HttpStatusCode.BadRequest
             };
 
