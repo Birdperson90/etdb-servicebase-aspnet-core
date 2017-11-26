@@ -14,6 +14,6 @@ namespace ETDB.API.ServiceBase.EventSourcing.Abstractions.Commands
             Timestamp = DateTime.UtcNow;
         }
 
-        public abstract bool IsValid();
+        //public abstract bool IsValid();
     }
 }

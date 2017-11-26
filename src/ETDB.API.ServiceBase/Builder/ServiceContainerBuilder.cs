@@ -15,6 +15,7 @@ using ETDB.API.ServiceBase.EventSourcing.Bus;
 using ETDB.API.ServiceBase.EventSourcing.ContextBase;
 using ETDB.API.ServiceBase.EventSourcing.Handler;
 using ETDB.API.ServiceBase.EventSourcing.Repositories;
+using ETDB.API.ServiceBase.EventSourcing.Validation;
 using ETDB.API.ServiceBase.Repositories;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -77,6 +78,12 @@ namespace ETDB.API.ServiceBase.Builder
                 .InstancePerLifetimeScope();
 
             this.containerBuilder.RegisterAssemblyTypes(assembliesToScan)
+                .AsClosedTypesOf(typeof(CommandValidation<>))
+                .AsImplementedInterfaces()
+                .AsSelf()
+                .InstancePerLifetimeScope();
+
+            this.containerBuilder.RegisterAssemblyTypes(assembliesToScan)
                 .AsClosedTypesOf(typeof(ICommandHandler<>))
                 .AsSelf()
                 .InstancePerLifetimeScope();
@@ -84,7 +91,6 @@ namespace ETDB.API.ServiceBase.Builder
             this.containerBuilder.RegisterAssemblyTypes(assembliesToScan)
                 .AsClosedTypesOf(typeof(IDomainEventHandler<>))
                 .AsSelf()
-                //.InstancePerMatchingLifetimeScope()
                 .InstancePerLifetimeScope();
 
             this.containerBuilder.RegisterGeneric(typeof(DomainNotificationHandler<>))

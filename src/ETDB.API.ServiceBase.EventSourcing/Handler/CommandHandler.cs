@@ -3,6 +3,7 @@ using ETDB.API.ServiceBase.EventSourcing.Abstractions.Bus;
 using ETDB.API.ServiceBase.EventSourcing.Abstractions.Commands;
 using ETDB.API.ServiceBase.EventSourcing.Abstractions.Handler;
 using ETDB.API.ServiceBase.EventSourcing.Abstractions.Notifications;
+using FluentValidation.Results;
 
 namespace ETDB.API.ServiceBase.EventSourcing.Handler
 {
@@ -37,9 +38,9 @@ namespace ETDB.API.ServiceBase.EventSourcing.Handler
             return false;
         }
 
-        public void NotifyValidationErrors(TCommand message)
+        public void NotifyValidationErrors(TCommand message, ValidationResult validationResult)
         {
-            foreach (var error in message.ValidationResult.Errors)
+            foreach (var error in validationResult.Errors)
             {
                 this.Bus.RaiseEvent(new DomainNotification(message.MessageType, error.ErrorMessage));
             }
