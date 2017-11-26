@@ -14,7 +14,7 @@ namespace ETDB.API.ServiceBase.Hasher
             if (salt == null) throw new ArgumentNullException(nameof(salt));
 
             return Convert.ToBase64String(KeyDerivation.Pbkdf2(unhashed, 
-                salt, KeyDerivationPrf.HMACSHA1, 10000, 256 / 8));
+                salt, KeyDerivationPrf.HMACSHA256, 10000, 256 / 8));
         }
 
         public byte[] GenerateSalt()
