@@ -8,11 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ETDB.API.ServiceBase.EventSourcing.Abstractions.Base
 {
-    public abstract class EventSourcedController : ControllerBase
+    public abstract class EventSourcingController : ControllerBase
     {
         private readonly IDomainNotificationHandler<DomainNotification> notificationHandler;
 
-        protected EventSourcedController(IDomainNotificationHandler<DomainNotification> notificationHandler)
+        protected EventSourcingController(IDomainNotificationHandler<DomainNotification> notificationHandler)
         {
             this.notificationHandler = notificationHandler;
         }
@@ -25,17 +25,17 @@ namespace ETDB.API.ServiceBase.EventSourcing.Abstractions.Base
             return !notificationHandler.HasNotifications();
         }
 
-        protected EventSourcedResult ExecuteResult(IEventSourcedDTO result = null)
+        protected EventSourcingResult ExecuteResult(IEventSourcingDTO result = null)
         {
             if (this.IsValidOperation())
             {
-                return new EventSourcedResult(new EventSourcedResponseSuccess
+                return new EventSourcingResult(new EventSourcedResponseSuccess
                 {
                     Data = result
                 });
             }
 
-            return new EventSourcedResult(new EventSourcedResponseFail
+            return new EventSourcingResult(new EventSourcedResponseFail
             {
                 Errors = this.notificationHandler
                     .GetNotifications()

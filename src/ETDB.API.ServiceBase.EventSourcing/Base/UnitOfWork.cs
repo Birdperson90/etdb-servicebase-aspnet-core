@@ -1,7 +1,7 @@
 ﻿using System;
 using ETDB.API.ServiceBase.EventSourcing.Abstractions.Base;
 using ETDB.API.ServiceBase.EventSourcing.Abstractions.Commands;
-using ETDB.API.ServiceBase.EventSourcing.ContextBase;
+using ETDB.API.ServiceBase.Repositories.Abstractions.Base;
 
 namespace ETDB.API.ServiceBase.EventSourcing.Base
 {

@@ -1,4 +1,4 @@
-﻿namespace ETDB.API.ServiceBase.Abstractions.Hasher
+﻿namespace ETDB.API.ServiceBase.General.Abstractions.Hasher
 {
     public interface IHasher
     {

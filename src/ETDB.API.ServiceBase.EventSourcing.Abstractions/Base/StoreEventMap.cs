@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace ETDB.API.ServiceBase.EventSourcing.Base
+namespace ETDB.API.ServiceBase.EventSourcing.Abstractions.Base
 {
     public class StoreEventMap : IEntityTypeConfiguration<StoredEvent>
     {

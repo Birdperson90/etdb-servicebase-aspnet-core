@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using ETDB.API.ServiceBase.Abstractions.Repositories;
 using ETDB.API.ServiceBase.Domain.Abstractions.Base;
-using ETDB.API.ServiceBase.EventSourcing.ContextBase;
+using ETDB.API.ServiceBase.Repositories.Abstractions.Base;
+using ETDB.API.ServiceBase.Repositories.Abstractions.Generics;
 using Microsoft.EntityFrameworkCore;
 
-namespace ETDB.API.ServiceBase.Repositories
+namespace ETDB.API.ServiceBase.Repositories.Generics
 {
-    public class EntityRepository<TEntity> : IDisposable, IEntityRepository<TEntity> where TEntity: class, IEntity, new()
+    public class EntityRepository<TEntity> : IEntityRepository<TEntity> where TEntity : class, IEntity, new()
     {
         private readonly AppContextBase context;
 

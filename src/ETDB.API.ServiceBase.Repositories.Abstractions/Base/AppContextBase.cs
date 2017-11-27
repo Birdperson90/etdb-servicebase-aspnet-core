@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-namespace ETDB.API.ServiceBase.EventSourcing.ContextBase
+namespace ETDB.API.ServiceBase.Repositories.Abstractions.Base
 {
     public class AppContextBase : DbContext
     {

@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ETDB.API.ServiceBase.EventSourcing.Abstractions.ActionResult
 {
-    public class EventSourcedResult : IActionResult
+    public class EventSourcingResult : IActionResult
     {
         private readonly EventSourcedRepsonse eventSourcedRepsonse;
 
-        public EventSourcedResult(EventSourcedRepsonse eventSourcedRepsonse)
+        public EventSourcingResult(EventSourcedRepsonse eventSourcedRepsonse)
         {
             this.eventSourcedRepsonse = eventSourcedRepsonse;
         }

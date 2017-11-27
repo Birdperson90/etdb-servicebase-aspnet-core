@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Security.Cryptography;
-using ETDB.API.ServiceBase.Abstractions.Hasher;
+using ETDB.API.ServiceBase.General.Abstractions.Hasher;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
-namespace ETDB.API.ServiceBase.Hasher
+namespace ETDB.API.ServiceBase.General.Hasher
 {
     public class Hasher : IHasher
     {

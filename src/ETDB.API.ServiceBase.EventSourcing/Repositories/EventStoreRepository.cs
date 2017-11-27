@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ETDB.API.ServiceBase.EventSourcing.Abstractions.Base;
 using ETDB.API.ServiceBase.EventSourcing.Abstractions.Events;
 using ETDB.API.ServiceBase.EventSourcing.Abstractions.Repositories;
-using ETDB.API.ServiceBase.EventSourcing.ContextBase;
 
 namespace ETDB.API.ServiceBase.EventSourcing.Repositories
 {

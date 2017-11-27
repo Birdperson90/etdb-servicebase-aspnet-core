@@ -9,6 +9,6 @@ namespace ETDB.API.ServiceBase.EventSourcing.Abstractions.Response
             this.Success = true;
         }
 
-        public IEventSourcedDTO Data { get; set; }
+        public IEventSourcingDTO Data { get; set; }
     }
 }

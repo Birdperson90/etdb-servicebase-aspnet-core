@@ -4,26 +4,24 @@ using System.Reflection;
 using Autofac;
 using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
-using ETDB.API.ServiceBase.Abstractions.Repositories;
-using ETDB.API.ServiceBase.EventSourcing;
 using ETDB.API.ServiceBase.EventSourcing.Abstractions.Base;
 using ETDB.API.ServiceBase.EventSourcing.Abstractions.Bus;
 using ETDB.API.ServiceBase.EventSourcing.Abstractions.Handler;
 using ETDB.API.ServiceBase.EventSourcing.Abstractions.Repositories;
 using ETDB.API.ServiceBase.EventSourcing.Base;
-using ETDB.API.ServiceBase.EventSourcing.Bus;
-using ETDB.API.ServiceBase.EventSourcing.ContextBase;
 using ETDB.API.ServiceBase.EventSourcing.Handler;
 using ETDB.API.ServiceBase.EventSourcing.Repositories;
 using ETDB.API.ServiceBase.EventSourcing.Validation;
-using ETDB.API.ServiceBase.Repositories;
+using ETDB.API.ServiceBase.Repositories.Abstractions.Base;
+using ETDB.API.ServiceBase.Repositories.Abstractions.Generics;
+using ETDB.API.ServiceBase.Repositories.Generics;
+using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ETDB.API.ServiceBase.Builder
+namespace ETDB.API.ServiceBase.Builder.Builder
 {
     public class ServiceContainerBuilder
     {
@@ -63,8 +61,8 @@ namespace ETDB.API.ServiceBase.Builder
             return this;
         }
 
-        public ServiceContainerBuilder UseEventSourcing<TAppDbContext, TEventStoreDbContext>(params Assembly[] assembliesToScan) 
-            where TAppDbContext : AppContextBase where TEventStoreDbContext: EventStoreContextBase
+        public ServiceContainerBuilder UseEventSourcing<TAppDbContext, TEventStoreDbContext>(params Assembly[] assembliesToScan)
+            where TAppDbContext : AppContextBase where TEventStoreDbContext : EventStoreContextBase
         {
             if (!assembliesToScan.Any())
             {
@@ -100,7 +98,7 @@ namespace ETDB.API.ServiceBase.Builder
                 .AsSelf()
                 .InstancePerLifetimeScope();
 
-            this.containerBuilder.RegisterType<InMemoryBus>()
+            this.containerBuilder.RegisterType<Mediator>()
                 .As<IMediatorHandler>()
                 .AsSelf()
                 .InstancePerLifetimeScope();
@@ -148,7 +146,7 @@ namespace ETDB.API.ServiceBase.Builder
             return this;
         }
 
-        public ServiceContainerBuilder RegisterTypeAsSingleton<TImplementation, TInterface>() 
+        public ServiceContainerBuilder RegisterTypeAsSingleton<TImplementation, TInterface>()
             where TImplementation : TInterface
         {
             this.containerBuilder.RegisterType<TImplementation>()

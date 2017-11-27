@@ -14,7 +14,6 @@ namespace ETDB.API.ServiceBase.EventSourcing.Base
             this.httpContextAccessor = httpContextAccessor;
         }
 
-        // TODO: check if this is working
         public string UserName => this.httpContextAccessor
             .HttpContext
             .User

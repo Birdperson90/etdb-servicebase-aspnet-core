@@ -10,14 +10,14 @@ namespace ETDB.API.ServiceBase.EventSourcing.Handler
     public abstract class CommandHandler<TCommand> : ICommandHandler<TCommand> where TCommand : SourcingCommand
     {
         private readonly IUnitOfWork unitOfWork;
-        protected readonly IMediatorHandler Bus;
+        protected readonly IMediatorHandler Mediator;
         private readonly IDomainNotificationHandler<DomainNotification> notificationsHandler;
 
-        protected CommandHandler(IUnitOfWork unitOfWork, IMediatorHandler bus, IDomainNotificationHandler<DomainNotification> notificationsHandler)
+        protected CommandHandler(IUnitOfWork unitOfWork, IMediatorHandler mediator, IDomainNotificationHandler<DomainNotification> notificationsHandler)
         {
             this.unitOfWork = unitOfWork;
             this.notificationsHandler = notificationsHandler;
-            this.Bus = bus;
+            this.Mediator = mediator;
         }
 
         public bool Commit()
@@ -34,7 +34,7 @@ namespace ETDB.API.ServiceBase.EventSourcing.Handler
                 return true;
             }
 
-            this.Bus.RaiseEvent(new DomainNotification("Commit", "We had a problem during saving your data."));
+            this.Mediator.RaiseEvent(new DomainNotification("Commit", "We had a problem during saving your data."));
             return false;
         }
 
@@ -42,7 +42,7 @@ namespace ETDB.API.ServiceBase.EventSourcing.Handler
         {
             foreach (var error in validationResult.Errors)
             {
-                this.Bus.RaiseEvent(new DomainNotification(message.MessageType, error.ErrorMessage));
+                this.Mediator.RaiseEvent(new DomainNotification(message.MessageType, error.ErrorMessage));
             }
         }
 

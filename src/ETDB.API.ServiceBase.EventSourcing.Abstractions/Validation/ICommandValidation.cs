@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ETDB.API.ServiceBase.EventSourcing.Abstractions.Commands;
+﻿using ETDB.API.ServiceBase.EventSourcing.Abstractions.Commands;
 using FluentValidation.Results;
 
 namespace ETDB.API.ServiceBase.EventSourcing.Abstractions.Validation
