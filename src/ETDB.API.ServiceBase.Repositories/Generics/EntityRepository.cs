@@ -10,29 +10,29 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ETDB.API.ServiceBase.Repositories.Generics
 {
-    public class EntityRepository<TEntity> : IEntityRepository<TEntity> where TEntity : class, IEntity, new()
+    public abstract class EntityRepository<TEntity> : IEntityRepository<TEntity> where TEntity : class, IEntity, new()
     {
-        private readonly AppContextBase context;
+        protected readonly AppContextBase Context;
 
-        public EntityRepository(AppContextBase context)
+        protected EntityRepository(AppContextBase context)
         {
-            this.context = context;
+            this.Context = context;
         }
 
         public virtual void Add(TEntity entity)
         {
-            this.context.Set<TEntity>().Add(entity);
+            this.Context.Set<TEntity>().Add(entity);
         }
 
         public virtual void Delete(TEntity entity)
         {
-            var entry = this.context.Entry(entity);
+            var entry = this.Context.Entry(entity);
             entry.State = EntityState.Deleted;
         }
 
         public virtual void Edit(TEntity entity)
         {
-            var entry = this.context.Entry(entity);
+            var entry = this.Context.Entry(entity);
             entry.State = EntityState.Modified;
         }
 
@@ -93,7 +93,7 @@ namespace ETDB.API.ServiceBase.Repositories.Generics
 
         public virtual IQueryable<TEntity> GetQueryable()
         {
-            var query = this.context
+            var query = this.Context
                 .Set<TEntity>()
                 .AsQueryable();
 
@@ -102,12 +102,12 @@ namespace ETDB.API.ServiceBase.Repositories.Generics
 
         public virtual int EnsureChanges()
         {
-            return this.context.SaveChanges();
+            return this.Context.SaveChanges();
         }
 
         public virtual async Task<int> EnsureChangesAsync()
         {
-            return await this.context.SaveChangesAsync();
+            return await this.Context.SaveChangesAsync();
         }
 
 
@@ -120,7 +120,7 @@ namespace ETDB.API.ServiceBase.Repositories.Generics
 
         private IQueryable<TEntity> GetQuery()
         {
-            var query = this.context
+            var query = this.Context
                 .Set<TEntity>()
                 .AsQueryable();
 
@@ -129,7 +129,7 @@ namespace ETDB.API.ServiceBase.Repositories.Generics
 
         public void Dispose()
         {
-            this.context?.Dispose();
+            this.Context?.Dispose();
             GC.SuppressFinalize(this);
         }
     }

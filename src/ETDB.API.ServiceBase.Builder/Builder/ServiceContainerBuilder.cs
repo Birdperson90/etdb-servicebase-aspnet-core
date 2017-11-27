@@ -10,12 +10,12 @@ using ETDB.API.ServiceBase.EventSourcing.Abstractions.Handler;
 using ETDB.API.ServiceBase.EventSourcing.Abstractions.Repositories;
 using ETDB.API.ServiceBase.EventSourcing.Base;
 using ETDB.API.ServiceBase.EventSourcing.Handler;
+using ETDB.API.ServiceBase.EventSourcing.Mediator;
 using ETDB.API.ServiceBase.EventSourcing.Repositories;
 using ETDB.API.ServiceBase.EventSourcing.Validation;
 using ETDB.API.ServiceBase.Repositories.Abstractions.Base;
 using ETDB.API.ServiceBase.Repositories.Abstractions.Generics;
 using ETDB.API.ServiceBase.Repositories.Generics;
-using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -48,11 +48,19 @@ namespace ETDB.API.ServiceBase.Builder.Builder
             return this;
         }
 
-        public ServiceContainerBuilder UseGenericRepositoryPattern<TDbContext>() where TDbContext : AppContextBase
+        public ServiceContainerBuilder UseGenericRepositoryPattern<TDbContext>(params Assembly[] assembliesToScan) where TDbContext : AppContextBase
         {
-            this.containerBuilder.RegisterGeneric(typeof(EntityRepository<>))
-                .As(typeof(IEntityRepository<>))
-                .InstancePerRequest()
+            if (!assembliesToScan.Any())
+            {
+                throw new ArgumentException(@"You need to provide assemblies in order to implement generic 
+                    Repositories!", nameof(assembliesToScan));
+            }
+
+            this.containerBuilder.RegisterAssemblyTypes(assembliesToScan)
+                .AsClosedTypesOf(typeof(EntityRepository<>))
+                .AsImplementedInterfaces()
+                .AsSelf()
+                .InstancePerLifetimeScope()
                 .WithParameter(new ResolvedParameter(
                     (parameterInfo, componentContext) => parameterInfo.ParameterType == typeof(AppContextBase),
                     (parameterInfo, componentContext) => componentContext.Resolve<TDbContext>()))
@@ -98,7 +106,7 @@ namespace ETDB.API.ServiceBase.Builder.Builder
                 .AsSelf()
                 .InstancePerLifetimeScope();
 
-            this.containerBuilder.RegisterType<Mediator>()
+            this.containerBuilder.RegisterType<MediatorHandler>()
                 .As<IMediatorHandler>()
                 .AsSelf()
                 .InstancePerLifetimeScope();
