@@ -21,7 +21,7 @@ namespace ETDB.API.ServiceBase.EventSourcing.Mediator
 
         public Task SendCommand<T>(T command) where T : SourcingCommand
         {
-            return Publish(command);
+            return this.Publish(command);
         }
 
         public Task RaiseEvent<T>(T @event) where T : Event
@@ -31,7 +31,7 @@ namespace ETDB.API.ServiceBase.EventSourcing.Mediator
                 this.eventStore.Save(@event);
             }
 
-            return Publish(@event);
+            return this.Publish(@event);
         }
 
         private Task Publish<T>(T message) where T : Message

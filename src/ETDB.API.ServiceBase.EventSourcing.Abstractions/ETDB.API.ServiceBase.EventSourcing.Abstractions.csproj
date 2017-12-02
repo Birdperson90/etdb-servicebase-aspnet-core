@@ -13,4 +13,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational.Design" Version="1.1.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Result\" />
+  </ItemGroup>
+
 </Project>
