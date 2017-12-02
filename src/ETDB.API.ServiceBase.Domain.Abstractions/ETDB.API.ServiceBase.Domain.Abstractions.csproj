@@ -5,9 +5,4 @@
     <Version>3.0.1</Version>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="7.2.1" />
-    <PackageReference Include="MediatR" Version="3.0.1" />
-  </ItemGroup>
-
 </Project>

@@ -1,4 +1,6 @@
-﻿using ETDB.API.ServiceBase.EventSourcing.Abstractions.Base;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using ETDB.API.ServiceBase.EventSourcing.Abstractions.Base;
 using ETDB.API.ServiceBase.EventSourcing.Abstractions.Bus;
 using ETDB.API.ServiceBase.EventSourcing.Abstractions.Commands;
 using ETDB.API.ServiceBase.EventSourcing.Abstractions.Handler;
@@ -46,6 +48,6 @@ namespace ETDB.API.ServiceBase.EventSourcing.Handler
             }
         }
 
-        public abstract void Handle(TCommand notification);
+        public abstract Task Handle(TCommand notification, CancellationToken cancellationToken);
     }
 }
