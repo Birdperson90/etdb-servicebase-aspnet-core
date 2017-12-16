@@ -34,11 +34,6 @@ namespace Etdb.ServiceBase.EventSourcing.Mediator
             return await this.mediator.Send(command);
         }
 
-        public Task SendCommand<T>(T command) where T : SourcingCommand
-        {
-            return this.Publish(command);
-        }
-
         public Task RaiseEvent<T>(T @event) where T : Event
         {
             if (!@event.Type.IsAssignableFrom(typeof(DomainNotification)))

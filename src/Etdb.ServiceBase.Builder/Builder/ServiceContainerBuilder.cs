@@ -8,6 +8,7 @@ using Etdb.ServiceBase.EventSourcing.Abstractions.Base;
 using Etdb.ServiceBase.EventSourcing.Abstractions.Bus;
 using Etdb.ServiceBase.EventSourcing.Abstractions.Handler;
 using Etdb.ServiceBase.EventSourcing.Abstractions.Repositories;
+using Etdb.ServiceBase.EventSourcing.Abstractions.Validation;
 using Etdb.ServiceBase.EventSourcing.Base;
 using Etdb.ServiceBase.EventSourcing.Handler;
 using Etdb.ServiceBase.EventSourcing.Mediator;
@@ -84,13 +85,8 @@ namespace Etdb.ServiceBase.Builder.Builder
                 .InstancePerLifetimeScope();
 
             this.containerBuilder.RegisterAssemblyTypes(assembliesToScan)
-                .AsClosedTypesOf(typeof(CommandValidation<>))
+                .AsClosedTypesOf(typeof(ICommandValidation<,>))
                 .AsImplementedInterfaces()
-                .AsSelf()
-                .InstancePerLifetimeScope();
-
-            this.containerBuilder.RegisterAssemblyTypes(assembliesToScan)
-                .AsClosedTypesOf(typeof(ICommandHandler<>))
                 .AsSelf()
                 .InstancePerLifetimeScope();
 

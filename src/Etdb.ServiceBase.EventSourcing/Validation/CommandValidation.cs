@@ -5,8 +5,10 @@ using FluentValidation.Results;
 
 namespace Etdb.ServiceBase.EventSourcing.Validation
 {
-    public abstract class CommandValidation<TSourcingCommand> : AbstractValidator<TSourcingCommand>, ICommandValidation<TSourcingCommand> where TSourcingCommand : SourcingCommand
+    public abstract class CommandValidation<TTransactionCommand, TResponse> : AbstractValidator<TTransactionCommand>, ICommandValidation<TTransactionCommand, TResponse> 
+        where TTransactionCommand : TransactionCommand<TResponse>
+        where TResponse : class 
     {
-        public abstract bool IsValid(TSourcingCommand sourcingCommand, out ValidationResult validationResult);
+        public abstract bool IsValid(TTransactionCommand sourcingCommand, out ValidationResult validationResult);
     }
 }

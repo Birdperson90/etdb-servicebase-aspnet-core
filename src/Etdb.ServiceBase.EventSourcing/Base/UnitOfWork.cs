@@ -14,15 +14,15 @@ namespace Etdb.ServiceBase.EventSourcing.Base
             this.context = context;
         }
 
-        public SourcingCommandResponse Commit()
-        {
-            var rowsAffected = this.context.SaveChanges();
-            return new SourcingCommandResponse(rowsAffected > 0);
-        }
-
         public void Dispose()
         {
             this.context?.Dispose();
+        }
+
+        public bool IsCommited()
+        {
+            var rowsAffected = this.context.SaveChanges();
+            return rowsAffected > 0;
         }
     }
 }

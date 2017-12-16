@@ -13,6 +13,5 @@ namespace Etdb.ServiceBase.EventSourcing.Abstractions.Handler
         where TResponse : class
     {
         bool CanCommit();
-        void NotifyValidationErrors(TTransactionCommand message, ValidationResult validationResult);
     }
 }

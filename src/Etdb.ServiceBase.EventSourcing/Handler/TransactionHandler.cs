@@ -8,7 +8,6 @@ using Etdb.ServiceBase.EventSourcing.Abstractions.Bus;
 using Etdb.ServiceBase.EventSourcing.Abstractions.Commands;
 using Etdb.ServiceBase.EventSourcing.Abstractions.Handler;
 using Etdb.ServiceBase.EventSourcing.Abstractions.Notifications;
-using FluentValidation.Results;
 
 namespace Etdb.ServiceBase.EventSourcing.Handler
 {
@@ -37,9 +36,7 @@ namespace Etdb.ServiceBase.EventSourcing.Handler
                 return false;
             }
 
-            var commandResponse = unitOfWork.Commit();
-
-            if (commandResponse.Success)
+            if (this.unitOfWork.IsCommited())
             {
                 return true;
             }
@@ -47,14 +44,6 @@ namespace Etdb.ServiceBase.EventSourcing.Handler
             this.Mediator.RaiseEvent(new DomainNotification("Commit", "We had a problem during saving your data."));
 
             return false;
-        }
-
-        public void NotifyValidationErrors(TTransactionCommand message, ValidationResult validationResult)
-        {
-            foreach (var error in validationResult.Errors)
-            {
-                this.Mediator.RaiseEvent(new DomainNotification(message.MessageType, error.ErrorMessage));
-            }
         }
     }
 }

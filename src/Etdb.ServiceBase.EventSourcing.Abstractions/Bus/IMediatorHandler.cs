@@ -6,7 +6,14 @@ namespace Etdb.ServiceBase.EventSourcing.Abstractions.Bus
 {
     public interface IMediatorHandler
     {
-        Task SendCommand<T>(T command) where T : SourcingCommand;
+        Task<TResponse> SendCommand<TTransactionCommand, TResponse>(TTransactionCommand command)
+            where TTransactionCommand : TransactionCommand<TResponse>
+            where TResponse : class;
+
+        Task<TResponse> SendCommandAsync<TTransactionCommand, TResponse>(TTransactionCommand command)
+            where TTransactionCommand : TransactionCommand<TResponse>
+            where TResponse : class;
+
         Task RaiseEvent<T>(T @event) where T : Event;
     }
 }

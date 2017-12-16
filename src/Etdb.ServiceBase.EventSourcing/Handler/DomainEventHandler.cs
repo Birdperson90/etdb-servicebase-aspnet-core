@@ -7,7 +7,6 @@ namespace Etdb.ServiceBase.EventSourcing.Handler
 {
     public abstract class DomainEventHandler<TEvent> : IDomainEventHandler<TEvent> where TEvent : Event
     {
-        public abstract void Handle(TEvent notification);
         public abstract Task Handle(TEvent notification, CancellationToken cancellationToken);
     }
 }

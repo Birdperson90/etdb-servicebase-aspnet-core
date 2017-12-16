@@ -4,6 +4,6 @@ namespace Etdb.ServiceBase.EventSourcing.Abstractions.Base
 {
     public interface IUnitOfWork
     {
-        SourcingCommandResponse Commit();
+        bool IsCommited();
     }
 }
