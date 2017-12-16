@@ -1,29 +1,29 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EC9EFBE9-B329-4C2D-935B-B2E2BEE02807}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{3CA06B60-6267-4AE5-91C3-C76838A5C7F4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETDB.API.ServiceBase.Constants", "src\ETDB.API.ServiceBase.Constants\ETDB.API.ServiceBase.Constants.csproj", "{4E6BA6DE-2AAC-46A7-87E0-D26D1F7C6F89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.Constants", "src\Etdb.ServiceBase.Constants\Etdb.ServiceBase.Constants.csproj", "{4E6BA6DE-2AAC-46A7-87E0-D26D1F7C6F89}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETDB.API.ServiceBase.Domain.Abstractions", "src\ETDB.API.ServiceBase.Domain.Abstractions\ETDB.API.ServiceBase.Domain.Abstractions.csproj", "{9C5C5DB8-A4F0-45FD-A37A-0A6096E9C303}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.Domain.Abstractions", "src\Etdb.ServiceBase.Domain.Abstractions\Etdb.ServiceBase.Domain.Abstractions.csproj", "{9C5C5DB8-A4F0-45FD-A37A-0A6096E9C303}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETDB.API.ServiceBase.EventSourcing.Abstractions", "src\ETDB.API.ServiceBase.EventSourcing.Abstractions\ETDB.API.ServiceBase.EventSourcing.Abstractions.csproj", "{D7FAEFFD-8B51-464A-BA05-142A17D57CC1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.EventSourcing.Abstractions", "src\Etdb.ServiceBase.EventSourcing.Abstractions\Etdb.ServiceBase.EventSourcing.Abstractions.csproj", "{D7FAEFFD-8B51-464A-BA05-142A17D57CC1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETDB.API.ServiceBase.EventSourcing", "src\ETDB.API.ServiceBase.EventSourcing\ETDB.API.ServiceBase.EventSourcing.csproj", "{FD46AD19-9314-4DE8-8533-2B1DF012D84F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.EventSourcing", "src\Etdb.ServiceBase.EventSourcing\Etdb.ServiceBase.EventSourcing.csproj", "{FD46AD19-9314-4DE8-8533-2B1DF012D84F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETDB.API.ServiceBase.Repositories.Abstractions", "src\ETDB.API.ServiceBase.Repositories.Abstractions\ETDB.API.ServiceBase.Repositories.Abstractions.csproj", "{B120EFF1-8127-4B00-BFFD-C801BED68F3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.Repositories.Abstractions", "src\Etdb.ServiceBase.Repositories.Abstractions\Etdb.ServiceBase.Repositories.Abstractions.csproj", "{B120EFF1-8127-4B00-BFFD-C801BED68F3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETDB.API.ServiceBase.Repositories", "src\ETDB.API.ServiceBase.Repositories\ETDB.API.ServiceBase.Repositories.csproj", "{6D7BD785-9BBC-4DEF-B8F5-98402A060B4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.Repositories", "src\Etdb.ServiceBase.Repositories\Etdb.ServiceBase.Repositories.csproj", "{6D7BD785-9BBC-4DEF-B8F5-98402A060B4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETDB.API.ServiceBase.General.Abstractions", "src\ETDB.API.ServiceBase.General.Abstractions\ETDB.API.ServiceBase.General.Abstractions.csproj", "{5D58840B-702A-411B-8286-5A7A374C5F00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.General.Abstractions", "src\Etdb.ServiceBase.General.Abstractions\Etdb.ServiceBase.General.Abstractions.csproj", "{5D58840B-702A-411B-8286-5A7A374C5F00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETDB.API.ServiceBase.General", "src\ETDB.API.ServiceBase.General\ETDB.API.ServiceBase.General.csproj", "{AEB7EFEA-2A8A-446B-8056-417FA6439977}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.General", "src\Etdb.ServiceBase.General\Etdb.ServiceBase.General.csproj", "{AEB7EFEA-2A8A-446B-8056-417FA6439977}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETDB.API.ServiceBase.Builder", "src\ETDB.API.ServiceBase.Builder\ETDB.API.ServiceBase.Builder.csproj", "{BE120A5A-0389-46D3-978C-136E45F857EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.Builder", "src\Etdb.ServiceBase.Builder\Etdb.ServiceBase.Builder.csproj", "{BE120A5A-0389-46D3-978C-136E45F857EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
