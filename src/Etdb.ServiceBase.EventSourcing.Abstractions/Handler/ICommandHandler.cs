@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Etdb.ServiceBase.EventSourcing.Abstractions.Handler
 {
-    public interface ICommandHandler<in TCommand>  : INotificationHandler<TCommand> where TCommand : SourcingCommand
+    public interface ICommandHandler<in TCommand> : INotificationHandler<TCommand> where TCommand : SourcingCommand
     {
         bool Commit();
         void NotifyValidationErrors(TCommand message, ValidationResult validationResult);

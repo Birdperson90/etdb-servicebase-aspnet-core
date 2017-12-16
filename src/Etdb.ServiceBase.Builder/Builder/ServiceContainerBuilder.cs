@@ -95,6 +95,11 @@ namespace Etdb.ServiceBase.Builder.Builder
                 .InstancePerLifetimeScope();
 
             this.containerBuilder.RegisterAssemblyTypes(assembliesToScan)
+                .AsClosedTypesOf(typeof(ITransactionHandler<,>))
+                .AsSelf()
+                .InstancePerLifetimeScope();
+
+            this.containerBuilder.RegisterAssemblyTypes(assembliesToScan)
                 .AsClosedTypesOf(typeof(IDomainEventHandler<>))
                 .AsSelf()
                 .InstancePerLifetimeScope();

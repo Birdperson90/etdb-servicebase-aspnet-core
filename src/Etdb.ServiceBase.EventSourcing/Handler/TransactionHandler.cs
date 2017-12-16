@@ -1,4 +1,7 @@
-﻿using System.Threading;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Etdb.ServiceBase.EventSourcing.Abstractions.Base;
 using Etdb.ServiceBase.EventSourcing.Abstractions.Bus;
@@ -9,20 +12,25 @@ using FluentValidation.Results;
 
 namespace Etdb.ServiceBase.EventSourcing.Handler
 {
-    public abstract class CommandHandler<TCommand> : ICommandHandler<TCommand> where TCommand : SourcingCommand
+    public abstract class TransactionHandler<TTransactionCommand, TResponse> : ITransactionHandler<TTransactionCommand, TResponse>
+        where TTransactionCommand : TransactionCommand<TResponse>
+        where TResponse : class
     {
         private readonly IUnitOfWork unitOfWork;
         protected readonly IMediatorHandler Mediator;
         private readonly IDomainNotificationHandler<DomainNotification> notificationsHandler;
 
-        protected CommandHandler(IUnitOfWork unitOfWork, IMediatorHandler mediator, IDomainNotificationHandler<DomainNotification> notificationsHandler)
+        protected TransactionHandler(IUnitOfWork unitOfWork, IMediatorHandler mediator, 
+            IDomainNotificationHandler<DomainNotification> notificationsHandler)
         {
             this.unitOfWork = unitOfWork;
-            this.notificationsHandler = notificationsHandler;
             this.Mediator = mediator;
+            this.notificationsHandler = notificationsHandler;
         }
 
-        public bool Commit()
+        public abstract Task<TResponse> Handle(TTransactionCommand request, CancellationToken cancellationToken);
+
+        public bool CanCommit()
         {
             if (this.notificationsHandler.HasNotifications())
             {
@@ -41,14 +49,12 @@ namespace Etdb.ServiceBase.EventSourcing.Handler
             return false;
         }
 
-        public void NotifyValidationErrors(TCommand message, ValidationResult validationResult)
+        public void NotifyValidationErrors(TTransactionCommand message, ValidationResult validationResult)
         {
             foreach (var error in validationResult.Errors)
             {
                 this.Mediator.RaiseEvent(new DomainNotification(message.MessageType, error.ErrorMessage));
             }
         }
-
-        public abstract Task Handle(TCommand notification, CancellationToken cancellationToken);
     }
 }

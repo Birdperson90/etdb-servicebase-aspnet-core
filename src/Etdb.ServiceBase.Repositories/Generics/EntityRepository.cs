@@ -7,6 +7,7 @@ using Etdb.ServiceBase.Domain.Abstractions.Base;
 using Etdb.ServiceBase.Repositories.Abstractions.Base;
 using Etdb.ServiceBase.Repositories.Abstractions.Generics;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Extensions.Internal;
 
 namespace Etdb.ServiceBase.Repositories.Generics
 {
@@ -36,6 +37,13 @@ namespace Etdb.ServiceBase.Repositories.Generics
             entry.State = EntityState.Modified;
         }
 
+        public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
+        {
+            return await this.BuildQuery(includes)
+                .Where(predicate)
+                .ToListAsync();
+        }
+
         public virtual TEntity Get(Guid id)
         {
             var entity = this
@@ -54,7 +62,7 @@ namespace Etdb.ServiceBase.Repositories.Generics
             return entity;
         }
 
-        public virtual TEntity GetIncluding(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
+        public virtual TEntity Get(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
         {
             var entity = this.BuildQuery(includes)
                 .Where(predicate)
@@ -64,7 +72,7 @@ namespace Etdb.ServiceBase.Repositories.Generics
             return entity;
         }
 
-        public virtual TEntity GetIncluding(Guid id, params Expression<Func<TEntity, object>>[] includes)
+        public virtual TEntity Get(Guid id, params Expression<Func<TEntity, object>>[] includes)
         {
             var entity = this.BuildQuery(includes)
                 .FirstOrDefault(data => data.Id == id);
@@ -78,13 +86,25 @@ namespace Etdb.ServiceBase.Repositories.Generics
                 .ToArray();
         }
 
-        public virtual IEnumerable<TEntity> GetAllIncluding(params Expression<Func<TEntity, object>>[] includes)
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
+        {
+            return await this.GetQuery()
+                .ToListAsync();
+        }
+
+        public virtual IEnumerable<TEntity> GetAll(params Expression<Func<TEntity, object>>[] includes)
         {
             return this.BuildQuery(includes)
                 .ToArray();
         }
 
-        public IEnumerable<TEntity> GetAllIncluding(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync(params Expression<Func<TEntity, object>>[] includes)
+        {
+            return await this.BuildQuery(includes)
+                .ToListAsync();
+        }
+
+        public IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
         {
             return this.BuildQuery(includes)
                 .Where(predicate)
@@ -109,7 +129,6 @@ namespace Etdb.ServiceBase.Repositories.Generics
         {
             return await this.Context.SaveChangesAsync();
         }
-
 
         private IQueryable<TEntity> BuildQuery(params Expression<Func<TEntity, object>>[] includes)
         {

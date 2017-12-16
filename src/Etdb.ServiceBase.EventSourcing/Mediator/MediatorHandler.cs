@@ -4,6 +4,7 @@ using Etdb.ServiceBase.EventSourcing.Abstractions.Commands;
 using Etdb.ServiceBase.EventSourcing.Abstractions.Events;
 using Etdb.ServiceBase.EventSourcing.Abstractions.Notifications;
 using Etdb.ServiceBase.EventSourcing.Abstractions.Repositories;
+using IdentityModel.Client;
 using MediatR;
 
 namespace Etdb.ServiceBase.EventSourcing.Mediator
@@ -17,6 +18,20 @@ namespace Etdb.ServiceBase.EventSourcing.Mediator
         {
             this.eventStore = eventStore;
             this.mediator = mediator;
+        }
+
+        public Task<TResponse> SendCommand<TTransactionCommand, TResponse>(TTransactionCommand command)
+            where TTransactionCommand : TransactionCommand<TResponse>
+            where TResponse : class
+        {
+            return this.mediator.Send(command);
+        }
+
+        public async Task<TResponse> SendCommandAsync<TTransactionCommand, TResponse>(TTransactionCommand command) 
+            where TTransactionCommand : TransactionCommand<TResponse>
+            where TResponse : class
+        {
+            return await this.mediator.Send(command);
         }
 
         public Task SendCommand<T>(T command) where T : SourcingCommand

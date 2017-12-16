@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Etdb.ServiceBase.Domain.Abstractions.Base;
 
 namespace Etdb.ServiceBase.Repositories.Abstractions.Generics
