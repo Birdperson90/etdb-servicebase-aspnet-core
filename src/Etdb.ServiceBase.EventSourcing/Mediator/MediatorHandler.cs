@@ -34,7 +34,7 @@ namespace Etdb.ServiceBase.EventSourcing.Mediator
             return await this.mediator.Send(command);
         }
 
-        public Task RaiseEvent<T>(T @event) where T : Event
+        public Task RaiseEvent<TEvent>(TEvent @event) where TEvent : Event
         {
             if (!@event.Type.IsAssignableFrom(typeof(DomainNotification)))
             {
@@ -44,7 +44,7 @@ namespace Etdb.ServiceBase.EventSourcing.Mediator
             return this.Publish(@event);
         }
 
-        private Task Publish<T>(T message) where T : Message
+        private Task Publish<TMessage>(TMessage message) where TMessage : Message
         {
             return mediator.Publish(message);
         }

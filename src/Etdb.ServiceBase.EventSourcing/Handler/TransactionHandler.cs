@@ -43,7 +43,10 @@ namespace Etdb.ServiceBase.EventSourcing.Handler
 
             this.Mediator.RaiseEvent(new DomainNotification("Commit", "There was a problem saving the data"));
 
-            savedEventstreamException = new SaveEventstreamException("No data was saved!", null);
+            if (savedEventstreamException == null)
+            {
+                savedEventstreamException = new SaveEventstreamException("No data was saved!", null);
+            }
 
             return false;
         }

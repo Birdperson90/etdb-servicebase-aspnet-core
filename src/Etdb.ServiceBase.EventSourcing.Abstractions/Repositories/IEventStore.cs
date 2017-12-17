@@ -4,6 +4,6 @@ namespace Etdb.ServiceBase.EventSourcing.Abstractions.Repositories
 {
     public interface IEventStore
     {
-        void Save<T>(T theEvent) where T : Event;
+        void Save<T>(T @event) where T : Event;
     }
 }

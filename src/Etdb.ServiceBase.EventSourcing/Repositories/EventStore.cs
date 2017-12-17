@@ -16,15 +16,15 @@ namespace Etdb.ServiceBase.EventSourcing.Repositories
             this.eventUser = eventUser;
         }
 
-        public void Save<T>(T theEvent) where T : Event
+        public void Save<TEvent>(TEvent @event) where TEvent : Event
         {
-            var serializedData = JsonConvert.SerializeObject(theEvent, new JsonSerializerSettings
+            var serializedData = JsonConvert.SerializeObject(@event, new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
 
             var storedEvent = new StoredEvent(
-                theEvent,
+                @event,
                 serializedData,
                 this.eventUser.UserName);
 
