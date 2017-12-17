@@ -8,6 +8,7 @@ using Etdb.ServiceBase.EventSourcing.Abstractions.Bus;
 using Etdb.ServiceBase.EventSourcing.Abstractions.Commands;
 using Etdb.ServiceBase.EventSourcing.Abstractions.Handler;
 using Etdb.ServiceBase.EventSourcing.Abstractions.Notifications;
+using Etdb.ServiceBase.General.Abstractions.Exceptions;
 
 namespace Etdb.ServiceBase.EventSourcing.Handler
 {
@@ -17,33 +18,36 @@ namespace Etdb.ServiceBase.EventSourcing.Handler
     {
         private readonly IUnitOfWork unitOfWork;
         protected readonly IMediatorHandler Mediator;
-        private readonly IDomainNotificationHandler<DomainNotification> notificationsHandler;
 
-        protected TransactionHandler(IUnitOfWork unitOfWork, IMediatorHandler mediator, 
-            IDomainNotificationHandler<DomainNotification> notificationsHandler)
+        protected TransactionHandler(IUnitOfWork unitOfWork, IMediatorHandler mediator)
         {
             this.unitOfWork = unitOfWork;
             this.Mediator = mediator;
-            this.notificationsHandler = notificationsHandler;
         }
 
-        public abstract Task<TResponse> Handle(TTransactionCommand request, CancellationToken cancellationToken);
-
-        public bool CanCommit()
+        public bool CanCommit(out SaveEventstreamException savedEventstreamException)
         {
-            if (this.notificationsHandler.HasNotifications())
+            savedEventstreamException = null;
+
+            try
             {
-                return false;
+                if (this.unitOfWork.IsCommited())
+                {
+                    return true;
+                }
+            }
+            catch (Exception exception)
+            {
+                savedEventstreamException = new SaveEventstreamException("There was a problem while saving the data!", exception);
             }
 
-            if (this.unitOfWork.IsCommited())
-            {
-                return true;
-            }
+            this.Mediator.RaiseEvent(new DomainNotification("Commit", "There was a problem saving the data"));
 
-            this.Mediator.RaiseEvent(new DomainNotification("Commit", "We had a problem during saving your data."));
+            savedEventstreamException = new SaveEventstreamException("No data was saved!", null);
 
             return false;
         }
+
+        public abstract Task<TResponse> Handle(TTransactionCommand request, CancellationToken cancellationToken);
     }
 }
