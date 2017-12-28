@@ -4,7 +4,7 @@ namespace Etdb.ServiceBase.Domain.Abstractions.Base
 {
     public interface IEntity
     {
-        Guid Id
+        string Id
         {
             get;
             set;

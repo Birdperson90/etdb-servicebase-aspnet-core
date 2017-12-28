@@ -22,7 +22,7 @@ namespace Etdb.ServiceBase.EventSourcing.Repositories
         {
             return this.context.Database.GetCollection<StoredEvent>("StoredEvents")
                 .AsQueryable()
-                .Where(storedEvent => storedEvent.AggregateId == aggregateId)
+                .Where(storedEvent => storedEvent.AggregateId == aggregateId.ToString())
                 .ToList();
         }
 

@@ -7,7 +7,7 @@ namespace Etdb.ServiceBase.EventSourcing.Abstractions.Events
     {
         public string MessageType { get; protected set; }
         public Type Type { get; protected set; }
-        public Guid AggregateId { get; protected set; }
+        public string AggregateId { get; protected set; }
 
         protected Message()
         {

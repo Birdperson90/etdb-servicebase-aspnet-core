@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Result\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Etdb.ServiceBase.General.Abstractions\Etdb.ServiceBase.General.Abstractions.csproj" />
   </ItemGroup>
 

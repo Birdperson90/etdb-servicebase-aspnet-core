@@ -42,7 +42,7 @@ namespace Etdb.ServiceBase.Repositories.Generics
         public async Task<TEntity> GetAsync(Guid id, string collectionName = null)
         {
             var result = await this.GetCollection(collectionName)
-                .Find(entity => entity.Id == id)
+                .Find(entity => entity.Id == id.ToString())
                 .SingleOrDefaultAsync();
 
             return result;
@@ -83,7 +83,7 @@ namespace Etdb.ServiceBase.Repositories.Generics
         public async Task<bool> DeleteAsync(Guid id, string collectionName = null)
         {
             var result = await this.GetCollection(collectionName)
-                .DeleteOneAsync(existingEntity => existingEntity.Id == id);
+                .DeleteOneAsync(existingEntity => existingEntity.Id == id.ToString());
 
             return result.DeletedCount > 0;
         }
@@ -97,7 +97,7 @@ namespace Etdb.ServiceBase.Repositories.Generics
 
         private static void AddIdentifier(TEntity entity)
         {
-            entity.Id = Guid.NewGuid();
+            entity.Id = Guid.NewGuid().ToString();
         }
 
         public void Dispose()
