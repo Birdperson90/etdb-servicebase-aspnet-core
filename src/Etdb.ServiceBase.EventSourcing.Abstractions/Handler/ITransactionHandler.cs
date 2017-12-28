@@ -8,6 +8,5 @@ namespace Etdb.ServiceBase.EventSourcing.Abstractions.Handler
         where TTransactionCommand : TransactionCommand<TResponse>
         where TResponse : class
     {
-        bool CanCommit(out SaveEventstreamException savedEventstreamException);
     }
 }
