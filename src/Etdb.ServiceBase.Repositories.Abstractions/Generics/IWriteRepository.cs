@@ -6,8 +6,8 @@ namespace Etdb.ServiceBase.Repositories.Abstractions.Generics
 {
     public interface IWriteRepository<in TEntity> where TEntity: class, IEntity
     {
-        Task Add(TEntity entity, string collectionName = null);
-        Task<bool> Edit(TEntity entity, string collectionName = null);
-        Task<bool> Delete(Guid id, string collectionName = null);
+        Task AddAsync(TEntity entity, string collectionName = null);
+        Task<bool> EditAsync(TEntity entity, string collectionName = null);
+        Task<bool> DeleteAsync(Guid id, string collectionName = null);
     }
 }

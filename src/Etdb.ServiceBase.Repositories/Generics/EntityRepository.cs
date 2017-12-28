@@ -66,13 +66,13 @@ namespace Etdb.ServiceBase.Repositories.Generics
             return result.AsQueryable();
         }
 
-        public async Task Add(TEntity entity, string collectionName = null)
+        public async Task AddAsync(TEntity entity, string collectionName = null)
         {
             AddIdentifier(entity);
             await this.GetCollection(collectionName).InsertOneAsync(entity);
         }
 
-        public async Task<bool> Edit(TEntity entity, string collectionName = null)
+        public async Task<bool> EditAsync(TEntity entity, string collectionName = null)
         {
             var result = await this.GetCollection(collectionName).UpdateOneAsync(existingEntity => existingEntity.Id == entity.Id,
                 new ObjectUpdateDefinition<TEntity>(entity));
@@ -80,7 +80,7 @@ namespace Etdb.ServiceBase.Repositories.Generics
             return result.ModifiedCount > 0;
         }
 
-        public async Task<bool> Delete(Guid id, string collectionName = null)
+        public async Task<bool> DeleteAsync(Guid id, string collectionName = null)
         {
             var result = await this.GetCollection(collectionName)
                 .DeleteOneAsync(existingEntity => existingEntity.Id == id);
