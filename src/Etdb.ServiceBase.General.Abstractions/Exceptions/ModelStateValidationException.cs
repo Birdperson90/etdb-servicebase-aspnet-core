@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Etdb.ServiceBase.General.Abstractions.Exceptions
 {
@@ -6,9 +8,12 @@ namespace Etdb.ServiceBase.General.Abstractions.Exceptions
     {
         public string[] Errors { get; }
 
-        public ModelStateValidationException(string message, string[] errors) : base(message)
+        public ModelStateValidationException(string message, ModelStateDictionary modelState) : base(message)
         {
-            this.Errors = errors;
+            this.Errors = modelState
+                .Values
+                .SelectMany(value => value.Errors.Select(error => error.ErrorMessage))
+                .ToArray();
         }
     }
 }
