@@ -35,7 +35,7 @@ namespace Etdb.ServiceBase.EventSourcing.Mediator
 
         public Task RaiseEvent<TEvent>(TEvent @event) where TEvent : Event
         {
-            if (!@event.Type.IsAssignableFrom(typeof(DomainNotification)))
+            if (!typeof(DomainNotification).IsAssignableFrom(@event.Type))
             {
                 this.eventStore.Save(@event);
             }
