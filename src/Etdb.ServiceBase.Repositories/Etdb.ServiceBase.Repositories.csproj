@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.0.2</Version>
+    <Version>2.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,11 +12,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Etdb.ServiceBase.Repositories.Abstractions\Etdb.ServiceBase.Repositories.Abstractions.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="MongoDB.Driver">
-      <HintPath>C:\Users\khatib.BREMACON\.nuget\packages\mongodb.driver\2.5.0\lib\netstandard1.5\MongoDB.Driver.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>
