@@ -5,20 +5,22 @@ namespace Etdb.ServiceBase.EventSourcing.Abstractions.Events
 {
     public class StoredEvent : Event
     {
-        public StoredEvent(Message theEvent, string data, string user)
+        public StoredEvent(Message theEvent, string user)
         {
             Id = Guid.NewGuid().ToString();
             AggregateId = theEvent.AggregateId;
             MessageType = theEvent.MessageType;
-            Data = data;
+            Data = theEvent;
             User = user;
         }
 
         [BsonId]
         public string Id { get; }
 
-        public string Data { get; }
+        [BsonElement]
+        public Message Data { get; }
 
+        [BsonElement]
         public string User { get; }
     }
 }

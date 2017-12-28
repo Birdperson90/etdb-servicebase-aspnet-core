@@ -69,11 +69,13 @@ namespace Etdb.ServiceBase.Repositories.Generics
         public async Task AddAsync(TEntity entity, string collectionName = null)
         {
             AddIdentifier(entity);
+            GenerateConcurrencyToken(entity);
             await this.GetCollection(collectionName).InsertOneAsync(entity);
         }
 
         public async Task<bool> EditAsync(TEntity entity, string collectionName = null)
         {
+            GenerateConcurrencyToken(entity);
             var result = await this.GetCollection(collectionName).UpdateOneAsync(existingEntity => existingEntity.Id == entity.Id,
                 new ObjectUpdateDefinition<TEntity>(entity));
 
@@ -98,6 +100,18 @@ namespace Etdb.ServiceBase.Repositories.Generics
         private static void AddIdentifier(TEntity entity)
         {
             entity.Id = Guid.NewGuid().ToString();
+        }
+
+        private static void GenerateConcurrencyToken(TEntity entity)
+        {
+            var token = new byte[128 / 8];
+
+            using (var keyGenerator = RandomNumberGenerator.Create())
+            {
+                keyGenerator.GetBytes(token);
+            }
+
+            entity.RowVersion = token;
         }
 
         public void Dispose()

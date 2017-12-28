@@ -19,15 +19,7 @@ namespace Etdb.ServiceBase.EventSourcing.Repositories
 
         public async Task Save<TEvent>(TEvent @event) where TEvent : Event
         {
-            var serializedData = JsonConvert.SerializeObject(@event, new JsonSerializerSettings
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            });
-
-            var storedEvent = new StoredEvent(
-                @event,
-                serializedData,
-                this.eventUser.UserName);
+            var storedEvent = new StoredEvent(@event, this.eventUser.UserName);
 
             await this.eventStoreRepository.Store(storedEvent);
         }
