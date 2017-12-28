@@ -43,7 +43,7 @@ namespace Etdb.ServiceBase.Repositories.Generics
         {
             var result = await this.GetCollection(collectionName)
                 .Find(entity => entity.Id == id)
-                .SingleAsync();
+                .SingleOrDefaultAsync();
 
             return result;
         }
@@ -52,7 +52,7 @@ namespace Etdb.ServiceBase.Repositories.Generics
         {
             var result = await this.GetCollection(collectionName)
                 .Find(predicate)
-                .SingleAsync();
+                .SingleOrDefaultAsync();
 
             return result;
         }
