@@ -1,4 +1,5 @@
-﻿using Etdb.ServiceBase.EventSourcing.Abstractions.Base;
+﻿using System.Threading.Tasks;
+using Etdb.ServiceBase.EventSourcing.Abstractions.Base;
 using Etdb.ServiceBase.EventSourcing.Abstractions.Events;
 using Etdb.ServiceBase.EventSourcing.Abstractions.Repositories;
 using Newtonsoft.Json;
@@ -16,7 +17,7 @@ namespace Etdb.ServiceBase.EventSourcing.Repositories
             this.eventUser = eventUser;
         }
 
-        public void Save<TEvent>(TEvent @event) where TEvent : Event
+        public async Task Save<TEvent>(TEvent @event) where TEvent : Event
         {
             var serializedData = JsonConvert.SerializeObject(@event, new JsonSerializerSettings
             {
@@ -28,7 +29,7 @@ namespace Etdb.ServiceBase.EventSourcing.Repositories
                 serializedData,
                 this.eventUser.UserName);
 
-            this.eventStoreRepository.Store(storedEvent);
+            await this.eventStoreRepository.Store(storedEvent);
         }
     }
 }
