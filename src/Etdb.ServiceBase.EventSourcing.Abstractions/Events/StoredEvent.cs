@@ -4,7 +4,7 @@ namespace Etdb.ServiceBase.EventSourcing.Abstractions.Events
 {
     public class StoredEvent : Event
     {
-        public StoredEvent(Event theEvent, string data, string user)
+        public StoredEvent(Message theEvent, string data, string user)
         {
             Id = Guid.NewGuid();
             AggregateId = theEvent.AggregateId;
@@ -13,14 +13,10 @@ namespace Etdb.ServiceBase.EventSourcing.Abstractions.Events
             User = user;
         }
 
-        // EF Core needs this
-        // TODO: fix this at some point
-        public StoredEvent() { }
+        public Guid Id { get; }
 
-        public Guid Id { get; private set; }
+        public string Data { get; }
 
-        public string Data { get; private set; }
-
-        public string User { get; private set; }
+        public string User { get; }
     }
 }

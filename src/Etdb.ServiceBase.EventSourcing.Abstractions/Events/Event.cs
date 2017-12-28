@@ -4,7 +4,7 @@ namespace Etdb.ServiceBase.EventSourcing.Abstractions.Events
 {
     public abstract class Event : Message
     {
-        public DateTime Timestamp { get; private set; }
+        public DateTime Timestamp { get; }
 
         protected Event()
         {

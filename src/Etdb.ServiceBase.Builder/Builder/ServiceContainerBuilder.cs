@@ -4,16 +4,15 @@ using System.Reflection;
 using Autofac;
 using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
+using Etdb.ServiceBase.Builder.Modules;
 using Etdb.ServiceBase.EventSourcing.Abstractions.Base;
 using Etdb.ServiceBase.EventSourcing.Abstractions.Bus;
 using Etdb.ServiceBase.EventSourcing.Abstractions.Handler;
 using Etdb.ServiceBase.EventSourcing.Abstractions.Repositories;
 using Etdb.ServiceBase.EventSourcing.Abstractions.Validation;
 using Etdb.ServiceBase.EventSourcing.Base;
-using Etdb.ServiceBase.EventSourcing.Handler;
 using Etdb.ServiceBase.EventSourcing.Mediator;
 using Etdb.ServiceBase.EventSourcing.Repositories;
-using Etdb.ServiceBase.EventSourcing.Validation;
 using Etdb.ServiceBase.Repositories.Abstractions.Base;
 using Etdb.ServiceBase.Repositories.Generics;
 using Microsoft.AspNetCore.Hosting;
@@ -69,8 +68,8 @@ namespace Etdb.ServiceBase.Builder.Builder
             return this;
         }
 
-        public ServiceContainerBuilder UseEventSourcing<TAppDbContext, TEventStoreDbContext>(params Assembly[] assembliesToScan)
-            where TAppDbContext : AppContextBase where TEventStoreDbContext : EventStoreContextBase
+        public ServiceContainerBuilder UseEventSourcing<TAppDbContext, TEventDbContext>(params Assembly[] assembliesToScan)
+            where TAppDbContext : AppContextBase where TEventDbContext : EventStoreContextBase
         {
             if (!assembliesToScan.Any())
             {
@@ -78,71 +77,8 @@ namespace Etdb.ServiceBase.Builder.Builder
                     Command- and Domaineventhandlers!", nameof(assembliesToScan));
             }
 
-            this.containerBuilder.RegisterType<TAppDbContext>()
-                .InstancePerLifetimeScope();
-
-            this.containerBuilder.RegisterType<TEventStoreDbContext>()
-                .InstancePerLifetimeScope();
-
-            this.containerBuilder.RegisterAssemblyTypes(assembliesToScan)
-                .AsClosedTypesOf(typeof(ICommandValidation<,>))
-                .AsImplementedInterfaces()
-                .AsSelf()
-                .InstancePerLifetimeScope();
-
-            this.containerBuilder.RegisterAssemblyTypes(assembliesToScan)
-                .AsClosedTypesOf(typeof(ITransactionHandler<,>))
-                .AsSelf()
-                .InstancePerLifetimeScope();
-
-            this.containerBuilder.RegisterAssemblyTypes(assembliesToScan)
-                .AsClosedTypesOf(typeof(IDomainEventHandler<>))
-                .AsSelf()
-                .InstancePerLifetimeScope();
-
-            this.containerBuilder.RegisterGeneric(typeof(DomainNotificationHandler<>))
-                .As(typeof(IDomainNotificationHandler<>))
-                .AsImplementedInterfaces()
-                .AsSelf()
-                .InstancePerLifetimeScope();
-
-            this.containerBuilder.RegisterType<MediatorHandler>()
-                .As<IMediatorHandler>()
-                .AsSelf()
-                .InstancePerLifetimeScope();
-
-            this.containerBuilder.RegisterType<UnitOfWork>()
-                .As<IUnitOfWork>()
-                .AsSelf()
-                .InstancePerLifetimeScope()
-                .WithParameter(new ResolvedParameter(
-                    (parameterInfo, componentContext) => parameterInfo.ParameterType == typeof(AppContextBase),
-                    (parameterInfo, componentContext) => componentContext.Resolve<TAppDbContext>()))
-                .InstancePerLifetimeScope();
-
-            this.containerBuilder.RegisterType<HttpContextAccessor>()
-                .As<IHttpContextAccessor>()
-                .AsSelf()
-                .InstancePerLifetimeScope();
-
-            this.containerBuilder.RegisterType<EventStoreRepository>()
-                .As<IEventStoreRepository>()
-                .AsSelf()
-                .InstancePerLifetimeScope()
-                .WithParameter(new ResolvedParameter(
-                    (parameterInfo, componentContext) => parameterInfo.ParameterType == typeof(EventStoreContextBase),
-                    (parameterInfo, componentContext) => componentContext.Resolve<TEventStoreDbContext>()))
-                .InstancePerLifetimeScope();
-
-            this.containerBuilder.RegisterType<EventUser>()
-                .As<IEventUser>()
-                .AsSelf()
-                .InstancePerLifetimeScope();
-
-            this.containerBuilder.RegisterType<EventStore>()
-                .As<IEventStore>()
-                .AsSelf()
-                .InstancePerLifetimeScope();
+            this.containerBuilder.RegisterModule(
+                new EventSourcingModule<TAppDbContext, TEventDbContext>(assembliesToScan));
 
             return this;
         }

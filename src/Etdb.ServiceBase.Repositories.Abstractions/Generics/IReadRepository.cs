@@ -4,31 +4,19 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Etdb.ServiceBase.Domain.Abstractions.Base;
-using Microsoft.EntityFrameworkCore.Query;
 
 namespace Etdb.ServiceBase.Repositories.Abstractions.Generics
 {
-    public interface IReadRepository<TEntity> where TEntity : class, IEntity, new()
+    public interface IReadRepository<TEntity> where TEntity : class, IEntity
     {
-        IEnumerable<TEntity> GetAll();
+        Task<IEnumerable<TEntity>> GetAllAsync(string collectionName = null);
 
-        Task<IEnumerable<TEntity>> GetAllAsync();
+        IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate, string collectionName = null);
 
-        IEnumerable<TEntity> GetAll(params Expression<Func<TEntity, object>>[] includes);
+        Task<TEntity> GetAsync(Guid id, string collectionName = null);
 
-        Task<IEnumerable<TEntity>> GetAllAsync(params Expression<Func<TEntity, object>>[] includes);
+        Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate, string collectionName = null);
 
-        IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes);
-
-        Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes);
-
-        TEntity Get(Guid id);
-
-        TEntity Get(Expression<Func<TEntity, bool>> predicate);
-
-
-        TEntity Get(Guid id, params Expression<Func<TEntity, object>>[] includes);
-
-        TEntity Get(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes);
+        Task<IQueryable<TEntity>> GetQueryableAsync(string collectionName = null);
     }
 }

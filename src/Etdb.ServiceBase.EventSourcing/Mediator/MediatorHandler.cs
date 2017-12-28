@@ -4,7 +4,6 @@ using Etdb.ServiceBase.EventSourcing.Abstractions.Commands;
 using Etdb.ServiceBase.EventSourcing.Abstractions.Events;
 using Etdb.ServiceBase.EventSourcing.Abstractions.Notifications;
 using Etdb.ServiceBase.EventSourcing.Abstractions.Repositories;
-using IdentityModel.Client;
 using MediatR;
 
 namespace Etdb.ServiceBase.EventSourcing.Mediator

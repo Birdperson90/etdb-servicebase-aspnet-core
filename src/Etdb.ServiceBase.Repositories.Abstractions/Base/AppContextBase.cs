@@ -1,16 +1,15 @@
-﻿using System.Linq;
-using Microsoft.EntityFrameworkCore;
+﻿using Etdb.ServiceBase.Domain.Abstractions.Base;
+using MongoDB.Driver;
 
 namespace Etdb.ServiceBase.Repositories.Abstractions.Base
 {
-    public class AppContextBase : DbContext
+    public abstract class AppContextBase
     {
-        protected void DisableCascadeDelete(ModelBuilder builder)
-        {
-            foreach (var entity in builder.Model.GetEntityTypes().SelectMany(entity => entity.GetForeignKeys()))
-            {
-                entity.DeleteBehavior = DeleteBehavior.Restrict;
-            }
-        }
+        public abstract IMongoDatabase Database { get; }
+
+        public abstract IMongoCollection<TEntity> GetCollection<TEntity>() where TEntity : class, IEntity;
+
+        public abstract IMongoCollection<TEntity> GetCollection<TEntity>(string collectionName)
+            where TEntity : class, IEntity;
     }
 }

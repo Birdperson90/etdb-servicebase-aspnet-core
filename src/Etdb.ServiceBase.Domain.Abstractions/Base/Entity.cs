@@ -2,9 +2,9 @@
 
 namespace Etdb.ServiceBase.Domain.Abstractions.Base
 {
-    public class Entity : IEntity
+    public abstract class Entity : IEntity
     {
-        public Guid Id { get; protected set; }
+        public Guid Id { get; set; }
         public byte[] RowVersion { get; set; }
     }
 }

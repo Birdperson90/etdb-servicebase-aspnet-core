@@ -1,14 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Etdb.ServiceBase.Domain.Abstractions.Base;
 
 namespace Etdb.ServiceBase.Repositories.Abstractions.Generics
 {
-    public interface IWriteRepository<in TEntity> where TEntity: class, IEntity, new()
+    public interface IWriteRepository<in TEntity> where TEntity: class, IEntity
     {
-        void Add(TEntity entity);
-        void Edit(TEntity entity);
-        void Delete(TEntity entity);
-        int EnsureChanges();
-        Task<int> EnsureChangesAsync();
+        Task Add(TEntity entity, string collectionName = null);
+        Task<bool> Edit(TEntity entity, string collectionName = null);
+        Task<bool> Delete(Guid id, string collectionName = null);
     }
 }

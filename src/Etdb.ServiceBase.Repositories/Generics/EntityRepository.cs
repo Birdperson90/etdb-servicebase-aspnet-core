@@ -2,154 +2,107 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Etdb.ServiceBase.Domain.Abstractions.Base;
 using Etdb.ServiceBase.Repositories.Abstractions.Base;
 using Etdb.ServiceBase.Repositories.Abstractions.Generics;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Extensions.Internal;
+using MongoDB.Driver;
 
 namespace Etdb.ServiceBase.Repositories.Generics
 {
-    public abstract class EntityRepository<TEntity> : IEntityRepository<TEntity> where TEntity : class, IEntity, new()
+    public abstract class EntityRepository<TEntity> : IDisposable, IEntityRepository<TEntity> where TEntity : class, IEntity
     {
-        protected readonly AppContextBase Context;
+        private AppContextBase dbContext;
 
-        protected EntityRepository(AppContextBase context)
+        protected EntityRepository(AppContextBase dbContext)
         {
-            this.Context = context;
+            this.dbContext = dbContext;
         }
 
-        public virtual void Add(TEntity entity)
+        public async Task<IEnumerable<TEntity>> GetAllAsync(string collectionName = null)
         {
-            this.Context.Set<TEntity>().Add(entity);
-        }
-
-        public virtual void Delete(TEntity entity)
-        {
-            var entry = this.Context.Entry(entity);
-            entry.State = EntityState.Deleted;
-        }
-
-        public virtual void Edit(TEntity entity)
-        {
-            var entry = this.Context.Entry(entity);
-            entry.State = EntityState.Modified;
-        }
-
-        public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
-        {
-            return await this.BuildQuery(includes)
-                .Where(predicate)
+            var result = await this.GetCollection(collectionName)
+                .AsQueryable()
                 .ToListAsync();
+
+            return result;
         }
 
-        public virtual TEntity Get(Guid id)
+        public IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate, string collectionName = null)
         {
-            var entity = this
-                .GetQueryable()
-                .FirstOrDefault(data => data.Id == id);
-
-            return entity;
-        }
-
-        public virtual TEntity Get(Expression<Func<TEntity, bool>> predicate)
-        {
-            var entity = this.GetQueryable()
+            var result = this.GetCollection(collectionName)
+                .AsQueryable()
                 .Where(predicate)
-                .FirstOrDefault();
+                .ToList();
 
-            return entity;
+            return result;
         }
 
-        public virtual TEntity Get(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
+        public async Task<TEntity> GetAsync(Guid id, string collectionName = null)
         {
-            var entity = this.BuildQuery(includes)
-                .Where(predicate)
-                .FirstOrDefault();
+            var result = await this.GetCollection(collectionName)
+                .Find(entity => entity.Id == id)
+                .SingleAsync();
 
-
-            return entity;
+            return result;
         }
 
-        public virtual TEntity Get(Guid id, params Expression<Func<TEntity, object>>[] includes)
+        public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate, string collectionName = null)
         {
-            var entity = this.BuildQuery(includes)
-                .FirstOrDefault(data => data.Id == id);
+            var result = await this.GetCollection(collectionName)
+                .Find(predicate)
+                .SingleAsync();
 
-            return entity;
+            return result;
         }
 
-        public virtual IEnumerable<TEntity> GetAll()
+        public async Task<IQueryable<TEntity>> GetQueryableAsync(string collectionName = null)
         {
-            return this.GetQuery()
-                .ToArray();
-        }
-
-        public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
-        {
-            return await this.GetQuery()
+            var result = await this.GetCollection(collectionName)
+                .AsQueryable()
                 .ToListAsync();
+
+            return result.AsQueryable();
         }
 
-        public virtual IEnumerable<TEntity> GetAll(params Expression<Func<TEntity, object>>[] includes)
+        public async Task Add(TEntity entity, string collectionName = null)
         {
-            return this.BuildQuery(includes)
-                .ToArray();
+            AddIdentifier(entity);
+            await this.GetCollection(collectionName).InsertOneAsync(entity);
         }
 
-        public virtual async Task<IEnumerable<TEntity>> GetAllAsync(params Expression<Func<TEntity, object>>[] includes)
+        public async Task<bool> Edit(TEntity entity, string collectionName = null)
         {
-            return await this.BuildQuery(includes)
-                .ToListAsync();
+            var result = await this.GetCollection(collectionName).UpdateOneAsync(existingEntity => existingEntity.Id == entity.Id,
+                new ObjectUpdateDefinition<TEntity>(entity));
+
+            return result.ModifiedCount > 0;
         }
 
-        public IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
+        public async Task<bool> Delete(Guid id, string collectionName = null)
         {
-            return this.BuildQuery(includes)
-                .Where(predicate)
-                .ToArray();
+            var result = await this.GetCollection(collectionName)
+                .DeleteOneAsync(existingEntity => existingEntity.Id == id);
+
+            return result.DeletedCount > 0;
         }
 
-        public virtual IQueryable<TEntity> GetQueryable()
+        private IMongoCollection<TEntity> GetCollection(string collectionName)
         {
-            var query = this.Context
-                .Set<TEntity>()
-                .AsQueryable();
-
-            return query;
+            return collectionName == null
+                ? this.dbContext.GetCollection<TEntity>()
+                : this.dbContext.GetCollection<TEntity>(collectionName);
         }
 
-        public virtual int EnsureChanges()
+        private static void AddIdentifier(TEntity entity)
         {
-            return this.Context.SaveChanges();
-        }
-
-        public virtual async Task<int> EnsureChangesAsync()
-        {
-            return await this.Context.SaveChangesAsync();
-        }
-
-        private IQueryable<TEntity> BuildQuery(params Expression<Func<TEntity, object>>[] includes)
-        {
-            var query = this.GetQuery();
-
-            return includes.Aggregate(query, (current, include) => current.Include(include));
-        }
-
-        private IQueryable<TEntity> GetQuery()
-        {
-            var query = this.Context
-                .Set<TEntity>()
-                .AsQueryable();
-
-            return query;
+            entity.Id = Guid.NewGuid();
         }
 
         public void Dispose()
         {
-            this.Context?.Dispose();
-            GC.SuppressFinalize(this);
+            this.dbContext = null;
         }
     }
 }

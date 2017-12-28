@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MongoDB.Driver;
 
 namespace Etdb.ServiceBase.EventSourcing.Abstractions.Base
 {
-    public class EventStoreContextBase : DbContext
+    public abstract class EventStoreContextBase
     {
+        public abstract IMongoDatabase Database { get; }
     }
 }
