@@ -25,6 +25,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.General", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.Builder", "src\Etdb.ServiceBase.Builder\Etdb.ServiceBase.Builder.csproj", "{BE120A5A-0389-46D3-978C-136E45F857EA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{2A1FE43E-188D-4319-8DC5-E0A7BA6B0427}"
+ProjectSection(SolutionItems) = preProject
+	.gitignore = .gitignore
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
