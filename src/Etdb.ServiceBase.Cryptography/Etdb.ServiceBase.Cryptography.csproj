@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="2.0.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Etdb.ServiceBase.Cryptography.Abstractions\Etdb.ServiceBase.Cryptography.Abstractions.csproj">
+      <Project>{3F480D92-7744-4050-AF03-8CC998CCA5C2}</Project>
+      <Name>Etdb.ServiceBase.Cryptography.Abstractions</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

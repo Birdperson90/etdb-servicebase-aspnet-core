@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Etdb.ServiceBase.ErrorHandling.Abstractions\Etdb.ServiceBase.ErrorHandling.Abstractions.csproj">
+      <Project>{DDE816E4-B055-4462-A2F5-5A82C6274216}</Project>
+      <Name>Etdb.ServiceBase.ErrorHandling.Abstractions</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

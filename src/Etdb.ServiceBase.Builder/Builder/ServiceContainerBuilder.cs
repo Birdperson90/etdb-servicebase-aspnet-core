@@ -5,18 +5,9 @@ using Autofac;
 using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
 using Etdb.ServiceBase.Builder.Modules;
-using Etdb.ServiceBase.EventSourcing.Abstractions.Base;
-using Etdb.ServiceBase.EventSourcing.Abstractions.Bus;
-using Etdb.ServiceBase.EventSourcing.Abstractions.Handler;
-using Etdb.ServiceBase.EventSourcing.Abstractions.Repositories;
-using Etdb.ServiceBase.EventSourcing.Abstractions.Validation;
-using Etdb.ServiceBase.EventSourcing.Base;
-using Etdb.ServiceBase.EventSourcing.Mediator;
-using Etdb.ServiceBase.EventSourcing.Repositories;
-using Etdb.ServiceBase.Repositories.Abstractions.Base;
-using Etdb.ServiceBase.Repositories.Generics;
+using Etdb.ServiceBase.DocumentRepository.Abstractions.Context;
+using Etdb.ServiceBase.DocumentRepository.Abstractions.Generics;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -47,7 +38,8 @@ namespace Etdb.ServiceBase.Builder.Builder
             return this;
         }
 
-        public ServiceContainerBuilder UseGenericRepositoryPattern<TDbContext>(params Assembly[] assembliesToScan) where TDbContext : AppContextBase
+        public ServiceContainerBuilder UseGenericDocumentRepositoryPattern<TDocumentDbContext>(params Assembly[] assembliesToScan) 
+            where TDocumentDbContext : DocumentDbContext
         {
             if (!assembliesToScan.Any())
             {
@@ -56,20 +48,19 @@ namespace Etdb.ServiceBase.Builder.Builder
             }
 
             this.containerBuilder.RegisterAssemblyTypes(assembliesToScan)
-                .AsClosedTypesOf(typeof(EntityRepository<>))
+                .AsClosedTypesOf(typeof(IDocumentRepository<,>))
                 .AsImplementedInterfaces()
                 .AsSelf()
                 .InstancePerLifetimeScope()
                 .WithParameter(new ResolvedParameter(
-                    (parameterInfo, componentContext) => parameterInfo.ParameterType == typeof(AppContextBase),
-                    (parameterInfo, componentContext) => componentContext.Resolve<TDbContext>()))
+                    (parameterInfo, componentContext) => parameterInfo.ParameterType == typeof(DocumentDbContext),
+                    (parameterInfo, componentContext) => componentContext.Resolve<TDocumentDbContext>()))
                 .InstancePerLifetimeScope();
 
             return this;
         }
 
-        public ServiceContainerBuilder UseEventSourcing<TAppDbContext, TEventDbContext>(params Assembly[] assembliesToScan)
-            where TAppDbContext : AppContextBase where TEventDbContext : EventStoreContextBase
+        public ServiceContainerBuilder UseCqrs(params Assembly[] assembliesToScan)
         {
             if (!assembliesToScan.Any())
             {
@@ -77,8 +68,20 @@ namespace Etdb.ServiceBase.Builder.Builder
                     Command- and Domaineventhandlers!", nameof(assembliesToScan));
             }
 
-            this.containerBuilder.RegisterModule(
-                new EventSourcingModule<TAppDbContext, TEventDbContext>(assembliesToScan));
+            this.containerBuilder.RegisterModule(new CqrsModule(assembliesToScan));
+
+            return this;
+        }
+
+        public ServiceContainerBuilder UseAutoMapper(params Assembly[] assembliesToScan)
+        {
+            if (!assembliesToScan.Any())
+            {
+                throw new ArgumentException(@"You need to provide assemblies in order to implement generic 
+                    Command- and Domaineventhandlers!", nameof(assembliesToScan));
+            }
+
+            this.containerBuilder.RegisterModule(new AutoMapperModule(assembliesToScan));
 
             return this;
         }
