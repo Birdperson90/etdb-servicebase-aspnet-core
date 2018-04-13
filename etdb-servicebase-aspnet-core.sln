@@ -28,6 +28,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{2A1FE43E-188D-4319-8DC5-E0A7BA6B0427}"
 ProjectSection(SolutionItems) = preProject
 	.gitignore = .gitignore
+	build-packages.sh = build-packages.sh
+	Licence.md = Licence.md
+	Readme.md = Readme.md
 EndProjectSection
 EndProject
 Global
