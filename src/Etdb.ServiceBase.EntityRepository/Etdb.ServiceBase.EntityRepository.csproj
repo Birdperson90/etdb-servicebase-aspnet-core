@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Etdb.ServiceBase.EntityRepository.Abstractions\Etdb.ServiceBase.EntityRepository.Abstractions.csproj">
+      <Project>{4691044F-515B-496E-A038-16C17BFAA559}</Project>
+      <Name>Etdb.ServiceBase.EntityRepository.Abstractions</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

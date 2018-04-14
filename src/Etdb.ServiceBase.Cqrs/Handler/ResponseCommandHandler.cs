@@ -18,17 +18,4 @@ namespace Etdb.ServiceBase.Cqrs.Handler
 
         public abstract Task<TResponse> Handle(TResponseCommand request, CancellationToken cancellationToken);
     }
-    
-    public abstract class VoidCommandHandler<TVoidCommand> : IVoidCommandHandler<TVoidCommand>
-        where TVoidCommand : class, IVoidCommand
-    {
-        protected readonly IVoidCommandHandler<TVoidCommand> CommandValidation;
-
-        protected VoidCommandHandler(IVoidCommandHandler<TVoidCommand> commandValidation)
-        {
-            CommandValidation = commandValidation;
-        }
-
-        public abstract Task Handle(TVoidCommand request, CancellationToken cancellationToken);
-    }
 }
