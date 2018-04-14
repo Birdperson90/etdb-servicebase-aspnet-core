@@ -632,7 +632,8 @@ state the exclusion of warranty; and each file should have at least
 the "copyright" line and a pointer to where the full notice is found.
 
     This software is based on .NET-Standard and is therefore cross platform compatible.
-    The libraries contain base implementations for different .NET technologies and design patterns.
+    The libraries contain base implementations for different .NET technologies and design patterns,
+    that I use to develop (micro)services.
     Copyright (C) 2018  Sami Al Khatib
 
     This program is free software: you can redistribute it and/or modify
