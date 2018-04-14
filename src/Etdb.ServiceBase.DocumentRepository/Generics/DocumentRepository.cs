@@ -22,7 +22,7 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
             this.context = context;
         }
         
-        public async Task<IEnumerable<TDocument>> GetAllAsync(string collectionName = null, string partitionKey = null)
+        public virtual async Task<IEnumerable<TDocument>> GetAllAsync(string collectionName = null, string partitionKey = null)
         {
             return await this.GetCollection(collectionName, partitionKey)
                 .AsQueryable()
@@ -30,7 +30,7 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
                 .ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<TDocument>> FindAllAsync(Expression<Func<TDocument, bool>> predicate, 
+        public virtual async Task<IEnumerable<TDocument>> FindAllAsync(Expression<Func<TDocument, bool>> predicate, 
             string collectionName = null, string partitionKey = null)
         {
             var qursor = await this.GetCollection(collectionName)
@@ -40,7 +40,7 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
             return await qursor.ToListAsync().ConfigureAwait(false);
         }
 
-        public async Task<TDocument> FindAsync(TKey id, string collectionName = null, string partitionKey = null)
+        public virtual async Task<TDocument> FindAsync(TKey id, string collectionName = null, string partitionKey = null)
         {
             return await this.GetCollection(collectionName)
                 .Find(document => document.Id.Equals(id))
@@ -48,7 +48,7 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
                 .ConfigureAwait(false);
         }
 
-        public async Task<TDocument> FindAsync(Expression<Func<TDocument, bool>> predicate, 
+        public virtual async Task<TDocument> FindAsync(Expression<Func<TDocument, bool>> predicate, 
             string collectionName = null, string partitionKey = null)
         {
             return await this.GetCollection(collectionName)
@@ -57,14 +57,14 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
                 .ConfigureAwait(false);
         }
 
-        public async Task AddAsync(TDocument document, string collectionName = null, string partitionKey = null)
+        public virtual async Task AddAsync(TDocument document, string collectionName = null, string partitionKey = null)
         {
             await this.GetCollection(collectionName)
                 .InsertOneAsync(document)
                 .ConfigureAwait(false);
         }
 
-        public async Task<bool> EditAsync(TDocument document, string collectionName = null, string partitionKey = null)
+        public virtual async Task<bool> EditAsync(TDocument document, string collectionName = null, string partitionKey = null)
         {
             var editResult = await this.GetCollection(collectionName)
                 .UpdateOneAsync(existingDocument => existingDocument.Id.Equals(document.Id),
@@ -75,7 +75,7 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
                    editResult.ModifiedCount == 0;
         }
 
-        public async Task<bool> DeleteAsync(TKey id, string collectionName = null, string partitionKey = null)
+        public virtual async Task<bool> DeleteAsync(TKey id, string collectionName = null, string partitionKey = null)
         {
             var deleteResult = await this.GetCollection(collectionName)
                 .DeleteOneAsync(document => document.Id.Equals(id))

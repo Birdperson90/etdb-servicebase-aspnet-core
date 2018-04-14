@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-      <TargetFramework>netstandard2.0</TargetFramework>
-      <Version>3.0.0</Version>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>3.0.0</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.2" />
@@ -24,5 +24,8 @@
       <Project>{A0106B21-F758-4F10-9F07-1159F75AED04}</Project>
       <Name>Etdb.ServiceBase.DocumentRepository.Abstractions</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Etdb.ServiceBase.DocumentRepository\Etdb.ServiceBase.DocumentRepository.csproj" />
+    <ProjectReference Include="..\Etdb.ServiceBase.EntityRepository.Abstractions\Etdb.ServiceBase.EntityRepository.Abstractions.csproj" />
+    <ProjectReference Include="..\Etdb.ServiceBase.EntityRepository\Etdb.ServiceBase.EntityRepository.csproj" />
   </ItemGroup>
 </Project>

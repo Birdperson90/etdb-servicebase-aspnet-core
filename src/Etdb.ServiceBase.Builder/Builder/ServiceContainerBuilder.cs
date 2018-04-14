@@ -7,6 +7,8 @@ using Autofac.Extensions.DependencyInjection;
 using Etdb.ServiceBase.Builder.Modules;
 using Etdb.ServiceBase.DocumentRepository.Abstractions.Context;
 using Etdb.ServiceBase.DocumentRepository.Abstractions.Generics;
+using Etdb.ServiceBase.EntityRepository.Abstractions.Context;
+using Etdb.ServiceBase.EntityRepository.Abstractions.Generics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -55,6 +57,28 @@ namespace Etdb.ServiceBase.Builder.Builder
                 .WithParameter(new ResolvedParameter(
                     (parameterInfo, componentContext) => parameterInfo.ParameterType == typeof(DocumentDbContext),
                     (parameterInfo, componentContext) => componentContext.Resolve<TDocumentDbContext>()))
+                .InstancePerLifetimeScope();
+
+            return this;
+        }
+
+        public ServiceContainerBuilder UseGenericEntityRepositoryPattern<TEntityDbContext>(
+            params Assembly[] assembliesToScan) where TEntityDbContext : EntityDbContext
+        {
+            if (!assembliesToScan.Any())
+            {
+                throw new ArgumentException(@"You need to provide assemblies in order to implement generic 
+                    Repositories!", nameof(assembliesToScan));
+            }
+
+            this.containerBuilder.RegisterAssemblyTypes(assembliesToScan)
+                .AsClosedTypesOf(typeof(IEntityRepository<,>))
+                .AsImplementedInterfaces()
+                .AsSelf()
+                .InstancePerLifetimeScope()
+                .WithParameter(new ResolvedParameter(
+                    (parameterInfo, componentContext) => parameterInfo.ParameterType == typeof(EntityDbContext),
+                    (parameterInfo, componentContext) => componentContext.Resolve<TEntityDbContext>()))
                 .InstancePerLifetimeScope();
 
             return this;

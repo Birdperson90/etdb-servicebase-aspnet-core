@@ -21,36 +21,36 @@ namespace Etdb.ServiceBase.EntityRepository.Generics
             this.context = context;
         }
         
-        public IEnumerable<TEntity> GetAll()
+        public virtual IEnumerable<TEntity> GetAll()
         {
             return this.CreateQuery().ToArray();
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync()
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
         {
             return await this.CreateQuery()
                 .ToArrayAsync()
                 .ConfigureAwait(false);
         }
 
-        public IEnumerable<TEntity> GetAll(params Expression<Func<TEntity, object>>[] includes)
+        public virtual IEnumerable<TEntity> GetAll(params Expression<Func<TEntity, object>>[] includes)
         {
             return this.BuildIncludes(includes).ToArray();
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync(params Expression<Func<TEntity, object>>[] includes)
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync(params Expression<Func<TEntity, object>>[] includes)
         {
             return await this.BuildIncludes(includes).ToArrayAsync();
         }
 
-        public IEnumerable<TEntity> FindAll(Expression<Func<TEntity, bool>> predicate)
+        public virtual IEnumerable<TEntity> FindAll(Expression<Func<TEntity, bool>> predicate)
         {
             return this.CreateQuery()
                 .Where(predicate)
                 .ToArray();
         }
 
-        public async Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> predicate)
+        public virtual async Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await this.CreateQuery()
                 .Where(predicate)
@@ -58,14 +58,14 @@ namespace Etdb.ServiceBase.EntityRepository.Generics
                 .ConfigureAwait(false);
         }
 
-        public IEnumerable<TEntity> FindAll(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
+        public virtual IEnumerable<TEntity> FindAll(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
         {
             return this.BuildIncludes(includes)
                 .Where(predicate)
                 .ToArray();
         }
 
-        public async Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> predicate, 
+        public virtual async Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> predicate, 
             params Expression<Func<TEntity, object>>[] includes)
         {
             return await this.BuildIncludes(includes)
@@ -74,100 +74,115 @@ namespace Etdb.ServiceBase.EntityRepository.Generics
                 .ConfigureAwait(false);
         }
 
-        public TEntity Find(TKey key)
+        public virtual TEntity Find(TKey key)
         {
             return this.CreateQuery()
                 .FirstOrDefault(entity => entity.Id.Equals(key));
         }
 
-        public async Task<TEntity> FindAsync(TKey key)
+        public virtual async Task<TEntity> FindAsync(TKey key)
         {
             return await this.CreateQuery()
                 .FirstOrDefaultAsync(entity => entity.Id.Equals(key))
                 .ConfigureAwait(false);
         }
 
-        public TEntity Find(TKey key, params Expression<Func<TEntity, object>>[] includes)
+        public virtual TEntity Find(TKey key, params Expression<Func<TEntity, object>>[] includes)
         {
             return this.BuildIncludes(includes)
                 .FirstOrDefault(entity => entity.Id.Equals(key));
         }
 
-        public async Task<TEntity> FindAsync(TKey key, params Expression<Func<TEntity, object>>[] includes)
+        public virtual async Task<TEntity> FindAsync(TKey key, params Expression<Func<TEntity, object>>[] includes)
         {
             return await this.BuildIncludes(includes)
                 .FirstOrDefaultAsync(entity => entity.Id.Equals(key))
                 .ConfigureAwait(false);
         }
 
-        public TEntity Find(Expression<Func<TEntity, bool>> predicate)
+        public virtual TEntity Find(Expression<Func<TEntity, bool>> predicate)
         {
             return this.CreateQuery().FirstOrDefault(predicate);
         }
 
-        public async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> predicate)
+        public virtual async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await this.CreateQuery()
                 .FirstOrDefaultAsync(predicate)
                 .ConfigureAwait(false);
         }
 
-        public TEntity Find(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
+        public virtual TEntity Find(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
         {
             return this.BuildIncludes(includes)
                 .FirstOrDefault(predicate);
         }
 
-        public async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
+        public virtual async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
         {
             return await this.BuildIncludes(includes)
                 .FirstOrDefaultAsync(predicate)
                 .ConfigureAwait(false);
         }
 
-        public void Add(TEntity entity)
+        public virtual void Add(TEntity entity)
         {
             this.context.Set<TEntity>().Add(entity);
         }
 
-        public async Task AddAsync(TEntity entity)
+        public virtual async Task AddAsync(TEntity entity)
         {
             await this.context.Set<TEntity>().AddAsync(entity);
         }
 
-        public void Edit(TEntity entity)
+        public virtual void Edit(TEntity entity)
         {
             var entry = this.context.Entry(entity);
 
             entry.State = EntityState.Modified;
         }
 
-        public void Delete(TEntity entity)
+        public virtual void Delete(TEntity entity)
         {
             var entry = this.context.Entry(entity);
 
             entry.State = EntityState.Deleted;
         }
 
-        public bool EnsureChanges()
+        public virtual bool EnsureChanges()
         {
             var modifiedCount = this.context.SaveChanges();
 
             return modifiedCount > 0;
         }
 
-        public async Task<bool> EnsureChangesAsync()
+        public virtual async Task<bool> EnsureChangesAsync()
         {
             var modifiedCount = await this.context.SaveChangesAsync();
 
             return modifiedCount > 0;
         }
 
-        public IQueryable<TEntity> GetQueryAble(bool noTracking = false)
+        public virtual IQueryable<TEntity> GetQueryAble(bool noTracking = false)
         {
             return noTracking
                 ? this.CreateQuery().AsNoTracking()
                 : this.CreateQuery();
+        }
+
+        public virtual int Count()
+        {
+            return this.CreateQuery()
+                .Select(entity => entity.Id)
+                .Count();
+        }
+
+        public virtual async Task<int> CountAsync()
+        {
+            return await this.CreateQuery()
+                .Select(entity => entity.Id)
+                .CountAsync()
+                .ConfigureAwait(false);
         }
 
         private IQueryable<TEntity> BuildIncludes(params Expression<Func<TEntity, object>>[] includes)

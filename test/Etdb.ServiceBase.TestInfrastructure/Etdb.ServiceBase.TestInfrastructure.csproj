@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="AutoMapper\DataTransferObjects" />
+    <Folder Include="EntityFramework\Entities" />
+    <Folder Include="EntityFramework\Repositories" />
+    <Folder Include="MongoDb\Documents" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.0.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Etdb.ServiceBase.Builder\Etdb.ServiceBase.Builder.csproj" />
+    <ProjectReference Include="..\..\src\Etdb.ServiceBase.Cqrs\Etdb.ServiceBase.Cqrs.csproj" />
+    <ProjectReference Include="..\..\src\Etdb.ServiceBase.Cryptography\Etdb.ServiceBase.Cryptography.csproj" />
+    <ProjectReference Include="..\..\src\Etdb.ServiceBase.DocumentRepository\Etdb.ServiceBase.DocumentRepository.csproj" />
+    <ProjectReference Include="..\..\src\Etdb.ServiceBase.EntityRepository\Etdb.ServiceBase.EntityRepository.csproj" />
+    <ProjectReference Include="..\..\src\Etdb.ServiceBase.ErrorHandling\Etdb.ServiceBase.ErrorHandling.csproj" />
+  </ItemGroup>
+</Project>
