@@ -166,9 +166,7 @@ namespace Etdb.ServiceBase.EntityRepository.Generics
         public IQueryable<TEntity> GetQueryAble(bool noTracking = false)
         {
             return noTracking
-                ? this.CreateQuery()
-                    .AsNoTracking()
-
+                ? this.CreateQuery().AsNoTracking()
                 : this.CreateQuery();
         }
 
