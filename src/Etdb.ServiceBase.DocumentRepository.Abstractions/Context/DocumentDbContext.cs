@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using Etdb.ServiceBase.DocumentDomain.Abstractions;
+using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -8,10 +9,10 @@ namespace Etdb.ServiceBase.DocumentRepository.Abstractions.Context
 {
     public abstract class DocumentDbContext
     {
-        protected DocumentDbContext(MongoClientSettings settings, string databaseName)
+        protected DocumentDbContext(IOptions<DocumentDbContextOptions> options)
         {
-            var client = new MongoClient(settings);
-            this.Database = client.GetDatabase(databaseName);
+            var client = new MongoClient(options.Value.ConnectionString);
+            this.Database = client.GetDatabase(options.Value.DatabaseName);
         }
         
         // ReSharper disable once MemberCanBePrivate.Global

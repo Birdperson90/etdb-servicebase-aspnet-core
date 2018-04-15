@@ -12,20 +12,11 @@
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="2.0.2" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Etdb.ServiceBase.Cqrs.Abstractions\Etdb.ServiceBase.Cqrs.Abstractions.csproj">
-      <Project>{30A8E080-3BF1-4093-A3C3-3A701F35A10D}</Project>
-      <Name>Etdb.ServiceBase.Cqrs.Abstractions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Etdb.ServiceBase.Cqrs\Etdb.ServiceBase.Cqrs.csproj">
       <Project>{1B1B9508-0CE2-471A-B79F-0DC4CEF82BEE}</Project>
       <Name>Etdb.ServiceBase.Cqrs</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Etdb.ServiceBase.DocumentRepository.Abstractions\Etdb.ServiceBase.DocumentRepository.Abstractions.csproj">
-      <Project>{A0106B21-F758-4F10-9F07-1159F75AED04}</Project>
-      <Name>Etdb.ServiceBase.DocumentRepository.Abstractions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Etdb.ServiceBase.DocumentRepository\Etdb.ServiceBase.DocumentRepository.csproj" />
-    <ProjectReference Include="..\Etdb.ServiceBase.EntityRepository.Abstractions\Etdb.ServiceBase.EntityRepository.Abstractions.csproj" />
     <ProjectReference Include="..\Etdb.ServiceBase.EntityRepository\Etdb.ServiceBase.EntityRepository.csproj" />
   </ItemGroup>
 </Project>

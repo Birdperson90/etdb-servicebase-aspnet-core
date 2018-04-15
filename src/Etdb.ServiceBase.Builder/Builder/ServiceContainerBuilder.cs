@@ -28,6 +28,8 @@ namespace Etdb.ServiceBase.Builder.Builder
         {
             this.containerBuilder
                 .RegisterInstance(configurationRoot)
+                .As<IConfigurationRoot>()
+                .AsImplementedInterfaces()
                 .SingleInstance();
             return this;
         }
@@ -49,6 +51,9 @@ namespace Etdb.ServiceBase.Builder.Builder
                     Repositories!", nameof(assembliesToScan));
             }
 
+            this.containerBuilder.RegisterType<TDocumentDbContext>()
+                .InstancePerLifetimeScope();
+
             this.containerBuilder.RegisterAssemblyTypes(assembliesToScan)
                 .AsClosedTypesOf(typeof(IDocumentRepository<,>))
                 .AsImplementedInterfaces()
@@ -56,8 +61,7 @@ namespace Etdb.ServiceBase.Builder.Builder
                 .InstancePerLifetimeScope()
                 .WithParameter(new ResolvedParameter(
                     (parameterInfo, componentContext) => parameterInfo.ParameterType == typeof(DocumentDbContext),
-                    (parameterInfo, componentContext) => componentContext.Resolve<TDocumentDbContext>()))
-                .InstancePerLifetimeScope();
+                    (parameterInfo, componentContext) => componentContext.Resolve<TDocumentDbContext>()));
 
             return this;
         }
@@ -71,6 +75,9 @@ namespace Etdb.ServiceBase.Builder.Builder
                     Repositories!", nameof(assembliesToScan));
             }
 
+            this.containerBuilder.RegisterType<TEntityDbContext>()
+                .InstancePerLifetimeScope();
+
             this.containerBuilder.RegisterAssemblyTypes(assembliesToScan)
                 .AsClosedTypesOf(typeof(IEntityRepository<,>))
                 .AsImplementedInterfaces()
@@ -78,8 +85,7 @@ namespace Etdb.ServiceBase.Builder.Builder
                 .InstancePerLifetimeScope()
                 .WithParameter(new ResolvedParameter(
                     (parameterInfo, componentContext) => parameterInfo.ParameterType == typeof(EntityDbContext),
-                    (parameterInfo, componentContext) => componentContext.Resolve<TEntityDbContext>()))
-                .InstancePerLifetimeScope();
+                    (parameterInfo, componentContext) => componentContext.Resolve<TEntityDbContext>()));
 
             return this;
         }
@@ -110,13 +116,6 @@ namespace Etdb.ServiceBase.Builder.Builder
             return this;
         }
 
-        public ServiceContainerBuilder RegisterTypeAsSingleton<TImplementation>()
-        {
-            this.containerBuilder.RegisterType<TImplementation>()
-                .SingleInstance();
-            return this;
-        }
-
         public ServiceContainerBuilder RegisterTypeAsSingleton<TImplementation, TInterface>()
             where TImplementation : TInterface
         {
@@ -124,16 +123,6 @@ namespace Etdb.ServiceBase.Builder.Builder
                 .As<TInterface>()
                 .AsSelf()
                 .SingleInstance();
-
-            return this;
-        }
-
-        public ServiceContainerBuilder RegisterTypePerRequest<TImplementation, TInterface>()
-            where TImplementation : TInterface
-        {
-            this.containerBuilder.RegisterType<TImplementation>()
-                .As<TInterface>()
-                .InstancePerRequest();
 
             return this;
         }
@@ -158,9 +147,23 @@ namespace Etdb.ServiceBase.Builder.Builder
             return this;
         }
 
-        public IContainer Build(IServiceCollection serviceCollection)
+        public ServiceContainerBuilder RegisterInstace<TType>(object @object) where TType : class
         {
-            this.containerBuilder.Populate(serviceCollection);
+            this.containerBuilder.RegisterInstance(@object)
+                .As<TType>()
+                .SingleInstance();
+
+            return this;
+        }
+
+        public IContainer Build(IServiceCollection services)
+        {
+            if (services == null)
+            {
+                throw new ArgumentNullException(nameof(services));
+            }
+            
+            this.containerBuilder.Populate(services);
             return this.containerBuilder
                 .Build();
         }
