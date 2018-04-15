@@ -1,9 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Autofac;
+using AutoMapper;
 using Etdb.ServiceBase.Builder.Builder;
 using Etdb.ServiceBase.DocumentRepository.Abstractions.Context;
 using Etdb.ServiceBase.DocumentRepository.Abstractions.Generics;
 using Etdb.ServiceBase.EntityRepository.Abstractions.Generics;
+using Etdb.ServiceBase.TestInfrastructure.AutoMapper.DataTransferObjects;
+using Etdb.ServiceBase.TestInfrastructure.AutoMapper.Profiles;
+using Etdb.ServiceBase.TestInfrastructure.AutoMapper.Resolver;
 using Etdb.ServiceBase.TestInfrastructure.EntityFramework.Context;
 using Etdb.ServiceBase.TestInfrastructure.EntityFramework.Entities;
 using Etdb.ServiceBase.TestInfrastructure.EntityFramework.Repositories;
@@ -15,6 +21,7 @@ using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using Xunit;
 
@@ -124,6 +131,21 @@ namespace Etdb.ServiceBase.Builder.IntegrationTests
         {
             Assert.Throws<ArgumentException>(() =>
                 this.containerBuilder.UseGenericEntityRepositoryPattern<InMemoryEntityDbContext>());
+        }
+
+        [Fact]
+        public void ServiceContainerBuilder_UseAutoMapperValidInput_ExpectInstance()
+        {
+            this.containerBuilder.UseAutoMapper(typeof(TodoProfile).Assembly);
+            this.BuildContainer();
+            
+            Assert.True(this.container.IsRegistered<IMapper>());
+            Assert.True(this.container.IsRegistered<MapperConfiguration>());
+            Assert.True(this.container.IsRegistered<TodoDtoIdResolver>());
+
+            var profiles = this.container.Resolve<IEnumerable<Profile>>();
+
+            Assert.Single(profiles);
         }
 
         private void BuildContainer()
