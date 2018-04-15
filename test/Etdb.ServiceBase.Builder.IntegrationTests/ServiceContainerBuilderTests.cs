@@ -36,6 +36,9 @@ namespace Etdb.ServiceBase.Builder.IntegrationTests
 
             this.containerBuilder.UseConfiguration(configuration);
             this.BuildContainer();
+            
+            Assert.True(this.container.IsRegistered<IConfigurationRoot>(), "IConfigurationRoot not registered!");
+            Assert.True(this.container.IsRegistered<IConfiguration>(), "IConfiguration not registered!");
 
             var resolvedConfigurationRoot = this.container.Resolve<IConfigurationRoot>();
             
@@ -52,8 +55,11 @@ namespace Etdb.ServiceBase.Builder.IntegrationTests
             var environment = new HostingEnvironment();
 
             this.containerBuilder.UseEnvironment(environment);
+            
             this.BuildContainer();
 
+            Assert.True(this.container.IsRegistered<IHostingEnvironment>(), "IHostingEnvironment not registered!");
+            
             var resolvedEnv = this.container.Resolve<IHostingEnvironment>();
             
             Assert.Equal(environment, resolvedEnv);
@@ -76,10 +82,38 @@ namespace Etdb.ServiceBase.Builder.IntegrationTests
             
             Assert.True(this.container.IsRegistered<IOptions<DocumentDbContextOptions>>(), "DbContextOptions not registered!");
             Assert.True(this.container.IsRegistered<TestDocumentDbContext>(), "DbContext not registered!");
+            Assert.True(this.container.IsRegistered<IDocumentRepository<TodoListDocument, Guid>>(), "Base repository not registered!");
+            Assert.True(this.container.IsRegistered<ITodoListDocumentRepository>(), "Implemented repository interface not registered!");
 
             var genericRepository = this.container.Resolve<IDocumentRepository<TodoListDocument, Guid>>();
             var implementedInterfaceRepository = this.container.Resolve<ITodoListDocumentRepository>();
+
+            Assert.Equal(genericRepository, implementedInterfaceRepository);
+        }
+        
+        [Fact]
+        public void ServiceContainerBuilder_UseGenericDocumentRepositoryPatternValidInput_ExpectInstance()
+        {
+            services.AddOptions();
             
+            this.services.Configure<DocumentDbContextOptions>(options =>
+            {
+                options.ConnectionString = "mongodb://admin:admin@localhost:27017";
+                options.DatabaseName = "Etdb_ServiceBase_Tests";
+            });
+            
+            this.containerBuilder.UseGenericDocumentRepositoryPattern<TestDocumentDbContext>(typeof(TestDocumentDbContext).Assembly);
+            
+            this.BuildContainer();
+            
+            Assert.True(this.container.IsRegistered<IOptions<DocumentDbContextOptions>>(), "DbContextOptions not registered!");
+            Assert.True(this.container.IsRegistered<TestDocumentDbContext>(), "DbContext not registered!");
+            Assert.True(this.container.IsRegistered<IDocumentRepository<TodoListDocument, Guid>>(), "Base repository not registered!");
+            Assert.True(this.container.IsRegistered<ITodoListDocumentRepository>(), "Implemented repository interface not registered!");
+
+            var genericRepository = this.container.Resolve<IDocumentRepository<TodoListDocument, Guid>>();
+            var implementedInterfaceRepository = this.container.Resolve<ITodoListDocumentRepository>();
+
             Assert.Equal(genericRepository, implementedInterfaceRepository);
         }
 
