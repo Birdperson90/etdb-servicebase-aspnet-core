@@ -1,4 +1,5 @@
-﻿using Etdb.ServiceBase.ErrorHandling.Abstractions.Exceptions;
+﻿using System.Net;
+using Etdb.ServiceBase.ErrorHandling.Abstractions.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
@@ -24,8 +25,10 @@ namespace Etdb.ServiceBase.ErrorHandling.Filters
             this.logger.LogError(context.Exception, "Conccurency conflict occured!");
 
             context.ExceptionHandled = true;
+            context.HttpContext.Response.StatusCode = (int) HttpStatusCode.Conflict;
+            
             var exception = (ConcurrencyException) context.Exception;
-            context.Result = new BadRequestObjectResult(new
+            context.Result = new ObjectResult(new
             {
                 exception.Message,
                 exception.Updated

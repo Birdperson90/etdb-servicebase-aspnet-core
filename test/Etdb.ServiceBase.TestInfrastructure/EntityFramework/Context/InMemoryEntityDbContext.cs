@@ -1,4 +1,5 @@
 ﻿using Etdb.ServiceBase.EntityRepository.Abstractions.Context;
+using Etdb.ServiceBase.TestInfrastructure.EntityFramework.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Etdb.ServiceBase.TestInfrastructure.EntityFramework.Context
@@ -12,7 +13,34 @@ namespace Etdb.ServiceBase.TestInfrastructure.EntityFramework.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            {
+                var builder = modelBuilder.Entity<TodoListEntity>();
+                
+                builder.HasKey(tl => tl.Id);
+
+                builder.HasMany(tl => tl.Todos)
+                    .WithOne(td => td.List)
+                    .HasForeignKey(td => td.ListId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                builder.HasIndex(tl => tl.Titel)
+                    .IsUnique(true);
+
+                builder.Property(tl => tl.Titel)
+                    .IsRequired();
+            }
+
+            {
+                var builder = modelBuilder.Entity<TodoEntity>();
+
+                builder.HasKey(td => td.Id);
+
+                builder.HasIndex(td => new
+                {
+                    td.ListId,
+                    td.Title
+                });
+            }
         }
     }
 }

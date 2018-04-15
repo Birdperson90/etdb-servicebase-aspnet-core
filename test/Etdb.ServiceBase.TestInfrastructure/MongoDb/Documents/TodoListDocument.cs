@@ -13,6 +13,8 @@ namespace Etdb.ServiceBase.TestInfrastructure.MongoDb.Documents
         
         public Guid Id { get; set; }
         
+        public string Titel { get; set; }
+        
         public ICollection<TodoDocument> Todos { get; set; }
     }
 }

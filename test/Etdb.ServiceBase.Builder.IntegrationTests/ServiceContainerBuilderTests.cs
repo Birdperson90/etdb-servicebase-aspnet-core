@@ -3,6 +3,10 @@ using Autofac;
 using Etdb.ServiceBase.Builder.Builder;
 using Etdb.ServiceBase.DocumentRepository.Abstractions.Context;
 using Etdb.ServiceBase.DocumentRepository.Abstractions.Generics;
+using Etdb.ServiceBase.EntityRepository.Abstractions.Generics;
+using Etdb.ServiceBase.TestInfrastructure.EntityFramework.Context;
+using Etdb.ServiceBase.TestInfrastructure.EntityFramework.Entities;
+using Etdb.ServiceBase.TestInfrastructure.EntityFramework.Repositories;
 using Etdb.ServiceBase.TestInfrastructure.MongoDb.Context;
 using Etdb.ServiceBase.TestInfrastructure.MongoDb.Documents;
 using Etdb.ServiceBase.TestInfrastructure.MongoDb.Repositories;
@@ -92,29 +96,34 @@ namespace Etdb.ServiceBase.Builder.IntegrationTests
         }
         
         [Fact]
-        public void ServiceContainerBuilder_UseGenericDocumentRepositoryPatternValidInput_ExpectInstance()
+        public void ServiceContainerBuilder_UseGenericDocumentRepositoryPatternInvalidInput_ExpectException()
         {
-            services.AddOptions();
-            
-            this.services.Configure<DocumentDbContextOptions>(options =>
-            {
-                options.ConnectionString = "mongodb://admin:admin@localhost:27017";
-                options.DatabaseName = "Etdb_ServiceBase_Tests";
-            });
-            
-            this.containerBuilder.UseGenericDocumentRepositoryPattern<TestDocumentDbContext>(typeof(TestDocumentDbContext).Assembly);
+            Assert.Throws<ArgumentException>(() => this.containerBuilder
+                .UseGenericDocumentRepositoryPattern<TestDocumentDbContext>());
+        }
+        
+        [Fact]
+        public void ServiceContainerBuilder_UseGenericEntityRepositoryPatternValidInput_ExpectInstance()
+        {
+            this.containerBuilder.UseGenericEntityRepositoryPattern<InMemoryEntityDbContext>(typeof(InMemoryEntityDbContext).Assembly);
             
             this.BuildContainer();
             
-            Assert.True(this.container.IsRegistered<IOptions<DocumentDbContextOptions>>(), "DbContextOptions not registered!");
-            Assert.True(this.container.IsRegistered<TestDocumentDbContext>(), "DbContext not registered!");
-            Assert.True(this.container.IsRegistered<IDocumentRepository<TodoListDocument, Guid>>(), "Base repository not registered!");
-            Assert.True(this.container.IsRegistered<ITodoListDocumentRepository>(), "Implemented repository interface not registered!");
+            Assert.True(this.container.IsRegistered<InMemoryEntityDbContext>(), "DbContext not registered!");
+            Assert.True(this.container.IsRegistered<IEntityRepository<TodoListEntity, Guid>>(), "Base repository not registered!");
+            Assert.True(this.container.IsRegistered<ITodoListEntityRepository>(), "Implemented repository interface not registered!");
 
-            var genericRepository = this.container.Resolve<IDocumentRepository<TodoListDocument, Guid>>();
-            var implementedInterfaceRepository = this.container.Resolve<ITodoListDocumentRepository>();
+            var genericRepository = this.container.Resolve<IEntityRepository<TodoListEntity, Guid>>();
+            var implementedInterfaceRepository = this.container.Resolve<ITodoListEntityRepository>();
 
             Assert.Equal(genericRepository, implementedInterfaceRepository);
+        }
+        
+        [Fact]
+        public void ServiceContainerBuilder_UseGenericEntityRepositoryPatternInvalidInput_ExpectException()
+        {
+            Assert.Throws<ArgumentException>(() =>
+                this.containerBuilder.UseGenericEntityRepositoryPattern<InMemoryEntityDbContext>());
         }
 
         private void BuildContainer()
