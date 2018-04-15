@@ -63,6 +63,7 @@ namespace Etdb.ServiceBase.Builder.IntegrationTests
         public void ServiceContainerBuilder_UseGenericDocumentRepositoryPatternValidInput_ExpectInstance()
         {
             services.AddOptions();
+            
             this.services.Configure<DocumentDbContextOptions>(options =>
             {
                 options.ConnectionString = "mongodb://admin:admin@localhost:27017";
