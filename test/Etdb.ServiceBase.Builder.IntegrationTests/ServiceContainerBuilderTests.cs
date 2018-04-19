@@ -4,18 +4,21 @@ using System.Linq;
 using Autofac;
 using AutoMapper;
 using Etdb.ServiceBase.Builder.Builder;
+using Etdb.ServiceBase.Cqrs.Abstractions.Bus;
 using Etdb.ServiceBase.DocumentRepository.Abstractions.Context;
 using Etdb.ServiceBase.DocumentRepository.Abstractions.Generics;
 using Etdb.ServiceBase.EntityRepository.Abstractions.Generics;
 using Etdb.ServiceBase.TestInfrastructure.AutoMapper.DataTransferObjects;
 using Etdb.ServiceBase.TestInfrastructure.AutoMapper.Profiles;
 using Etdb.ServiceBase.TestInfrastructure.AutoMapper.Resolver;
+using Etdb.ServiceBase.TestInfrastructure.Cqrs.Commands;
 using Etdb.ServiceBase.TestInfrastructure.EntityFramework.Context;
 using Etdb.ServiceBase.TestInfrastructure.EntityFramework.Entities;
 using Etdb.ServiceBase.TestInfrastructure.EntityFramework.Repositories;
 using Etdb.ServiceBase.TestInfrastructure.MongoDb.Context;
 using Etdb.ServiceBase.TestInfrastructure.MongoDb.Documents;
 using Etdb.ServiceBase.TestInfrastructure.MongoDb.Repositories;
+using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.Extensions.Configuration;
@@ -40,7 +43,7 @@ namespace Etdb.ServiceBase.Builder.IntegrationTests
         }
         
         [Fact]
-        public void ServiceContainerBuilder_UseConfigurationAndResolve_ExpectInstance()
+        public void ServiceContainerBuilder_UseConfigurationAndResolve_ExpectInstances()
         {
             var configuration = new ConfigurationBuilder()
                 .Build();
@@ -61,7 +64,7 @@ namespace Etdb.ServiceBase.Builder.IntegrationTests
         }
 
         [Fact]
-        public void ServiceContainerBuilder_UseHostingEnvironmentAndResolve_ExpectInstance()
+        public void ServiceContainerBuilder_UseHostingEnvironmentAndResolve_ExpectInstances()
         {
             var environment = new HostingEnvironment();
 
@@ -77,7 +80,7 @@ namespace Etdb.ServiceBase.Builder.IntegrationTests
         }
         
         [Fact]
-        public void ServiceContainerBuilder_UseGenericDocumentRepositoryPatternValidInput_ExpectInstance()
+        public void ServiceContainerBuilder_UseGenericDocumentRepositoryPatternValidInput_ExpectInstances()
         {
             services.AddOptions();
             
@@ -110,7 +113,7 @@ namespace Etdb.ServiceBase.Builder.IntegrationTests
         }
         
         [Fact]
-        public void ServiceContainerBuilder_UseGenericEntityRepositoryPatternValidInput_ExpectInstance()
+        public void ServiceContainerBuilder_UseGenericEntityRepositoryPatternValidInput_ExpectInstances()
         {
             this.containerBuilder.UseGenericEntityRepositoryPattern<InMemoryEntityDbContext>(typeof(InMemoryEntityDbContext).Assembly);
             
@@ -134,7 +137,7 @@ namespace Etdb.ServiceBase.Builder.IntegrationTests
         }
 
         [Fact]
-        public void ServiceContainerBuilder_UseAutoMapperValidInput_ExpectInstance()
+        public void ServiceContainerBuilder_UseAutoMapperValidInput_ExpectInstances()
         {
             this.containerBuilder.UseAutoMapper(typeof(TodoProfile).Assembly);
             this.BuildContainer();
@@ -146,6 +149,16 @@ namespace Etdb.ServiceBase.Builder.IntegrationTests
             var profiles = this.container.Resolve<IEnumerable<Profile>>();
 
             Assert.Single(profiles);
+        }
+
+        [Fact]
+        public void ServiceContainerBuilder_UseCqrs_ExpectInstances()
+        {
+            this.containerBuilder.UseCqrs(typeof(SimpleVoidCommand).Assembly);
+            this.BuildContainer();
+            
+            Assert.True(this.container.IsRegistered<IMediator>());
+            Assert.True(this.container.IsRegistered<IMediatorHandler>());
         }
 
         private void BuildContainer()

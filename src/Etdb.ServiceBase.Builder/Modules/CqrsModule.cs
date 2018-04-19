@@ -31,8 +31,8 @@ namespace Etdb.ServiceBase.Builder.Modules
 
             var openGenericTypes = new[]
             {
-                typeof(IRequestHandler<,>),
                 typeof(IRequestHandler<>),
+                typeof(IRequestHandler<,>),
                 typeof(INotificationHandler<>),
                 typeof(IResponseCommandValidation<,>),
                 typeof(IVoidCommandValidation<>),

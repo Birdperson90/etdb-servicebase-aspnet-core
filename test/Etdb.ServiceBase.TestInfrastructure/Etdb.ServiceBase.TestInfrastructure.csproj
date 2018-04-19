@@ -13,4 +13,7 @@
     <ProjectReference Include="..\..\src\Etdb.ServiceBase.EntityRepository\Etdb.ServiceBase.EntityRepository.csproj" />
     <ProjectReference Include="..\..\src\Etdb.ServiceBase.ErrorHandling\Etdb.ServiceBase.ErrorHandling.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Cqrs\Validation" />
+  </ItemGroup>
 </Project>

@@ -2,15 +2,16 @@
 using System.Threading.Tasks;
 using Etdb.ServiceBase.Cqrs.Abstractions.Commands;
 using Etdb.ServiceBase.Cqrs.Abstractions.Handler;
+using Etdb.ServiceBase.Cqrs.Abstractions.Validation;
 
 namespace Etdb.ServiceBase.Cqrs.Handler
 {
     public abstract class VoidCommandHandler<TVoidCommand> : IVoidCommandHandler<TVoidCommand>
         where TVoidCommand : class, IVoidCommand
     {
-        protected readonly IVoidCommandHandler<TVoidCommand> CommandValidation;
+        protected readonly IVoidCommandValidation<TVoidCommand> CommandValidation;
 
-        protected VoidCommandHandler(IVoidCommandHandler<TVoidCommand> commandValidation)
+        protected VoidCommandHandler(IVoidCommandValidation<TVoidCommand> commandValidation)
         {
             CommandValidation = commandValidation;
         }
