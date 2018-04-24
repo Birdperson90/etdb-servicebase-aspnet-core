@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Etdb.ServiceBase.DocumentDomain.Abstractions;
+using Etdb.ServiceBase.Domain.Abstractions.Documents;
 
 namespace Etdb.ServiceBase.TestInfrastructure.MongoDb.Documents
 {

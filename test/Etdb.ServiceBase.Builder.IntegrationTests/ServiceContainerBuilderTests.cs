@@ -170,11 +170,13 @@ namespace Etdb.ServiceBase.Builder.IntegrationTests
             Assert.True(this.container.IsRegistered<IVoidCommandHandler<ComplexVoidCommand>>());
         }
         
+        [Fact]
         public void ServiceContainerBuilder_UseCqrsInvalidInput_ExpectException()
         {
             Assert.Throws<ArgumentException>(() => this.containerBuilder.UseCqrs());
         }
 
+        [Fact]
         public void ServiceContainerBuilder_RegisterTypeAsSingleton_ExpectInstances()
         {
             this.containerBuilder.RegisterTypeAsSingleton<SomeClass, ISomeInterface>();

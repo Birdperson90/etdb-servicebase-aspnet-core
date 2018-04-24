@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Etdb.ServiceBase.DocumentDomain.Abstractions;
 using Etdb.ServiceBase.DocumentRepository.Abstractions.Context;
 using Etdb.ServiceBase.DocumentRepository.Abstractions.Generics;
+using Etdb.ServiceBase.Domain.Abstractions.Documents;
 using MongoDB.Driver;
 
 namespace Etdb.ServiceBase.DocumentRepository.Generics

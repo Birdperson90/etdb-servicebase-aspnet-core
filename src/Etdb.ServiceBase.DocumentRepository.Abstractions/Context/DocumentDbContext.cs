@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Reflection;
-using Etdb.ServiceBase.DocumentDomain.Abstractions;
+using Etdb.ServiceBase.Domain.Abstractions.Documents;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 

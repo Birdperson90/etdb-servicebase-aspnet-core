@@ -8,9 +8,6 @@
     <PackageReference Include="MongoDB.Driver" Version="2.5.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Etdb.ServiceBase.DocumentDomain.Abstractions\Etdb.ServiceBase.DocumentDomain.Abstractions.csproj">
-      <Project>{8E52508A-C5E4-4AD6-A3AA-886488C9D83B}</Project>
-      <Name>Etdb.ServiceBase.DocumentDomain.Abstractions</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\Etdb.ServiceBase.Domain.Abstractions\Etdb.ServiceBase.Domain.Abstractions.csproj" />
   </ItemGroup>
 </Project>

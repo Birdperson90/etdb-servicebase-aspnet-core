@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Etdb.ServiceBase.EntityDomain.Abstractions;
+using Etdb.ServiceBase.Domain.Abstractions.Entities;
 
 namespace Etdb.ServiceBase.TestInfrastructure.EntityFramework.Entities
 {

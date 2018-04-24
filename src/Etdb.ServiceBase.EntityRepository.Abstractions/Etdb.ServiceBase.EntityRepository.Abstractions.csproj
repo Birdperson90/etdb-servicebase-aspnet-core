@@ -6,9 +6,6 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.2" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Etdb.ServiceBase.EntityDomain.Abstractions\Etdb.ServiceBase.EntityDomain.Abstractions.csproj">
-      <Project>{0CE599A3-F8A1-4BC7-A803-E59EAD2DFE46}</Project>
-      <Name>Etdb.ServiceBase.EntityDomain.Abstractions</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\Etdb.ServiceBase.Domain.Abstractions\Etdb.ServiceBase.Domain.Abstractions.csproj" />
   </ItemGroup>
 </Project>

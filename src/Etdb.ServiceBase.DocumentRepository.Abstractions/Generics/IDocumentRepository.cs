@@ -1,5 +1,5 @@
 ﻿using System;
-using Etdb.ServiceBase.DocumentDomain.Abstractions;
+using Etdb.ServiceBase.Domain.Abstractions.Documents;
 
 namespace Etdb.ServiceBase.DocumentRepository.Abstractions.Generics
 {

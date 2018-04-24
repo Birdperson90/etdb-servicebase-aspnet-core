@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Etdb.ServiceBase.EntityDomain.Abstractions;
+using Etdb.ServiceBase.Domain.Abstractions.Entities;
 using Etdb.ServiceBase.EntityRepository.Abstractions.Context;
 using Etdb.ServiceBase.EntityRepository.Abstractions.Generics;
 using Microsoft.EntityFrameworkCore;

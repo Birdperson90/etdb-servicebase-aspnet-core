@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Etdb.ServiceBase.EntityDomain.Abstractions;
+using Etdb.ServiceBase.Domain.Abstractions.Entities;
 
 namespace Etdb.ServiceBase.EntityRepository.Abstractions.Generics
 {
