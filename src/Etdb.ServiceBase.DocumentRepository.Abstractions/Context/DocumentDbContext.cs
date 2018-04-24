@@ -2,7 +2,6 @@
 using System.Reflection;
 using Etdb.ServiceBase.DocumentDomain.Abstractions;
 using Microsoft.Extensions.Options;
-using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Etdb.ServiceBase.DocumentRepository.Abstractions.Context

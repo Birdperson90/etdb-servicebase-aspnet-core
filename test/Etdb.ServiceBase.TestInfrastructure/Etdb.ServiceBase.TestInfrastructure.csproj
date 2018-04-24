@@ -14,6 +14,8 @@
     <ProjectReference Include="..\..\src\Etdb.ServiceBase.ErrorHandling\Etdb.ServiceBase.ErrorHandling.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Cqrs\Validation" />
+    <None Update="xunit.runner.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

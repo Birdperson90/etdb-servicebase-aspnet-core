@@ -147,7 +147,7 @@ namespace Etdb.ServiceBase.Builder.Builder
             return this;
         }
 
-        public ServiceContainerBuilder RegisterInstace<TType>(object @object) where TType : class
+        public ServiceContainerBuilder RegisterInstance<TType>(object @object) where TType : class
         {
             this.containerBuilder.RegisterInstance(@object)
                 .As<TType>()

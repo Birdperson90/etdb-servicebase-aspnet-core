@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Autofac;
 using AutoMapper;
 using Etdb.ServiceBase.Builder.Builder;
 using Etdb.ServiceBase.Cqrs.Abstractions.Bus;
+using Etdb.ServiceBase.Cqrs.Abstractions.Handler;
+using Etdb.ServiceBase.Cqrs.Abstractions.Validation;
 using Etdb.ServiceBase.DocumentRepository.Abstractions.Context;
 using Etdb.ServiceBase.DocumentRepository.Abstractions.Generics;
 using Etdb.ServiceBase.EntityRepository.Abstractions.Generics;
@@ -15,6 +16,7 @@ using Etdb.ServiceBase.TestInfrastructure.Cqrs.Commands;
 using Etdb.ServiceBase.TestInfrastructure.EntityFramework.Context;
 using Etdb.ServiceBase.TestInfrastructure.EntityFramework.Entities;
 using Etdb.ServiceBase.TestInfrastructure.EntityFramework.Repositories;
+using Etdb.ServiceBase.TestInfrastructure.Misc;
 using Etdb.ServiceBase.TestInfrastructure.MongoDb.Context;
 using Etdb.ServiceBase.TestInfrastructure.MongoDb.Documents;
 using Etdb.ServiceBase.TestInfrastructure.MongoDb.Repositories;
@@ -24,8 +26,6 @@ using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using MongoDB.Bson;
-using MongoDB.Driver;
 using Xunit;
 
 namespace Etdb.ServiceBase.Builder.IntegrationTests
@@ -82,7 +82,7 @@ namespace Etdb.ServiceBase.Builder.IntegrationTests
         [Fact]
         public void ServiceContainerBuilder_UseGenericDocumentRepositoryPatternValidInput_ExpectInstances()
         {
-            services.AddOptions();
+            this.services.AddOptions();
             
             this.services.Configure<DocumentDbContextOptions>(options =>
             {
@@ -152,14 +152,130 @@ namespace Etdb.ServiceBase.Builder.IntegrationTests
         }
 
         [Fact]
-        public void ServiceContainerBuilder_UseCqrs_ExpectInstances()
+        public void ServiceContainerBuilder_UseCqrsValidInput_ExpectInstances()
         {
             this.containerBuilder.UseCqrs(typeof(SimpleVoidCommand).Assembly);
             this.BuildContainer();
             
             Assert.True(this.container.IsRegistered<IMediator>());
             Assert.True(this.container.IsRegistered<IMediatorHandler>());
+            
+            Assert.True(this.container.IsRegistered<IVoidCommandValidation<ComplexVoidCommand>>());
+            Assert.True(this.container.IsRegistered<IResponseCommandValidation<ComplexResponseCommand, int>>());
+            
+            Assert.True(this.container.IsRegistered<IResponseCommandHandler<SimpleResponseCommand, int>>());
+            Assert.True(this.container.IsRegistered<IVoidCommandHandler<SimpleVoidCommand>>());
+            
+            Assert.True(this.container.IsRegistered<IResponseCommandHandler<ComplexResponseCommand, int>>());
+            Assert.True(this.container.IsRegistered<IVoidCommandHandler<ComplexVoidCommand>>());
         }
+        
+        public void ServiceContainerBuilder_UseCqrsInvalidInput_ExpectException()
+        {
+            Assert.Throws<ArgumentException>(() => this.containerBuilder.UseCqrs());
+        }
+
+        public void ServiceContainerBuilder_RegisterTypeAsSingleton_ExpectInstances()
+        {
+            this.containerBuilder.RegisterTypeAsSingleton<SomeClass, ISomeInterface>();
+            this.BuildContainer();
+            
+            Assert.True(this.container.IsRegistered<ISomeInterface>());
+
+            ISomeInterface firstInstance = null;
+            ISomeInterface secondInstance = null;
+
+            using (var scope = this.container.BeginLifetimeScope())
+            {
+                firstInstance = scope.Resolve<ISomeInterface>();
+            }
+
+            using (var scope = this.container.BeginLifetimeScope())
+            {
+                secondInstance = scope.Resolve<ISomeInterface>();
+            }
+            
+            Assert.Equal(firstInstance, secondInstance);
+        }
+        
+        [Fact]
+        public void ServiceContainerBuilder_RegisterTypePerDependency_ExpectInstances()
+        {
+            this.containerBuilder.RegisterTypePerDependency<SomeClass, ISomeInterface>();
+            this.BuildContainer();
+            
+            Assert.True(this.container.IsRegistered<ISomeInterface>());
+
+            ISomeInterface firstInstance = null;
+            ISomeInterface secondInstance = null;
+
+            using (var scope = this.container.BeginLifetimeScope())
+            {
+                firstInstance = scope.Resolve<ISomeInterface>();
+            }
+
+            using (var scope = this.container.BeginLifetimeScope())
+            {
+                secondInstance = scope.Resolve<ISomeInterface>();
+            }
+            
+            Assert.NotEqual(firstInstance, secondInstance);
+        }
+        
+        [Fact]
+        public void ServiceContainerBuilder_RegisterTypePerLifetimeScope_ExpectInstances()
+        {
+            this.containerBuilder.RegisterTypePerLifetimeScope<SomeClass, ISomeInterface>();
+            this.BuildContainer();
+            
+            Assert.True(this.container.IsRegistered<ISomeInterface>());
+
+            ISomeInterface firstScopeInstanceOne = null;
+            ISomeInterface firstScopeInstanceTwo = null;
+            ISomeInterface secondScopeInstanceOne = null;
+            ISomeInterface secondScopeInstanceTwo = null;
+
+            using (var scope = this.container.BeginLifetimeScope())
+            {
+                firstScopeInstanceOne = scope.Resolve<ISomeInterface>();
+                firstScopeInstanceTwo = scope.Resolve<ISomeInterface>();
+            }
+
+            using (var scope = this.container.BeginLifetimeScope())
+            {
+                secondScopeInstanceOne = scope.Resolve<ISomeInterface>();
+                secondScopeInstanceTwo = scope.Resolve<ISomeInterface>();
+            }
+            
+            Assert.NotEqual(firstScopeInstanceOne, secondScopeInstanceOne);
+            Assert.Equal(firstScopeInstanceOne, firstScopeInstanceTwo);
+            Assert.Equal(secondScopeInstanceOne, secondScopeInstanceTwo);
+        }
+        
+        [Fact]
+        public void ServiceContainerBuilder_RegisterInstance_ExpectInstances()
+        {
+            this.containerBuilder.RegisterInstance<ISomeInterface>(new SomeClass());
+            this.BuildContainer();
+            
+            Assert.True(this.container.IsRegistered<ISomeInterface>());
+
+            ISomeInterface firstInstance = null;
+            ISomeInterface secondInstance = null;
+
+            using (var scope = this.container.BeginLifetimeScope())
+            {
+                firstInstance = scope.Resolve<ISomeInterface>();
+            }
+
+            using (var scope = this.container.BeginLifetimeScope())
+            {
+                secondInstance = scope.Resolve<ISomeInterface>();
+            }
+            
+            Assert.Equal(firstInstance, secondInstance);
+        }
+        
 
         private void BuildContainer()
         {

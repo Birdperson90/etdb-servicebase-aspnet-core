@@ -4,6 +4,6 @@ namespace Etdb.ServiceBase.TestInfrastructure.Cqrs.Commands
 {
     public class ComplexResponseCommand : IResponseCommand<int>
     {
-        
+        public int Value { get; set; }
     }
 }
