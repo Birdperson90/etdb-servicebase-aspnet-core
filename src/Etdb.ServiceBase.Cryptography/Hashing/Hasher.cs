@@ -9,9 +9,12 @@ namespace Etdb.ServiceBase.Cryptography.Hashing
     {
         public string CreateSaltedHash(string unhashed, byte[] salt)
         {
-            if (unhashed == null) throw new ArgumentNullException(nameof(unhashed));
+            if (unhashed == null || string.IsNullOrWhiteSpace(unhashed))
+            {
+                throw new ArgumentException(nameof(unhashed));
+            }
 
-            if (salt == null) throw new ArgumentNullException(nameof(salt));
+            if (salt == null ) throw new ArgumentNullException(nameof(salt));
 
             return Convert.ToBase64String(KeyDerivation.Pbkdf2(unhashed, 
                 salt, KeyDerivationPrf.HMACSHA512, 10000, 256 / 8));

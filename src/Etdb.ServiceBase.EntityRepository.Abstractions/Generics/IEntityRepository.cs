@@ -5,8 +5,8 @@ using Etdb.ServiceBase.EntityDomain.Abstractions;
 
 namespace Etdb.ServiceBase.EntityRepository.Abstractions.Generics
 {
-    public interface IEntityRepository<TEntity, TKey> : IReadEntityRepository<TEntity, TKey>, 
-        IWriteEntityRepository<TEntity, TKey> where TEntity : class, IEntity<TKey>, new() where TKey : IEquatable<TKey>
+    public interface IEntityRepository<TEntity, TId> : IReadEntityRepository<TEntity, TId>, 
+        IWriteEntityRepository<TEntity, TId> where TEntity : class, IEntity<TId>, new() where TId : IEquatable<TId>
     {
         IQueryable<TEntity> GetQueryAble(bool noTracking = false);
         

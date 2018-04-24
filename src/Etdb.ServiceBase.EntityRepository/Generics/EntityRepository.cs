@@ -10,9 +10,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Etdb.ServiceBase.EntityRepository.Generics
 {
-    public abstract class EntityRepository<TEntity, TKey> : IEntityRepository<TEntity, TKey>
-        where TEntity : class, IEntity<TKey>, new()
-        where TKey : IEquatable<TKey>
+    public abstract class EntityRepository<TEntity, TId> : IEntityRepository<TEntity, TId>
+        where TEntity : class, IEntity<TId>, new()
+        where TId : IEquatable<TId>
     {
         private readonly EntityDbContext context;
 
@@ -74,26 +74,26 @@ namespace Etdb.ServiceBase.EntityRepository.Generics
                 .ConfigureAwait(false);
         }
 
-        public virtual TEntity Find(TKey key)
+        public virtual TEntity Find(TId key)
         {
             return this.CreateQuery()
                 .FirstOrDefault(entity => entity.Id.Equals(key));
         }
 
-        public virtual async Task<TEntity> FindAsync(TKey key)
+        public virtual async Task<TEntity> FindAsync(TId key)
         {
             return await this.CreateQuery()
                 .FirstOrDefaultAsync(entity => entity.Id.Equals(key))
                 .ConfigureAwait(false);
         }
 
-        public virtual TEntity Find(TKey key, params Expression<Func<TEntity, object>>[] includes)
+        public virtual TEntity Find(TId key, params Expression<Func<TEntity, object>>[] includes)
         {
             return this.BuildIncludes(includes)
                 .FirstOrDefault(entity => entity.Id.Equals(key));
         }
 
-        public virtual async Task<TEntity> FindAsync(TKey key, params Expression<Func<TEntity, object>>[] includes)
+        public virtual async Task<TEntity> FindAsync(TId key, params Expression<Func<TEntity, object>>[] includes)
         {
             return await this.BuildIncludes(includes)
                 .FirstOrDefaultAsync(entity => entity.Id.Equals(key))

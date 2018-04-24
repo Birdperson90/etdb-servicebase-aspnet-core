@@ -18,8 +18,8 @@ namespace Etdb.ServiceBase.DocumentRepository.Abstractions.Context
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public IMongoDatabase Database { get; }
 
-        public IMongoCollection<TDocument> GetCollection<TDocument, TKey>(string collectionName = null, 
-            string partitionKey = null) where TDocument : class, IDocument<TKey> where TKey : IEquatable<TKey>
+        public IMongoCollection<TDocument> GetCollection<TDocument, TId>(string collectionName = null, 
+            string partitionKey = null) where TDocument : class, IDocument<TId> where TId : IEquatable<TId>
         {
             var possibleCollectionName = string.IsNullOrWhiteSpace(collectionName)
                 ? $"{typeof(TDocument).GetTypeInfo().Name}s"

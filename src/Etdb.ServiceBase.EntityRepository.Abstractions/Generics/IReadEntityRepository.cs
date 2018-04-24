@@ -6,8 +6,8 @@ using Etdb.ServiceBase.EntityDomain.Abstractions;
 
 namespace Etdb.ServiceBase.EntityRepository.Abstractions.Generics
 {
-    public interface IReadEntityRepository<TEntity, in TKey> where TEntity : class, IEntity<TKey>, new()
-        where TKey : IEquatable<TKey>
+    public interface IReadEntityRepository<TEntity, in TId> where TEntity : class, IEntity<TId>, new()
+        where TId : IEquatable<TId>
     {
         IEnumerable<TEntity> GetAll();
         
@@ -27,13 +27,13 @@ namespace Etdb.ServiceBase.EntityRepository.Abstractions.Generics
         Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> predicate,
             params Expression<Func<TEntity, object>>[] includes);
 
-        TEntity Find(TKey key);
+        TEntity Find(TId key);
 
-        Task<TEntity> FindAsync(TKey key);
+        Task<TEntity> FindAsync(TId key);
         
-        TEntity Find(TKey key, params Expression<Func<TEntity, object>>[] includes);
+        TEntity Find(TId key, params Expression<Func<TEntity, object>>[] includes);
 
-        Task<TEntity> FindAsync(TKey key, params Expression<Func<TEntity, object>>[] includes);
+        Task<TEntity> FindAsync(TId key, params Expression<Func<TEntity, object>>[] includes);
 
         TEntity Find(Expression<Func<TEntity, bool>> predicate);
         

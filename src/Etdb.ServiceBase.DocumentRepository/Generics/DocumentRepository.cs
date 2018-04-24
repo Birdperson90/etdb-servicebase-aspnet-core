@@ -9,9 +9,9 @@ using MongoDB.Driver;
 
 namespace Etdb.ServiceBase.DocumentRepository.Generics
 {
-    public abstract class DocumentRepository<TDocument, TKey> : IDocumentRepository<TDocument, TKey> 
-        where TDocument : class, IDocument<TKey>, new()
-        where TKey : IEquatable<TKey>
+    public abstract class DocumentRepository<TDocument, TId> : IDocumentRepository<TDocument, TId> 
+        where TDocument : class, IDocument<TId>, new()
+        where TId : IEquatable<TId>
     {
         private readonly DocumentDbContext context;
 
@@ -38,7 +38,7 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
             return await qursor.ToListAsync().ConfigureAwait(false);
         }
 
-        public virtual async Task<TDocument> FindAsync(TKey id, string collectionName = null, string partitionKey = null)
+        public virtual async Task<TDocument> FindAsync(TId id, string collectionName = null, string partitionKey = null)
         {
             return await this.GetCollection(collectionName)
                 .Find(document => document.Id.Equals(id))
@@ -73,7 +73,7 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
                    editResult.ModifiedCount == 0;
         }
 
-        public virtual async Task<bool> DeleteAsync(TKey id, string collectionName = null, string partitionKey = null)
+        public virtual async Task<bool> DeleteAsync(TId id, string collectionName = null, string partitionKey = null)
         {
             var deleteResult = await this.GetCollection(collectionName)
                 .DeleteOneAsync(document => document.Id.Equals(id))
@@ -84,7 +84,7 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
 
         private IMongoCollection<TDocument> GetCollection(string collectionName = null, string partitionKey = null)
         {
-            return this.context.GetCollection<TDocument, TKey>(collectionName, partitionKey);
+            return this.context.GetCollection<TDocument, TId>(collectionName, partitionKey);
         }
     }
 }
