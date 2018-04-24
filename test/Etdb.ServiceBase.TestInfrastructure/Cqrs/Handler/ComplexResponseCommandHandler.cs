@@ -23,7 +23,9 @@ namespace Etdb.ServiceBase.TestInfrastructure.Cqrs.Handler
                 throw new GeneralValidationException("Error", validationResult.Errors.Select(error => error.ErrorMessage).ToArray());
             }
 
-            return 0;
+            request.Value = 5;
+
+            return 10;
         }
     }
 }

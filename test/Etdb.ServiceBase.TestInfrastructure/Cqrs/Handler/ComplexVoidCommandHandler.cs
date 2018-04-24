@@ -22,6 +22,8 @@ namespace Etdb.ServiceBase.TestInfrastructure.Cqrs.Handler
             {
                 throw new GeneralValidationException("", new[]{""});
             }
+
+            request.Value = 5;
         }
     }
 }

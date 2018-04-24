@@ -9,6 +9,8 @@ namespace Etdb.ServiceBase.TestInfrastructure.Cqrs.Handler
     {
         public Task Handle(SimpleVoidCommand request, CancellationToken cancellationToken)
         {
+            request.Value = 5;
+            
             return Task.CompletedTask;
         }
     }

@@ -19,9 +19,9 @@ namespace Etdb.ServiceBase.Builder.Builder
     {
         private readonly ContainerBuilder containerBuilder;
 
-        public ServiceContainerBuilder(ContainerBuilder containerBuilder)
+        public ServiceContainerBuilder(ContainerBuilder containerBuilder = null)
         {
-            this.containerBuilder = containerBuilder;
+            this.containerBuilder = containerBuilder ?? new ContainerBuilder();
         }
 
         public ServiceContainerBuilder UseConfiguration(IConfigurationRoot configurationRoot)
@@ -156,14 +156,9 @@ namespace Etdb.ServiceBase.Builder.Builder
             return this;
         }
 
-        public IContainer Build(IServiceCollection services)
+        public IContainer Build(IServiceCollection services = null)
         {
-            if (services == null)
-            {
-                throw new ArgumentNullException(nameof(services));
-            }
-            
-            this.containerBuilder.Populate(services);
+            this.containerBuilder.Populate(services ?? new ServiceCollection());
             return this.containerBuilder
                 .Build();
         }

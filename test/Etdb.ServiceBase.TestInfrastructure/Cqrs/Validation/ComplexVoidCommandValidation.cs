@@ -9,7 +9,7 @@ namespace Etdb.ServiceBase.TestInfrastructure.Cqrs.Validation
         public ComplexVoidCommandValidation()
         {
             this.RuleFor(command => command.Value)
-                .NotEqual(0)
+                .Equal(0)
                 .WithMessage("Must be zero!");
         }
     }
