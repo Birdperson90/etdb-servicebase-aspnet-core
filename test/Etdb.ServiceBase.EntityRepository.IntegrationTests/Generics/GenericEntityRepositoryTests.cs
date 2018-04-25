@@ -40,7 +40,7 @@ namespace Etdb.ServiceBase.EntityRepository.IntegrationTests.Generics
                 Assert.NotNull(readList);
                 Assert.True(readList.Todos.Count == 3);
 
-                var newTitle = $"NewTitel_{key}";
+                var newTitle = $"NewTitle_{key}";
 
                 readList.Titel = newTitle;
                 readList.Todos.First().Done = true;
@@ -55,10 +55,30 @@ namespace Etdb.ServiceBase.EntityRepository.IntegrationTests.Generics
                 Assert.Equal(newTitle, readList.Titel);
                 Assert.True(readList.Todos.First().Done);
             }
-
+            
             var allTodoLists = await this.repository.GetAllAsync();
             
             Assert.True(createLists.Select(todoList => todoList.Id).All(createId => allTodoLists.Select(todoList => todoList.Id).Contains(createId)));
+
+            foreach (var key in addedToIdsByListId.Keys)
+            {
+                var readList = await this.repository.FindAsync(key);
+                
+                Assert.NotNull(readList);
+                
+                readList = await this.repository.FindAsync(list => list.Titel == $"NewTitle_{ key }");
+                
+                Assert.NotNull(readList);
+                
+                this.repository.Delete(readList);
+
+                var deleted = await this.repository.EnsureChangesAsync();
+                
+                Assert.True(deleted);
+            }
+            
+            allTodoLists = await this.repository.GetAllAsync();
+            Assert.False(allTodoLists.Select(todoList => todoList.Id).Any(id => createLists.Select(todoList => todoList.Id).Contains(id)));
         }
 
         private static ICollection<TodoListEntity> CreateRandom(int lists = 1, int children = 0)
