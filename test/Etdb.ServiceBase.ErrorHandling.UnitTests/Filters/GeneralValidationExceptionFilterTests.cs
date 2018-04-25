@@ -39,10 +39,12 @@ namespace Etdb.ServiceBase.ErrorHandling.UnitTests.Filters
             var exception = new InvalidOperationException();
 
             this.contextMock.ExceptionContext.Exception = exception;
+            var initialStatusCode = this.contextMock.ExceptionContext.HttpContext.Response.StatusCode;
             
             this.filter.OnException(this.contextMock.ExceptionContext);
             
             Assert.False(this.contextMock.ExceptionContext.ExceptionHandled);
+            Assert.Equal(initialStatusCode, this.contextMock.ExceptionContext.HttpContext.Response.StatusCode);
         }
     }
 }
