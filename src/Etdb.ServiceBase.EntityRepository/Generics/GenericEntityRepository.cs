@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Etdb.ServiceBase.EntityRepository.Generics
 {
-    public abstract class GenericEntityRepository<TEntity, TId> : IEntityRepository<TEntity, TId>
+    public abstract class GenericEntityRepository<TEntity, TId> : IEntityRepository<TEntity, TId>, IDisposable
         where TEntity : class, IEntity<TId>, new()
         where TId : IEquatable<TId>
     {
@@ -183,6 +183,12 @@ namespace Etdb.ServiceBase.EntityRepository.Generics
                 .Select(entity => entity.Id)
                 .CountAsync()
                 .ConfigureAwait(false);
+        }
+
+        public void Dispose()
+        {
+            this.context?.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         private IQueryable<TEntity> BuildIncludes(params Expression<Func<TEntity, object>>[] includes)

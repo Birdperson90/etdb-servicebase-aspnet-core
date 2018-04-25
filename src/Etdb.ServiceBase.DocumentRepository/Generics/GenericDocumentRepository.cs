@@ -9,7 +9,7 @@ using MongoDB.Driver;
 
 namespace Etdb.ServiceBase.DocumentRepository.Generics
 {
-    public abstract class GenericDocumentRepository<TDocument, TId> : IDocumentRepository<TDocument, TId> 
+    public abstract class GenericDocumentRepository<TDocument, TId> : IDocumentRepository<TDocument, TId>, IDisposable
         where TDocument : class, IDocument<TId>, new()
         where TId : IEquatable<TId>
     {
@@ -80,6 +80,11 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
                 .ConfigureAwait(false);
 
             return deleteResult.DeletedCount == 0;
+        }
+        
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
         }
 
         private IMongoCollection<TDocument> GetCollection(string collectionName = null, string partitionKey = null)
