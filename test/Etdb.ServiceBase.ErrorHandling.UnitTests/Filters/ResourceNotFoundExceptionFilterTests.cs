@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Net;
-using System.Threading.Tasks;
 using Etdb.ServiceBase.ErrorHandling.Abstractions.Exceptions;
 using Etdb.ServiceBase.ErrorHandling.Filters;
 using Etdb.ServiceBase.TestInfrastructure.Mocks;
-using Microsoft.AspNetCore.Mvc;
 using Xunit;
 
 namespace Etdb.ServiceBase.ErrorHandling.UnitTests.Filters

@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Net;
-using Etdb.ServiceBase.ErrorHandling.Abstractions.Exceptions;
 using Etdb.ServiceBase.ErrorHandling.Filters;
 using Etdb.ServiceBase.TestInfrastructure.Mocks;
-using Microsoft.AspNetCore.Hosting;
-using MongoDB.Driver;
 using Xunit;
 
 namespace Etdb.ServiceBase.ErrorHandling.UnitTests.Filters
