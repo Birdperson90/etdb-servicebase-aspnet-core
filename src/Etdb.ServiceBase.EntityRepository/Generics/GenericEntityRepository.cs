@@ -10,13 +10,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Etdb.ServiceBase.EntityRepository.Generics
 {
-    public abstract class EntityRepository<TEntity, TId> : IEntityRepository<TEntity, TId>
+    public abstract class GenericEntityRepository<TEntity, TId> : IEntityRepository<TEntity, TId>
         where TEntity : class, IEntity<TId>, new()
         where TId : IEquatable<TId>
     {
         private readonly EntityDbContext context;
 
-        protected EntityRepository(EntityDbContext context)
+        protected GenericEntityRepository(EntityDbContext context)
         {
             this.context = context;
         }

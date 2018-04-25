@@ -9,13 +9,13 @@ using MongoDB.Driver;
 
 namespace Etdb.ServiceBase.DocumentRepository.Generics
 {
-    public abstract class DocumentRepository<TDocument, TId> : IDocumentRepository<TDocument, TId> 
+    public abstract class GenericDocumentRepository<TDocument, TId> : IDocumentRepository<TDocument, TId> 
         where TDocument : class, IDocument<TId>, new()
         where TId : IEquatable<TId>
     {
         private readonly DocumentDbContext context;
 
-        protected DocumentRepository(DocumentDbContext context)
+        protected GenericDocumentRepository(DocumentDbContext context)
         {
             this.context = context;
         }
