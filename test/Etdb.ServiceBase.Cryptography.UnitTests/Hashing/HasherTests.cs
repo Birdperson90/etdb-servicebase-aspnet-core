@@ -54,7 +54,7 @@ namespace Etdb.ServiceBase.Cryptography.UnitTests.Hashing
         public void Hasher_GenerateSalt_ExpectByteArray()
         {
             var salt = this.hasher.GenerateSalt();
-            Assert.True(salt.Length > 0);
+            Assert.Equal(16, salt.Length);
         }
     }
 }

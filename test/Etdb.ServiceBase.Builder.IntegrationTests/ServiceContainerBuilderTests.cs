@@ -9,7 +9,6 @@ using Etdb.ServiceBase.Cqrs.Abstractions.Validation;
 using Etdb.ServiceBase.DocumentRepository.Abstractions.Context;
 using Etdb.ServiceBase.DocumentRepository.Abstractions.Generics;
 using Etdb.ServiceBase.EntityRepository.Abstractions.Generics;
-using Etdb.ServiceBase.TestInfrastructure.AutoMapper.DataTransferObjects;
 using Etdb.ServiceBase.TestInfrastructure.AutoMapper.Profiles;
 using Etdb.ServiceBase.TestInfrastructure.AutoMapper.Resolver;
 using Etdb.ServiceBase.TestInfrastructure.Cqrs.Commands;

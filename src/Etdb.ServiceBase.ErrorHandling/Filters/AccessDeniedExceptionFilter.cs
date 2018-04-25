@@ -6,26 +6,26 @@ using Microsoft.Extensions.Logging;
 
 namespace Etdb.ServiceBase.ErrorHandling.Filters
 {
-    public class ResourceNotFoundExceptionFilter : IExceptionFilter
+    public class AccessDeniedExceptionFilter : IExceptionFilter
     {
-        private readonly ILogger<ResourceNotFoundExceptionFilter> logger;
+        private readonly ILogger<AccessDeniedExceptionFilter> logger;
 
-        public ResourceNotFoundExceptionFilter(ILogger<ResourceNotFoundExceptionFilter> logger)
+        public AccessDeniedExceptionFilter(ILogger<AccessDeniedExceptionFilter> logger)
         {
             this.logger = logger;
         }
-
+        
         public void OnException(ExceptionContext context)
         {
-            if (!(context.Exception is ResourceNotFoundException))
+            if (!(context.Exception is AccessDeniedException))
             {
                 return;
             }
-
-            this.logger.LogError(context.Exception, "Resource not found!");
+            
+            this.logger.LogError(context.Exception, context.Exception.Message);
 
             context.ExceptionHandled = true;
-            context.HttpContext.Response.StatusCode = (int) HttpStatusCode.NotFound;
+            context.HttpContext.Response.StatusCode = (int) HttpStatusCode.Forbidden;
             context.Result = new ObjectResult(new
             {
                 context.Exception.Message
