@@ -212,7 +212,7 @@ namespace Etdb.ServiceBase.DocumentRepository.IntegrationTests.Generics
 
             todoLists = readLists as TodoListDocument[] ?? readLists.ToArray();
             
-            Assert.Equal(0, todoLists.Length);
+            Assert.Empty(todoLists);
         }
         
         [Fact]
@@ -243,7 +243,7 @@ namespace Etdb.ServiceBase.DocumentRepository.IntegrationTests.Generics
 
             todoLists = readLists as TodoListDocument[] ?? readLists.ToArray();
             
-            Assert.Equal(0, todoLists.Length);
+            Assert.Empty(todoLists);
         }
 
         [Fact]
