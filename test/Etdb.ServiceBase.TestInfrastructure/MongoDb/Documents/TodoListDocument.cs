@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Etdb.ServiceBase.Domain.Abstractions.Documents;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Etdb.ServiceBase.TestInfrastructure.MongoDb.Documents
 {
@@ -11,6 +12,7 @@ namespace Etdb.ServiceBase.TestInfrastructure.MongoDb.Documents
             this.Todos = new List<TodoDocument>();
         }
         
+        [BsonId]
         public Guid Id { get; set; }
         
         public string Titel { get; set; }

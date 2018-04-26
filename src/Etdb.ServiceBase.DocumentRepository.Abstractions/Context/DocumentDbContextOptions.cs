@@ -5,5 +5,7 @@
         public string ConnectionString { get; set; }
 
         public string DatabaseName { get; set; }
+
+        public bool UseCamelCaseConvention { get; set; }
     }
 }

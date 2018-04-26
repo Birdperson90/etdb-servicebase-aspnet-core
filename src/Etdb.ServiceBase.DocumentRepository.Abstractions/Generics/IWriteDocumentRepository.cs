@@ -8,7 +8,10 @@ namespace Etdb.ServiceBase.DocumentRepository.Abstractions.Generics
         where TDocument : class, IDocument<TId> where TId : IEquatable<TId>
     {
         Task AddAsync(TDocument document, string collectionName = null, string partitionKey = null);
+        void Add(TDocument document, string collectionName = null, string partitionKey = null);
         Task<bool> EditAsync(TDocument document, string collectionName = null, string partitionKey = null);
+        bool Edit(TDocument document, string collectionName = null, string partitionKey = null);
         Task<bool> DeleteAsync(TId id, string collectionName = null, string partitionKey = null);
+        bool Delete(TId id, string collectionName = null, string partitionKey = null);
     }
 }
