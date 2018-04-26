@@ -110,10 +110,24 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
                 .ConfigureAwait(false);
         }
 
+        public virtual async Task AddManyAsync(IEnumerable<TDocument> documents, string collectionName = null, string partionKey = null)
+        {
+            await this.GetCollection(collectionName, partionKey)
+                .InsertManyAsync(documents)
+                .ConfigureAwait(false);
+        }
+
         public virtual void Add(TDocument document, string collectionName = null, string partitionKey = null)
         {
             this.GetCollection(collectionName, partitionKey)
                 .InsertOne(document);
+        }
+
+        public virtual void AddMany(IEnumerable<TDocument> documents, string collectionName = null,
+            string partionKey = null)
+        {
+            this.GetCollection(collectionName, partionKey)
+                .InsertMany(documents);
         }
 
         public virtual async Task<bool> EditAsync(TDocument document, string collectionName = null, string partitionKey = null)
@@ -141,6 +155,16 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
 
             return deleteResult.DeletedCount == 1;
         }
+        
+        public virtual async Task<bool> DeleteManyAsync(Expression<Func<TDocument, bool>> predicate, string collectionName = null,
+            string partionKey = null)
+        {
+            var deleteResult = await this.GetCollection(collectionName, partionKey)
+                .DeleteManyAsync(predicate)
+                .ConfigureAwait(false);
+
+            return deleteResult.DeletedCount > 0;
+        }
 
         public bool Delete(TId id, string collectionName = null, string partitionKey = null)
         {
@@ -148,6 +172,15 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
                 .DeleteOne(document => document.Id.Equals(id));
 
             return deleteResult.DeletedCount == 1;
+        }
+        
+        public virtual bool DeleteMany(Expression<Func<TDocument, bool>> predicate, string collectionName = null,
+            string partionKey = null)
+        {
+            var deleteResult = this.GetCollection(collectionName, partionKey)
+                .DeleteMany(predicate);
+
+            return deleteResult.DeletedCount > 0;
         }
 
         public void Dispose()

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Etdb.ServiceBase.DocumentRepository.Abstractions.Context;
 using Etdb.ServiceBase.TestInfrastructure.MongoDb.Context;
@@ -181,6 +182,68 @@ namespace Etdb.ServiceBase.DocumentRepository.IntegrationTests.Generics
             {
                 Assert.DoesNotContain(createIds, id => id == allId);
             }
+        }
+
+        [Fact]
+        public async Task GenericEntityRepositoryTests_CreateDeleteBatchedAsync_ExpectSuccess()
+        {
+            var createList = CreateRandom(5);
+
+            foreach (var listDocument in createList)
+            {
+                listDocument.Titel = $"ToDeleteAsync_{listDocument.Id}";
+            }
+
+            await this.repository.AddManyAsync(createList);
+
+            Expression<Func<TodoListDocument, bool>> predicate = list => list.Titel.StartsWith("ToDeleteAsync_");
+
+            var readLists = await this.repository.FindAllAsync(predicate);
+
+            var todoLists = readLists as TodoListDocument[] ?? readLists.ToArray();
+            
+            Assert.Equal(5, todoLists.Length);
+
+            var deleted = await this.repository.DeleteManyAsync(predicate);
+            
+            Assert.True(deleted);
+            
+            readLists = await this.repository.FindAllAsync(predicate);
+
+            todoLists = readLists as TodoListDocument[] ?? readLists.ToArray();
+            
+            Assert.Equal(0, todoLists.Length);
+        }
+        
+        [Fact]
+        public void GenericEntityRepositoryTests_CreateDeleteBatched_ExpectSuccess()
+        {
+            var createList = CreateRandom(5);
+
+            foreach (var listDocument in createList)
+            {
+                listDocument.Titel = $"ToDelete_{listDocument.Id}";
+            }
+
+            this.repository.AddMany(createList);
+
+            Expression<Func<TodoListDocument, bool>> predicate = list => list.Titel.StartsWith("ToDelete_");
+
+            var readLists = this.repository.FindAll(predicate);
+
+            var todoLists = readLists as TodoListDocument[] ?? readLists.ToArray();
+            
+            Assert.Equal(5, todoLists.Length);
+
+            var deleted = this.repository.DeleteMany(predicate);
+            
+            Assert.True(deleted);
+            
+            readLists = this.repository.FindAll(predicate);
+
+            todoLists = readLists as TodoListDocument[] ?? readLists.ToArray();
+            
+            Assert.Equal(0, todoLists.Length);
         }
 
         [Fact]
