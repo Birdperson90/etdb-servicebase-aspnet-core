@@ -21,8 +21,7 @@ namespace Etdb.ServiceBase.DocumentRepository.IntegrationTests.Generics
             this.repository = new TodoListDocumentRepository(new TestDocumentDbContext(Options.Create(new DocumentDbContextOptions
             {
                 ConnectionString = "mongodb://admin:admin@localhost:27017",
-                DatabaseName = "Etdb_ServiceBase_Tests",
-                UseCamelCaseConvention = true
+                DatabaseName = "Etdb_ServiceBase_Tests"
             })));
         }
         

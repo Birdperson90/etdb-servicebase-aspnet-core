@@ -13,10 +13,15 @@ namespace Etdb.ServiceBase.DocumentRepository.Abstractions.Context
             var client = new MongoClient(options.Value.ConnectionString);
             
             this.Database = client.GetDatabase(options.Value.DatabaseName);
-            
+        }
+
+        public abstract void Configure();
+
+        protected static void UseCamelCaseConvention()
+        {
             ConventionRegistry.Register(DocumentDbContext.CamelCase, 
                 new ConventionPack { new CamelCaseElementNameConvention() }, 
-                type => options.Value.UseCamelCaseConvention);
+                type => true);
         }
         
         public IMongoDatabase Database { get; }
