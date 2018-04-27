@@ -11,11 +11,11 @@ namespace Etdb.ServiceBase.DocumentRepository.Abstractions.Generics
     {
         Task AddAsync(TDocument document, string collectionName = null, string partitionKey = null);
 
-        Task AddManyAsync(IEnumerable<TDocument> documents, string collectionName = null, string partionKey = null);
+        Task AddManyAsync(IEnumerable<TDocument> documents, string collectionName = null, string partitionKey = null);
         
         void Add(TDocument document, string collectionName = null, string partitionKey = null);
 
-        void AddMany(IEnumerable<TDocument> documents, string collectionName = null, string partionKey = null);
+        void AddMany(IEnumerable<TDocument> documents, string collectionName = null, string partitionKey = null);
         
         Task<bool> EditAsync(TDocument document, string collectionName = null, string partitionKey = null);
         
@@ -24,11 +24,11 @@ namespace Etdb.ServiceBase.DocumentRepository.Abstractions.Generics
         Task<bool> DeleteAsync(TId id, string collectionName = null, string partitionKey = null);
 
         Task<bool> DeleteManyAsync(Expression<Func<TDocument, bool>> predicate, string collectionName = null,
-            string partionKey = null);
+            string partitionKey = null);
         
         bool Delete(TId id, string collectionName = null, string partitionKey = null);
         
         bool DeleteMany(Expression<Func<TDocument, bool>> predicate, string collectionName = null,
-            string partionKey = null);
+            string partitionKey = null);
     }
 }

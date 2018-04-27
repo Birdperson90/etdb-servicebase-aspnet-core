@@ -15,7 +15,10 @@ namespace Etdb.ServiceBase.TestInfrastructure.MongoDb.Context
         {
             UseCamelCaseConvention();
 
-            this.Database.CreateCollection($"{nameof(TodoListDocument)}s");
+            if (!this.CollectionExists($"{nameof(TodoListDocument)}s"))
+            {
+                this.CreateCollection($"{nameof(TodoListDocument)}s", AutoIndexIdCollectionOptions());
+            }
         }
     }
 }

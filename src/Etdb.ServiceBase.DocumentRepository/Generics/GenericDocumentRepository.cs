@@ -31,9 +31,9 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
                 .CountAsync();
         }
 
-        public virtual int Count(string collectionName = null, string partionKey = null)
+        public virtual int Count(string collectionName = null, string partitionKey = null)
         {
-            return this.GetCollection(collectionName, partionKey)
+            return this.GetCollection(collectionName, partitionKey)
                 .AsQueryable()
                 .Select(document => document.Id)
                 .Count();
@@ -110,9 +110,9 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
                 .ConfigureAwait(false);
         }
 
-        public virtual async Task AddManyAsync(IEnumerable<TDocument> documents, string collectionName = null, string partionKey = null)
+        public virtual async Task AddManyAsync(IEnumerable<TDocument> documents, string collectionName = null, string partitionKey = null)
         {
-            await this.GetCollection(collectionName, partionKey)
+            await this.GetCollection(collectionName, partitionKey)
                 .InsertManyAsync(documents)
                 .ConfigureAwait(false);
         }
@@ -124,9 +124,9 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
         }
 
         public virtual void AddMany(IEnumerable<TDocument> documents, string collectionName = null,
-            string partionKey = null)
+            string partitionKey = null)
         {
-            this.GetCollection(collectionName, partionKey)
+            this.GetCollection(collectionName, partitionKey)
                 .InsertMany(documents);
         }
 
@@ -157,9 +157,9 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
         }
         
         public virtual async Task<bool> DeleteManyAsync(Expression<Func<TDocument, bool>> predicate, string collectionName = null,
-            string partionKey = null)
+            string partitionKey = null)
         {
-            var deleteResult = await this.GetCollection(collectionName, partionKey)
+            var deleteResult = await this.GetCollection(collectionName, partitionKey)
                 .DeleteManyAsync(predicate)
                 .ConfigureAwait(false);
 
@@ -175,9 +175,9 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
         }
         
         public virtual bool DeleteMany(Expression<Func<TDocument, bool>> predicate, string collectionName = null,
-            string partionKey = null)
+            string partitionKey = null)
         {
-            var deleteResult = this.GetCollection(collectionName, partionKey)
+            var deleteResult = this.GetCollection(collectionName, partitionKey)
                 .DeleteMany(predicate);
 
             return deleteResult.DeletedCount > 0;

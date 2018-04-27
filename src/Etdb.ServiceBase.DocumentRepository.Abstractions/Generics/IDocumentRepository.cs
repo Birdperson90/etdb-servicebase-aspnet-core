@@ -9,6 +9,6 @@ namespace Etdb.ServiceBase.DocumentRepository.Abstractions.Generics
     {
         Task<int> CountAsync(string collectionName = null, string partitionKey = null);
 
-        int Count(string collectionName = null, string partionKey = null);
+        int Count(string collectionName = null, string partitionKey = null);
     }
 }
