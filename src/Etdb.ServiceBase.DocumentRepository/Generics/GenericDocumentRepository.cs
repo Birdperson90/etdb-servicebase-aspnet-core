@@ -191,7 +191,7 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
         protected IMongoCollection<TDocument> GetCollection(string collectionName = null, string partitionKey = null)
         {
             var possibleCollectionName = string.IsNullOrWhiteSpace(collectionName)
-                ? $"{typeof(TDocument).GetTypeInfo().Name}s"
+                ? $"{typeof(TDocument).GetTypeInfo().Name.ToLower()}s"
                 : collectionName;
 
             return string.IsNullOrWhiteSpace(partitionKey)
