@@ -56,6 +56,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.EntityRepo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.DocumentRepository.IntegrationTests", "test\Etdb.ServiceBase.DocumentRepository.IntegrationTests\Etdb.ServiceBase.DocumentRepository.IntegrationTests.csproj", "{8C9667A5-D8AE-40D1-B5C8-CC412F2F4E49}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.Extensions", "src\Etdb.ServiceBase.Extensions\Etdb.ServiceBase.Extensions.csproj", "{3C2841FA-EECA-4E06-9359-85F06CFBC5DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -142,6 +144,10 @@ Global
 		{8C9667A5-D8AE-40D1-B5C8-CC412F2F4E49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C9667A5-D8AE-40D1-B5C8-CC412F2F4E49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C9667A5-D8AE-40D1-B5C8-CC412F2F4E49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C2841FA-EECA-4E06-9359-85F06CFBC5DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C2841FA-EECA-4E06-9359-85F06CFBC5DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C2841FA-EECA-4E06-9359-85F06CFBC5DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C2841FA-EECA-4E06-9359-85F06CFBC5DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -167,6 +173,7 @@ Global
 		{54542902-0C6C-49BF-9701-3B5F8883A771} = {3CA06B60-6267-4AE5-91C3-C76838A5C7F4}
 		{AFEEF900-907A-4F53-AFC8-15BF0B3C020C} = {3CA06B60-6267-4AE5-91C3-C76838A5C7F4}
 		{8C9667A5-D8AE-40D1-B5C8-CC412F2F4E49} = {3CA06B60-6267-4AE5-91C3-C76838A5C7F4}
+		{3C2841FA-EECA-4E06-9359-85F06CFBC5DB} = {EC9EFBE9-B329-4C2D-935B-B2E2BEE02807}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2A92CEFB-6720-4D1A-B5CD-C99E8EE59F9E}

@@ -6,6 +6,9 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="7.5.2" />
-    <PackageReference Include="MediatR" Version="4.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Etdb.ServiceBase.ErrorHandling.Abstractions\Etdb.ServiceBase.ErrorHandling.Abstractions.csproj" />
   </ItemGroup>
 </Project>
