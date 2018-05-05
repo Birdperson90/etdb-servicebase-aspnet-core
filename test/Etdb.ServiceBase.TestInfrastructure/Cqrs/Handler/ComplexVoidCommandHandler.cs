@@ -9,7 +9,7 @@ namespace Etdb.ServiceBase.TestInfrastructure.Cqrs.Handler
 {
     public class ComplexVoidCommandHandler : VoidCommandHandler<ComplexVoidCommand>
     {
-        public ComplexVoidCommandHandler(IVoidCommandValidation<ComplexVoidCommand> commandValidation) : 
+        public ComplexVoidCommandHandler(ICommandValidation<ComplexVoidCommand> commandValidation) : 
             base(commandValidation)
         {
         }

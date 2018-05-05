@@ -9,11 +9,11 @@ namespace Etdb.ServiceBase.Cqrs.Handler
     public abstract class VoidCommandHandler<TVoidCommand> : IVoidCommandHandler<TVoidCommand>
         where TVoidCommand : class, IVoidCommand
     {
-        protected readonly IVoidCommandValidation<TVoidCommand> CommandValidation;
+        protected readonly ICommandValidation<TVoidCommand> CommandValidation;
 
-        protected VoidCommandHandler(IVoidCommandValidation<TVoidCommand> commandValidation)
+        protected VoidCommandHandler(ICommandValidation<TVoidCommand> commandValidation)
         {
-            CommandValidation = commandValidation;
+            this.CommandValidation = commandValidation;
         }
 
         public abstract Task Handle(TVoidCommand request, CancellationToken cancellationToken);

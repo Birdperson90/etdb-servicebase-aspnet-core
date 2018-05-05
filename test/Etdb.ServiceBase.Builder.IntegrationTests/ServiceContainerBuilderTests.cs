@@ -159,8 +159,8 @@ namespace Etdb.ServiceBase.Builder.IntegrationTests
             Assert.True(this.container.IsRegistered<IMediator>());
             Assert.True(this.container.IsRegistered<IMediatorHandler>());
             
-            Assert.True(this.container.IsRegistered<IVoidCommandValidation<ComplexVoidCommand>>());
-            Assert.True(this.container.IsRegistered<IResponseCommandValidation<ComplexResponseCommand, int>>());
+            Assert.True(this.container.IsRegistered<ICommandValidation<ComplexVoidCommand>>());
+            Assert.True(this.container.IsRegistered<ICommandValidation<ComplexResponseCommand>>());
             
             Assert.True(this.container.IsRegistered<IResponseCommandHandler<SimpleResponseCommand, int>>());
             Assert.True(this.container.IsRegistered<IVoidCommandHandler<SimpleVoidCommand>>());

@@ -9,11 +9,11 @@ namespace Etdb.ServiceBase.Cqrs.Handler
     public abstract class ResponseCommandHandler<TResponseCommand, TResponse> : IResponseCommandHandler<TResponseCommand, TResponse>
         where TResponseCommand : class, IResponseCommand<TResponse>
     {
-        protected readonly IResponseCommandValidation<TResponseCommand, TResponse> CommandValidation;
+        protected readonly ICommandValidation<TResponseCommand> CommandValidation;
 
-        protected ResponseCommandHandler(IResponseCommandValidation<TResponseCommand, TResponse> commandValidation)
+        protected ResponseCommandHandler(ICommandValidation<TResponseCommand> commandValidation)
         {
-            CommandValidation = commandValidation;
+            this.CommandValidation = commandValidation;
         }
 
         public abstract Task<TResponse> Handle(TResponseCommand request, CancellationToken cancellationToken);

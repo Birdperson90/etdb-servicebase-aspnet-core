@@ -6,7 +6,7 @@ namespace Etdb.ServiceBase.Extensions
 {
     public static class ValidationResultExtensions
     {
-        public static GeneralValidationException CreatValidationException(this ValidationResult validationResult,
+        public static GeneralValidationException GenerateValidationException(this ValidationResult validationResult,
             string primaryMessage = "Error during validation!")
         {
             return new GeneralValidationException(primaryMessage,

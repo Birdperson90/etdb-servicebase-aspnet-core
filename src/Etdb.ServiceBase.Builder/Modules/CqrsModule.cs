@@ -34,8 +34,7 @@ namespace Etdb.ServiceBase.Builder.Modules
                 typeof(IRequestHandler<>),
                 typeof(IRequestHandler<,>),
                 typeof(INotificationHandler<>),
-                typeof(IResponseCommandValidation<,>),
-                typeof(IVoidCommandValidation<>),
+                typeof(ICommandValidation<>),
             };
 
             foreach (var openGenericType in openGenericTypes)

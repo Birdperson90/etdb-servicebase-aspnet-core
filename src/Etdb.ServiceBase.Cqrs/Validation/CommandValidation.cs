@@ -7,10 +7,10 @@ using FluentValidation.Results;
 
 namespace Etdb.ServiceBase.Cqrs.Validation
 {
-    public abstract class ResponseCommandValidation<TResponseCommand, TResponse> : AbstractValidator<TResponseCommand>, IResponseCommandValidation<TResponseCommand, TResponse>
-        where TResponseCommand : class, IResponseCommand<TResponse>
+    public abstract class CommandValidation<TCommand> : AbstractValidator<TCommand>, ICommandValidation<TCommand>
+        where TCommand : class
     {
-        public ValidationResult ValidateCommand(TResponseCommand command)
+        public ValidationResult ValidateCommand(TCommand command)
         {
             if (command == null)
             {
@@ -20,7 +20,7 @@ namespace Etdb.ServiceBase.Cqrs.Validation
             return this.Validate(command);
         }
 
-        public async Task<ValidationResult> ValidateCommandAsync(TResponseCommand command)
+        public async Task<ValidationResult> ValidateCommandAsync(TCommand command)
         {
             if (command == null)
             {

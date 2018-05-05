@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Etdb.ServiceBase.Cqrs.Abstractions.Validation;
 using Etdb.ServiceBase.Cqrs.Handler;
 using Etdb.ServiceBase.ErrorHandling.Abstractions.Exceptions;
@@ -10,7 +11,7 @@ namespace Etdb.ServiceBase.TestInfrastructure.Cqrs.Handler
 {
     public class ComplexResponseCommandHandler : ResponseCommandHandler<ComplexResponseCommand, int>
     {
-        public ComplexResponseCommandHandler(IResponseCommandValidation<ComplexResponseCommand, int> commandValidation) : base(commandValidation)
+        public ComplexResponseCommandHandler(ICommandValidation<ComplexResponseCommand> commandValidation) : base(commandValidation)
         {
         }
 

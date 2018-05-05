@@ -4,9 +4,9 @@ using FluentValidation;
 
 namespace Etdb.ServiceBase.TestInfrastructure.Cqrs.Validation
 {
-    public class ComplexVoidCommandValidation : VoidCommandValidation<ComplexVoidCommand>
+    public class ComplexCommandValidation : CommandValidation<ComplexVoidCommand>
     {
-        public ComplexVoidCommandValidation()
+        public ComplexCommandValidation()
         {
             this.RuleFor(command => command.Value)
                 .Equal(0)

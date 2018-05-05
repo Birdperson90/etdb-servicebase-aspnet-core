@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace Etdb.ServiceBase.TestInfrastructure.Cqrs.Validation
 {
-    public class ComplexResponseCommandValidation : ResponseCommandValidation<ComplexResponseCommand, int>
+    public class ComplexResponseCommandValidation : CommandValidation<ComplexResponseCommand>
     {
         public ComplexResponseCommandValidation()
         {
