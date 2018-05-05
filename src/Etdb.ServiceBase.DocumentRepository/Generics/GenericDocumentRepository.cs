@@ -183,11 +183,18 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
             return deleteResult.DeletedCount > 0;
         }
 
+        public virtual IMongoQueryable<TDocument> Query(string collectionName = null, string partitionKey = null)
+        {
+            return this.GetCollection(collectionName, partitionKey)
+                .AsQueryable();
+        }
+
         public void Dispose()
         {
             GC.SuppressFinalize(this);
         }
-
+        
+        // ReSharper disable once MemberCanBePrivate.Global
         protected IMongoCollection<TDocument> GetCollection(string collectionName = null, string partitionKey = null)
         {
             var possibleCollectionName = string.IsNullOrWhiteSpace(collectionName)

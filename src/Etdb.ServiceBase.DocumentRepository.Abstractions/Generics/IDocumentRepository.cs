@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Etdb.ServiceBase.Domain.Abstractions.Documents;
+using MongoDB.Driver.Linq;
 
 namespace Etdb.ServiceBase.DocumentRepository.Abstractions.Generics
 {
@@ -10,5 +12,7 @@ namespace Etdb.ServiceBase.DocumentRepository.Abstractions.Generics
         Task<int> CountAsync(string collectionName = null, string partitionKey = null);
 
         int Count(string collectionName = null, string partitionKey = null);
+
+        IMongoQueryable<TDocument> Query(string collectionName = null, string partitionKey = null);
     }
 }
