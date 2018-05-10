@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Etdb.ServiceBase.Cqrs.Abstractions.Commands;
 using Etdb.ServiceBase.Cqrs.Abstractions.Validation;
 using FluentValidation;
 using FluentValidation.Results;

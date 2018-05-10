@@ -15,6 +15,8 @@ namespace Etdb.ServiceBase.DocumentRepository.Abstractions.Context
             
             this.Database = client.GetDatabase(options.Value.DatabaseName);
         }
+        
+        public IMongoDatabase Database { get; }
 
         public abstract void Configure();
 
@@ -35,6 +37,14 @@ namespace Etdb.ServiceBase.DocumentRepository.Abstractions.Context
             this.Database.CreateCollection(collectionName, options);
         }
 
+        protected static void UseImmutableConvention()
+        {
+            ConventionRegistry.Register(nameof(ImmutableTypeClassMapConvention), new ConventionPack
+            {
+                new ImmutableTypeClassMapConvention()
+            }, type => true);
+        }
+
         protected static void UseCamelCaseConvention()
         {
             ConventionRegistry.Register(DocumentDbContext.CamelCase, 
@@ -51,6 +61,5 @@ namespace Etdb.ServiceBase.DocumentRepository.Abstractions.Context
         }
             
         
-        public IMongoDatabase Database { get; }
     }
 }

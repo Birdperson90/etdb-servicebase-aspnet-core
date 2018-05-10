@@ -2,8 +2,8 @@
 
 namespace Etdb.ServiceBase.Domain.Abstractions.Base
 {
-    public interface IDomainObject<TId> where TId : IEquatable<TId>
+    public interface IDomainObject<out TId> where TId : IEquatable<TId>
     {
-        TId Id { get; set; }
+        TId Id { get; }
     }
 }

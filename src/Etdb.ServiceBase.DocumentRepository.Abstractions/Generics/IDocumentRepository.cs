@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Etdb.ServiceBase.Domain.Abstractions.Documents;
 using MongoDB.Driver.Linq;

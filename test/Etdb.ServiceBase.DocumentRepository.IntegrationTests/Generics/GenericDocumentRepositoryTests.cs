@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Etdb.ServiceBase.DocumentRepository.Abstractions.Context;
 using Etdb.ServiceBase.TestInfrastructure.MongoDb.Context;
@@ -10,30 +9,23 @@ using Etdb.ServiceBase.TestInfrastructure.MongoDb.Documents;
 using Etdb.ServiceBase.TestInfrastructure.MongoDb.Repositories;
 using Microsoft.Extensions.Options;
 using Xunit;
-using System.Security.Cryptography;
 
 namespace Etdb.ServiceBase.DocumentRepository.IntegrationTests.Generics
 {
     public class GenericDocumentRepositoryTests
     {
         private readonly TodoListDocumentRepository repository;
-        private readonly TodoPartitionRepository repository2;
 
         public GenericDocumentRepositoryTests()
         {
-            this.repository = new TodoListDocumentRepository(new TestDocumentDbContext(Options.Create(new DocumentDbContextOptions
-            {
-                ConnectionString = "mongodb://admin:admin@localhost:27017",
-                DatabaseName = "Etdb_ServiceBase_Tests"
-            })));
-            
-            this.repository2 = new TodoPartitionRepository(new TestDocumentDbContext(Options.Create(new DocumentDbContextOptions
-            {
-                ConnectionString = "mongodb://admin:admin@localhost:27017",
-                DatabaseName = "Etdb_ServiceBase_Tests"
-            })));
+            this.repository = new TodoListDocumentRepository(new TestDocumentDbContext(Options.Create(
+                new DocumentDbContextOptions
+                {
+                    ConnectionString = "mongodb://admin:admin@localhost:27017",
+                    DatabaseName = "Etdb_ServiceBase_Tests"
+                })));
         }
-        
+
         [Fact]
         public async Task GenericDocumentRepository_CreateReadUpdateDeleteMultipleAsync_ExpectSuccess()
         {

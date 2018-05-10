@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Runtime.CompilerServices;
 using Etdb.ServiceBase.ErrorHandling.Abstractions.Exceptions;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
