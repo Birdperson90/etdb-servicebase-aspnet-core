@@ -13,7 +13,7 @@ using MongoDB.Driver.Linq;
 namespace Etdb.ServiceBase.DocumentRepository.Generics
 {
     public abstract class GenericDocumentRepository<TDocument, TId> : IDocumentRepository<TDocument, TId>, IDisposable
-        where TDocument : class, IDocument<TId>, new()
+        where TDocument : class, IDocument<TId>
         where TId : IEquatable<TId>
     {
         private readonly DocumentDbContext context;

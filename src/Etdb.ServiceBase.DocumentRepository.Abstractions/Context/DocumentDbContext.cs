@@ -16,6 +16,8 @@ namespace Etdb.ServiceBase.DocumentRepository.Abstractions.Context
         
         public IMongoDatabase Database { get; }
         
+        public abstract void Configure();
+        
         protected static void UseImmutableConvention()
         {
             ConventionRegistry.Register(nameof(ImmutableTypeClassMapConvention), new ConventionPack
@@ -30,8 +32,6 @@ namespace Etdb.ServiceBase.DocumentRepository.Abstractions.Context
                 new ConventionPack { new CamelCaseElementNameConvention() }, 
                 type => true);
         }
-
-        public abstract void Configure();
 
         protected bool CollectionExists(string collectionName)
         {
