@@ -7,8 +7,6 @@ namespace Etdb.ServiceBase.DocumentRepository.Abstractions.Context
 {
     public abstract class DocumentDbContext
     {
-        private const string CamelCase = "CamelCase";
-
         protected DocumentDbContext(IOptions<DocumentDbContextOptions> options)
         {
             var client = new MongoClient(options.Value.ConnectionString);
@@ -17,6 +15,21 @@ namespace Etdb.ServiceBase.DocumentRepository.Abstractions.Context
         }
         
         public IMongoDatabase Database { get; }
+        
+        protected static void UseImmutableConvention()
+        {
+            ConventionRegistry.Register(nameof(ImmutableTypeClassMapConvention), new ConventionPack
+            {
+                new ImmutableTypeClassMapConvention()
+            }, type => true);
+        }
+
+        protected static void UseCamelCaseConvention()
+        {
+            ConventionRegistry.Register(nameof(CamelCaseElementNameConvention), 
+                new ConventionPack { new CamelCaseElementNameConvention() }, 
+                type => true);
+        }
 
         public abstract void Configure();
 
@@ -37,21 +50,6 @@ namespace Etdb.ServiceBase.DocumentRepository.Abstractions.Context
             this.Database.CreateCollection(collectionName, options);
         }
 
-        protected static void UseImmutableConvention()
-        {
-            ConventionRegistry.Register(nameof(ImmutableTypeClassMapConvention), new ConventionPack
-            {
-                new ImmutableTypeClassMapConvention()
-            }, type => true);
-        }
-
-        protected static void UseCamelCaseConvention()
-        {
-            ConventionRegistry.Register(DocumentDbContext.CamelCase, 
-                new ConventionPack { new CamelCaseElementNameConvention() }, 
-                type => true);
-        }
-
         protected static CreateCollectionOptions AutoIndexIdCollectionOptions()
         {
             return new CreateCollectionOptions
@@ -59,7 +57,5 @@ namespace Etdb.ServiceBase.DocumentRepository.Abstractions.Context
                 AutoIndexId = true
             };
         }
-            
-        
     }
 }
