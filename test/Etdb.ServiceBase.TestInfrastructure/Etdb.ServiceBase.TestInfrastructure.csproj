@@ -13,10 +13,17 @@
     <ProjectReference Include="..\..\src\Etdb.ServiceBase.DocumentRepository\Etdb.ServiceBase.DocumentRepository.csproj" />
     <ProjectReference Include="..\..\src\Etdb.ServiceBase.EntityRepository\Etdb.ServiceBase.EntityRepository.csproj" />
     <ProjectReference Include="..\..\src\Etdb.ServiceBase.ErrorHandling\Etdb.ServiceBase.ErrorHandling.csproj" />
+    <ProjectReference Include="..\..\src\Etdb.ServiceBase.Services\Etdb.ServiceBase.Services.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="xunit.runner.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Files/kitten.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Files" />
   </ItemGroup>
 </Project>
