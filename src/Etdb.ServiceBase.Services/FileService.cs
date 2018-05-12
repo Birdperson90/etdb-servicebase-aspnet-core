@@ -48,6 +48,11 @@ namespace Etdb.ServiceBase.Services
             
             var fullPath = Path.Combine(basePath, fileName);
 
+            if (!Directory.Exists(fullPath))
+            {
+                Directory.CreateDirectory(fullPath);
+            }
+
             using (var binaryWriter = new BinaryWriter(new FileStream(fullPath, FileMode.CreateNew, FileAccess.Write, FileShare.Write)))
             {
                 var offset = 0;
@@ -68,6 +73,11 @@ namespace Etdb.ServiceBase.Services
 
         private static async Task<byte[]> ReadBytes(string path)
         {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            
             byte[] fileBytes;
             
             using (var binaryReader = new BinaryReader(new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)))

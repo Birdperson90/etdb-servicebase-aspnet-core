@@ -135,7 +135,7 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
             var editResult = await this.GetCollection(collectionName, partitionKey)
                 .ReplaceOneAsync(existingDocument => existingDocument.Id.Equals(document.Id), document)
                 .ConfigureAwait(false);
-
+            
             return editResult.ModifiedCount == 1;
         }
 
