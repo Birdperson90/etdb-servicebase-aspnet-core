@@ -48,12 +48,72 @@ namespace Etdb.ServiceBase.Services
             
             var fullPath = Path.Combine(basePath, fileName);
 
-            if (!Directory.Exists(fullPath))
+            if (!Directory.Exists(basePath))
             {
-                Directory.CreateDirectory(fullPath);
+                Directory.CreateDirectory(basePath);
             }
 
-            using (var binaryWriter = new BinaryWriter(new FileStream(fullPath, FileMode.CreateNew, FileAccess.Write, FileShare.Write)))
+            await StoreBytes(fullPath, fileBytes);
+        }
+
+        public async Task StoreBinaryAsync(string fullPath, byte[] fileBytes)
+        {
+            if (string.IsNullOrWhiteSpace(fullPath))
+            {
+                throw new ArgumentNullException(nameof(fullPath));
+            }
+
+            await StoreBytes(fullPath, fileBytes);
+        }
+
+        public void DeleteBinary(string basePath, string fileName)
+        {
+            if (string.IsNullOrWhiteSpace(basePath))
+            {
+                throw new ArgumentNullException(nameof(basePath));
+            }
+
+            if (string.IsNullOrWhiteSpace(fileName))
+            {
+                throw new ArgumentNullException(nameof(fileName));
+            }
+            
+            DeleteFile(Path.Combine(basePath, fileName));
+        }
+
+        public void DeleteBinary(string fullPath)
+        {
+            if (string.IsNullOrWhiteSpace(fullPath))
+            {
+                throw new ArgumentNullException(nameof(fullPath));
+            }
+
+            DeleteFile(fullPath);
+        }
+
+        private static async Task<byte[]> ReadBytes(string path)
+        {
+            byte[] fileBytes;
+            
+            using (var binaryReader = new BinaryReader(new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)))
+            {
+                var offest = 0;
+                var totalLength = binaryReader.BaseStream.Length;
+                fileBytes = new byte[totalLength];
+
+                while (binaryReader.BaseStream.Length - binaryReader.BaseStream.Position > 0)
+                {
+                    var leftOver = totalLength - offest;
+                    offest += await binaryReader.BaseStream.ReadAsync(fileBytes, offest, leftOver < 4096L ? (int) leftOver : 4096);
+                }
+            }
+
+            return fileBytes;
+        }
+        
+        private static async Task StoreBytes(string path, byte[] fileBytes)
+        {
+            using (var binaryWriter = new BinaryWriter(new FileStream(path, FileMode.CreateNew, FileAccess.Write, FileShare.Write)))
             {
                 var offset = 0;
                 var totalLength = fileBytes.LongLength;
@@ -71,29 +131,14 @@ namespace Etdb.ServiceBase.Services
             }
         }
 
-        private static async Task<byte[]> ReadBytes(string path)
+        private static void DeleteFile(string path)
         {
-            if (!Directory.Exists(path))
+            if (!File.Exists(path))
             {
-                Directory.CreateDirectory(path);
+                return;
             }
             
-            byte[] fileBytes;
-            
-            using (var binaryReader = new BinaryReader(new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)))
-            {
-                var offest = 0;
-                var totalLength = binaryReader.BaseStream.Length;
-                fileBytes = new byte[totalLength];
-
-                while (binaryReader.BaseStream.Length - binaryReader.BaseStream.Position > 0)
-                {
-                    var leftOver = totalLength - offest;
-                    offest += await binaryReader.BaseStream.ReadAsync(fileBytes, offest, leftOver < 4096L ? (int) leftOver : 4096);
-                }
-            }
-
-            return fileBytes;
+            File.Delete(path);
         }
     }
 }
