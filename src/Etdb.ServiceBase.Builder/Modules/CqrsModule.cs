@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection;
 using Autofac;
 using Etdb.ServiceBase.Cqrs.Abstractions.Bus;
@@ -24,8 +23,8 @@ namespace Etdb.ServiceBase.Builder.Modules
             builder.RegisterAssemblyTypes(typeof(IMediator).Assembly)
                 .AsImplementedInterfaces();
 
-            builder.RegisterType<MediatorHandler>()
-                .As<IMediatorHandler>()
+            builder.RegisterType<Bus>()
+                .As<IBus>()
                 .AsSelf()
                 .InstancePerLifetimeScope();
 
@@ -50,20 +49,11 @@ namespace Etdb.ServiceBase.Builder.Modules
             builder.RegisterGeneric(typeof(RequestPreProcessorBehavior<,>))
                 .As(typeof(IPipelineBehavior<,>));
 
-            builder.Register<SingleInstanceFactory>(ctx =>
+            builder.Register<ServiceFactory>(ctx =>
             {
                 var componentContext = ctx.Resolve<IComponentContext>();
 
                 return type => componentContext.Resolve(type);
-            });
-
-            builder.Register<MultiInstanceFactory>(ctx =>
-            {
-                var componentContext = ctx.Resolve<IComponentContext>();
-
-                return type => (IEnumerable<object>) componentContext
-                    .Resolve(typeof(IEnumerable<>)
-                        .MakeGenericType(type));
             });
         }
     }

@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Etdb.ServiceBase.ErrorHandling.Abstractions.Exceptions;
+using Etdb.ServiceBase.Exceptions;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Etdb.ServiceBase.Extensions
@@ -14,7 +14,7 @@ namespace Etdb.ServiceBase.Extensions
                 .ToArray();
 
             errors = errors.Any() ? errors : new[] {"Error parsing object!"};
-            
+
             return new GeneralValidationException(primaryMessage, errors);
         }
     }

@@ -19,15 +19,15 @@ namespace Etdb.ServiceBase.Services.IntegrationTests
 
         [Fact]
         public async Task FileService_ReadBinary_ExpectBinaryContent()
-        {            
+        {
             var binary = await this.fileService.ReadBinaryAsync(this.basePath, FileServiceTests.FileName);
 
-            var storedFileName = $"{DateTime.UtcNow.Ticks}_{FileServiceTests.FileName}"; 
-            
+            var storedFileName = $"{DateTime.UtcNow.Ticks}_{FileServiceTests.FileName}";
+
             await this.fileService.StoreBinaryAsync(this.basePath, storedFileName, binary);
 
             var secondBinary = await this.fileService.ReadBinaryAsync(this.basePath, storedFileName);
-            
+
             Assert.Equal(binary, secondBinary);
         }
     }

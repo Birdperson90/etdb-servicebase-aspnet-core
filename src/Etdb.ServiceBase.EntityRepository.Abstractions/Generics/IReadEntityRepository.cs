@@ -10,9 +10,9 @@ namespace Etdb.ServiceBase.EntityRepository.Abstractions.Generics
         where TId : IEquatable<TId>
     {
         IEnumerable<TEntity> GetAll();
-        
+
         Task<IEnumerable<TEntity>> GetAllAsync();
-        
+
         IEnumerable<TEntity> GetAll(params Expression<Func<TEntity, object>>[] includes);
 
         Task<IEnumerable<TEntity>> GetAllAsync(params Expression<Func<TEntity, object>>[] includes);
@@ -30,13 +30,13 @@ namespace Etdb.ServiceBase.EntityRepository.Abstractions.Generics
         TEntity Find(TId key);
 
         Task<TEntity> FindAsync(TId key);
-        
+
         TEntity Find(TId key, params Expression<Func<TEntity, object>>[] includes);
 
         Task<TEntity> FindAsync(TId key, params Expression<Func<TEntity, object>>[] includes);
 
         TEntity Find(Expression<Func<TEntity, bool>> predicate);
-        
+
         Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> predicate);
 
         TEntity Find(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes);

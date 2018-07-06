@@ -20,7 +20,7 @@ namespace Etdb.ServiceBase.EntityRepository.Generics
         {
             this.context = context;
         }
-        
+
         public virtual IEnumerable<TEntity> GetAll()
         {
             return this.CreateQuery().ToArray();
@@ -58,14 +58,15 @@ namespace Etdb.ServiceBase.EntityRepository.Generics
                 .ConfigureAwait(false);
         }
 
-        public virtual IEnumerable<TEntity> FindAll(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
+        public virtual IEnumerable<TEntity> FindAll(Expression<Func<TEntity, bool>> predicate,
+            params Expression<Func<TEntity, object>>[] includes)
         {
             return this.BuildIncludes(includes)
                 .Where(predicate)
                 .ToArray();
         }
 
-        public virtual async Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> predicate, 
+        public virtual async Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> predicate,
             params Expression<Func<TEntity, object>>[] includes)
         {
             return await this.BuildIncludes(includes)
@@ -112,13 +113,15 @@ namespace Etdb.ServiceBase.EntityRepository.Generics
                 .ConfigureAwait(false);
         }
 
-        public virtual TEntity Find(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
+        public virtual TEntity Find(Expression<Func<TEntity, bool>> predicate,
+            params Expression<Func<TEntity, object>>[] includes)
         {
             return this.BuildIncludes(includes)
                 .FirstOrDefault(predicate);
         }
 
-        public virtual async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
+        public virtual async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> predicate,
+            params Expression<Func<TEntity, object>>[] includes)
         {
             return await this.BuildIncludes(includes)
                 .FirstOrDefaultAsync(predicate)

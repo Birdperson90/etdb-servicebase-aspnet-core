@@ -14,16 +14,16 @@ namespace Etdb.ServiceBase.Cryptography.Hashing
                 throw new ArgumentException(nameof(unhashed));
             }
 
-            if (salt == null ) throw new ArgumentNullException(nameof(salt));
+            if (salt == null) throw new ArgumentNullException(nameof(salt));
 
-            return Convert.ToBase64String(KeyDerivation.Pbkdf2(unhashed, 
+            return Convert.ToBase64String(KeyDerivation.Pbkdf2(unhashed,
                 salt, KeyDerivationPrf.HMACSHA512, 10000, 256 / 8));
         }
 
         public byte[] GenerateSalt()
         {
             var salt = new byte[128 / 8];
-            
+
             using (var keyGenerator = RandomNumberGenerator.Create())
             {
                 keyGenerator.GetBytes(salt);

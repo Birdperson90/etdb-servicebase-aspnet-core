@@ -22,7 +22,7 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
         {
             this.context = context;
         }
-        
+
         public virtual async Task<int> CountAsync(string collectionName = null, string partitionKey = null)
         {
             return await this.GetCollection(collectionName, partitionKey)
@@ -38,8 +38,9 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
                 .Select(document => document.Id)
                 .Count();
         }
-        
-        public virtual async Task<IEnumerable<TDocument>> GetAllAsync(string collectionName = null, string partitionKey = null)
+
+        public virtual async Task<IEnumerable<TDocument>> GetAllAsync(string collectionName = null,
+            string partitionKey = null)
         {
             return await this.GetCollection(collectionName, partitionKey)
                 .AsQueryable()
@@ -54,7 +55,7 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
                 .ToArray();
         }
 
-        public virtual async Task<IEnumerable<TDocument>> FindAllAsync(Expression<Func<TDocument, bool>> predicate, 
+        public virtual async Task<IEnumerable<TDocument>> FindAllAsync(Expression<Func<TDocument, bool>> predicate,
             string collectionName = null, string partitionKey = null)
         {
             var qursor = await this.GetCollection(collectionName, partitionKey)
@@ -64,7 +65,8 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
             return await qursor.ToListAsync().ConfigureAwait(false);
         }
 
-        public virtual IEnumerable<TDocument> FindAll(Expression<Func<TDocument, bool>> predicate, string collectionName = null, string partitionKey = null)
+        public virtual IEnumerable<TDocument> FindAll(Expression<Func<TDocument, bool>> predicate,
+            string collectionName = null, string partitionKey = null)
         {
             var qursor = this.GetCollection(collectionName, partitionKey)
                 .Find(predicate);
@@ -87,7 +89,7 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
                 .SingleOrDefault();
         }
 
-        public virtual async Task<TDocument> FindAsync(Expression<Func<TDocument, bool>> predicate, 
+        public virtual async Task<TDocument> FindAsync(Expression<Func<TDocument, bool>> predicate,
             string collectionName = null, string partitionKey = null)
         {
             return await this.GetCollection(collectionName, partitionKey)
@@ -96,7 +98,8 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
                 .ConfigureAwait(false);
         }
 
-        public virtual TDocument Find(Expression<Func<TDocument, bool>> predicate, string collectionName = null, string partitionKey = null)
+        public virtual TDocument Find(Expression<Func<TDocument, bool>> predicate, string collectionName = null,
+            string partitionKey = null)
         {
             return this.GetCollection(collectionName, partitionKey)
                 .Find(predicate)
@@ -110,7 +113,8 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
                 .ConfigureAwait(false);
         }
 
-        public virtual async Task AddManyAsync(IEnumerable<TDocument> documents, string collectionName = null, string partitionKey = null)
+        public virtual async Task AddManyAsync(IEnumerable<TDocument> documents, string collectionName = null,
+            string partitionKey = null)
         {
             await this.GetCollection(collectionName, partitionKey)
                 .InsertManyAsync(documents)
@@ -130,12 +134,13 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
                 .InsertMany(documents);
         }
 
-        public virtual async Task<bool> EditAsync(TDocument document, string collectionName = null, string partitionKey = null)
+        public virtual async Task<bool> EditAsync(TDocument document, string collectionName = null,
+            string partitionKey = null)
         {
             var editResult = await this.GetCollection(collectionName, partitionKey)
                 .ReplaceOneAsync(existingDocument => existingDocument.Id.Equals(document.Id), document)
                 .ConfigureAwait(false);
-            
+
             return editResult.ModifiedCount == 1;
         }
 
@@ -155,8 +160,9 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
 
             return deleteResult.DeletedCount == 1;
         }
-        
-        public virtual async Task<bool> DeleteManyAsync(Expression<Func<TDocument, bool>> predicate, string collectionName = null,
+
+        public virtual async Task<bool> DeleteManyAsync(Expression<Func<TDocument, bool>> predicate,
+            string collectionName = null,
             string partitionKey = null)
         {
             var deleteResult = await this.GetCollection(collectionName, partitionKey)
@@ -173,7 +179,7 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
 
             return deleteResult.DeletedCount == 1;
         }
-        
+
         public virtual bool DeleteMany(Expression<Func<TDocument, bool>> predicate, string collectionName = null,
             string partitionKey = null)
         {
@@ -193,7 +199,7 @@ namespace Etdb.ServiceBase.DocumentRepository.Generics
         {
             GC.SuppressFinalize(this);
         }
-        
+
         // ReSharper disable once MemberCanBePrivate.Global
         protected IMongoCollection<TDocument> GetCollection(string collectionName = null, string partitionKey = null)
         {

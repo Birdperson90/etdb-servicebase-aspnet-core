@@ -1,10 +1,10 @@
 ﻿using System.Net;
-using Etdb.ServiceBase.ErrorHandling.Abstractions.Exceptions;
+using Etdb.ServiceBase.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 
-namespace Etdb.ServiceBase.ErrorHandling.Filters
+namespace Etdb.ServiceBase.Filter
 {
     public class ConcurrencyExceptionFilter : IExceptionFilter
     {
@@ -26,7 +26,7 @@ namespace Etdb.ServiceBase.ErrorHandling.Filters
 
             context.ExceptionHandled = true;
             context.HttpContext.Response.StatusCode = (int) HttpStatusCode.Conflict;
-            
+
             var exception = (ConcurrencyException) context.Exception;
             context.Result = new ObjectResult(new
             {

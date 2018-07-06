@@ -12,7 +12,7 @@ namespace Etdb.ServiceBase.EntityRepository.IntegrationTests.Generics
     public class GenericEntityRepositoryTests
     {
         private readonly ITodoListEntityRepository repository;
-        
+
         public GenericEntityRepositoryTests()
         {
             this.repository = new TodoListEntityRepository(new InMemoryEntityDbContext());
@@ -29,14 +29,14 @@ namespace Etdb.ServiceBase.EntityRepository.IntegrationTests.Generics
                 var added = await this.repository.EnsureChangesAsync();
                 Assert.True(added);
             }
-            
+
             var createIds = createLists.Select(todoList => todoList.Id).ToArray();
 
             foreach (var id in createIds)
             {
                 var readList =
                     await this.repository.FindAsync(todoList => todoList.Id == id, todoList => todoList.Todos);
-                
+
                 Assert.NotNull(readList);
                 Assert.True(readList.Todos.Count == 3);
 
@@ -48,23 +48,25 @@ namespace Etdb.ServiceBase.EntityRepository.IntegrationTests.Generics
                 this.repository.Edit(readList);
                 var updated = await this.repository.EnsureChangesAsync();
                 Assert.True(updated);
-                
+
                 readList =
                     await this.repository.FindAsync(todoList => todoList.Id == id, todoList => todoList.Todos);
-                
+
                 Assert.Equal(newTitle, readList.Titel);
                 Assert.True(readList.Todos.First().Done);
             }
-            
+
             var allTodoLists = await this.repository.GetAllAsync();
-            
+
             Assert.True(createIds.All(createId => allTodoLists.Select(todoList => todoList.Id).Contains(createId)));
-            
-            allTodoLists = await this.repository.FindAllAsync(todoList => todoList.Titel.StartsWith("NewTitle"), todoList => todoList.Todos);
-            
+
+            allTodoLists = await this.repository.FindAllAsync(todoList => todoList.Titel.StartsWith("NewTitle"),
+                todoList => todoList.Todos);
+
             var todoListArray = allTodoLists as TodoListEntity[] ?? allTodoLists.ToArray();
-            
-            Assert.True(createLists.Select(todoList => todoList.Id).All(createId => todoListArray.Select(todoList => todoList.Id).Contains(createId)));
+
+            Assert.True(createLists.Select(todoList => todoList.Id).All(createId =>
+                todoListArray.Select(todoList => todoList.Id).Contains(createId)));
 
             var intersectingIds = createLists.Select(todoList => todoList.Id)
                 .Intersect(todoListArray.Select(todoList => todoList.Id));
@@ -79,30 +81,30 @@ namespace Etdb.ServiceBase.EntityRepository.IntegrationTests.Generics
             foreach (var id in createIds)
             {
                 var readList = await this.repository.FindAsync(id);
-                
+
                 Assert.NotNull(readList);
-                
-                readList = await this.repository.FindAsync(list => list.Titel == $"NewTitle_{ id }");
-                
+
+                readList = await this.repository.FindAsync(list => list.Titel == $"NewTitle_{id}");
+
                 Assert.NotNull(readList);
-                
+
                 this.repository.Delete(readList);
 
                 var deleted = await this.repository.EnsureChangesAsync();
-                
+
                 Assert.True(deleted);
             }
-            
+
             allTodoLists = await this.repository.GetAllAsync();
 
             todoListArray = allTodoLists as TodoListEntity[] ?? allTodoLists.ToArray();
-            
+
             foreach (var allId in todoListArray.Select(todoList => todoList.Id))
             {
                 Assert.DoesNotContain(createIds, id => id == allId);
             }
         }
-        
+
         [Fact]
         public void GenericEntityRepository_CreateReadUpdateDeleteMultiple_ExpectSuccess()
         {
@@ -120,7 +122,7 @@ namespace Etdb.ServiceBase.EntityRepository.IntegrationTests.Generics
             foreach (var id in createIds)
             {
                 var readList = this.repository.Find(todoList => todoList.Id == id, todoList => todoList.Todos);
-                
+
                 Assert.NotNull(readList);
                 Assert.True(readList.Todos.Count == 3);
 
@@ -132,23 +134,25 @@ namespace Etdb.ServiceBase.EntityRepository.IntegrationTests.Generics
                 this.repository.Edit(readList);
                 var updated = this.repository.EnsureChanges();
                 Assert.True(updated);
-                
+
                 readList = this.repository.Find(todoList => todoList.Id == id, todoList => todoList.Todos);
-                
+
                 Assert.Equal(newTitle, readList.Titel);
                 Assert.True(readList.Todos.First().Done);
             }
-            
+
             var allTodoLists = this.repository.GetAll();
-            
-            Assert.True(createLists.Select(todoList => todoList.Id).All(createId => allTodoLists.Select(todoList => todoList.Id).Contains(createId)));
+
+            Assert.True(createLists.Select(todoList => todoList.Id).All(createId =>
+                allTodoLists.Select(todoList => todoList.Id).Contains(createId)));
 
             allTodoLists = this.repository.FindAll(todoList => todoList.Titel.StartsWith("NewTitle"),
                 todoList => todoList.Todos);
 
             var todoListArray = allTodoLists as TodoListEntity[] ?? allTodoLists.ToArray();
-            
-            Assert.True(createLists.Select(todoList => todoList.Id).All(createId => todoListArray.Select(todoList => todoList.Id).Contains(createId)));
+
+            Assert.True(createLists.Select(todoList => todoList.Id).All(createId =>
+                todoListArray.Select(todoList => todoList.Id).Contains(createId)));
 
             var intersectingIds = createLists.Select(todoList => todoList.Id)
                 .Intersect(todoListArray.Select(todoList => todoList.Id));
@@ -163,24 +167,24 @@ namespace Etdb.ServiceBase.EntityRepository.IntegrationTests.Generics
             foreach (var id in createIds)
             {
                 var readList = this.repository.Find(id);
-                
+
                 Assert.NotNull(readList);
-                
-                readList = this.repository.Find(list => list.Titel == $"NewTitle_{ id }");
-                
+
+                readList = this.repository.Find(list => list.Titel == $"NewTitle_{id}");
+
                 Assert.NotNull(readList);
-                
+
                 this.repository.Delete(readList);
 
                 var deleted = this.repository.EnsureChanges();
-                
+
                 Assert.True(deleted);
             }
-            
+
             allTodoLists = this.repository.GetAll();
-            
+
             todoListArray = allTodoLists as TodoListEntity[] ?? allTodoLists.ToArray();
-            
+
             foreach (var allId in todoListArray.Select(todoList => todoList.Id))
             {
                 Assert.DoesNotContain(createIds, id => id == allId);
@@ -200,10 +204,10 @@ namespace Etdb.ServiceBase.EntityRepository.IntegrationTests.Generics
             }
 
             var count = await this.repository.CountAsync();
-            
+
             Assert.True(5 <= count);
         }
-        
+
         [Fact]
         public void GenericEntityRepositoryTests_CreateCountMultiple_ExpectSuccess()
         {
@@ -217,14 +221,14 @@ namespace Etdb.ServiceBase.EntityRepository.IntegrationTests.Generics
             }
 
             var count = this.repository.Count();
-            
+
             Assert.True(5 <= count);
         }
 
         private static ICollection<TodoListEntity> CreateRandom(int lists = 1, int children = 0)
         {
             var random = new Random();
-            
+
             var todoLists = new List<TodoListEntity>();
 
             for (var i = 0; i < lists; i++)
@@ -234,12 +238,12 @@ namespace Etdb.ServiceBase.EntityRepository.IntegrationTests.Generics
                     Id = Guid.NewGuid(),
                     Titel = random.Next(1111, 9999999).ToString()
                 };
-                
+
                 for (var j = 0; j < children; j++)
                 {
                     todoList.Todos.Add(CreateRandom(todoList.Id, j));
                 }
-                
+
                 todoLists.Add(todoList);
             }
 

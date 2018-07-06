@@ -6,6 +6,5 @@ namespace Etdb.ServiceBase.TestInfrastructure.EntityFramework.Repositories
 {
     public interface ITodoListEntityRepository : IEntityRepository<TodoListEntity, Guid>
     {
-        
     }
 }

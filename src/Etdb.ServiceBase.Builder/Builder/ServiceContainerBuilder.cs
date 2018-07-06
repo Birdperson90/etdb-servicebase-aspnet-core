@@ -9,9 +9,9 @@ using Etdb.ServiceBase.DocumentRepository.Abstractions.Context;
 using Etdb.ServiceBase.DocumentRepository.Abstractions.Generics;
 using Etdb.ServiceBase.EntityRepository.Abstractions.Context;
 using Etdb.ServiceBase.EntityRepository.Abstractions.Generics;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Etdb.ServiceBase.Builder.Builder
 {
@@ -42,7 +42,8 @@ namespace Etdb.ServiceBase.Builder.Builder
             return this;
         }
 
-        public ServiceContainerBuilder UseGenericDocumentRepositoryPattern<TDocumentDbContext>(params Assembly[] assembliesToScan) 
+        public ServiceContainerBuilder UseGenericDocumentRepositoryPattern<TDocumentDbContext>(
+            params Assembly[] assembliesToScan)
             where TDocumentDbContext : DocumentDbContext
         {
             if (!assembliesToScan.Any())

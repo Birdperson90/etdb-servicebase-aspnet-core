@@ -23,7 +23,7 @@ namespace Etdb.ServiceBase.Cryptography.UnitTests.Hashing
             var hashOne = this.hasher.CreateSaltedHash(SamplePassword, salt);
 
             var hashTwo = this.hasher.CreateSaltedHash(SamplePassword, salt);
-            
+
             Assert.Equal(hashOne, hashTwo);
         }
 
@@ -32,11 +32,11 @@ namespace Etdb.ServiceBase.Cryptography.UnitTests.Hashing
         {
             var saltOne = this.hasher.GenerateSalt();
             var saltTwo = this.hasher.GenerateSalt();
-            
+
             var hashOne = this.hasher.CreateSaltedHash(SamplePassword, saltOne);
 
             var hashTwo = this.hasher.CreateSaltedHash(SamplePassword, saltTwo);
-            
+
             Assert.NotEqual(hashOne, hashTwo);
         }
 

@@ -30,9 +30,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.Cryptograp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.Cryptography", "src\Etdb.ServiceBase.Cryptography\Etdb.ServiceBase.Cryptography.csproj", "{480A03B8-3DCE-47A8-AF33-3E479C5A3CF2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.ErrorHandling.Abstractions", "src\Etdb.ServiceBase.ErrorHandling.Abstractions\Etdb.ServiceBase.ErrorHandling.Abstractions.csproj", "{DDE816E4-B055-4462-A2F5-5A82C6274216}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.Exceptions", "src\Etdb.ServiceBase.Exceptions\Etdb.ServiceBase.Exceptions.csproj", "{DDE816E4-B055-4462-A2F5-5A82C6274216}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.ErrorHandling", "src\Etdb.ServiceBase.ErrorHandling\Etdb.ServiceBase.ErrorHandling.csproj", "{EAC58FE0-397D-432F-BE23-16FD373BD8A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.Filter", "src\Etdb.ServiceBase.Filter\Etdb.ServiceBase.Filter.csproj", "{EAC58FE0-397D-432F-BE23-16FD373BD8A4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.Constants", "src\Etdb.ServiceBase.Constants\Etdb.ServiceBase.Constants.csproj", "{26ACE912-951C-4731-A787-582D28909B7F}"
 EndProject
@@ -50,7 +50,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.DocumentRe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.Cqrs.IntegrationTests", "test\Etdb.ServiceBase.Cqrs.IntegrationTests\Etdb.ServiceBase.Cqrs.IntegrationTests.csproj", "{4EC8CC39-98DF-4378-938B-CBADC273F53C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.ErrorHandling.UnitTests", "test\Etdb.ServiceBase.ErrorHandling.UnitTests\Etdb.ServiceBase.ErrorHandling.UnitTests.csproj", "{54542902-0C6C-49BF-9701-3B5F8883A771}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.Filter.UnitTests", "test\Etdb.ServiceBase.Filter.UnitTests\Etdb.ServiceBase.Filter.UnitTests.csproj", "{54542902-0C6C-49BF-9701-3B5F8883A771}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.EntityRepository.IntegrationTests", "test\Etdb.ServiceBase.EntityRepository.IntegrationTests\Etdb.ServiceBase.EntityRepository.IntegrationTests.csproj", "{AFEEF900-907A-4F53-AFC8-15BF0B3C020C}"
 EndProject

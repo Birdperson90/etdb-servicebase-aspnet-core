@@ -17,7 +17,7 @@ namespace Etdb.ServiceBase.TestInfrastructure.MongoDb.Context
 
             if (!this.CollectionExists($"{nameof(TodoListDocument)}s"))
             {
-                this.CreateCollection($"{nameof(TodoListDocument)}s", AutoIndexIdCollectionOptions());
+                this.CreateCollection($"{nameof(TodoListDocument)}s");
             }
         }
     }

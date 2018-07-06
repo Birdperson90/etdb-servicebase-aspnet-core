@@ -1,10 +1,10 @@
 ﻿using System.Net;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Etdb.ServiceBase.ErrorHandling.Filters
+namespace Etdb.ServiceBase.Filter
 {
     /// <inheritdoc />
     /// <summary>
@@ -21,7 +21,7 @@ namespace Etdb.ServiceBase.ErrorHandling.Filters
             this.logger = logger;
             this.environment = environment;
         }
-        
+
         public void OnException(ExceptionContext context)
         {
             if (context.ExceptionHandled)
@@ -30,7 +30,7 @@ namespace Etdb.ServiceBase.ErrorHandling.Filters
             }
 
             this.logger.LogCritical(context.Exception, "An unhandled exception occured!");
-            
+
             context.ExceptionHandled = true;
 
             var response = this.environment.IsProduction()
@@ -45,7 +45,7 @@ namespace Etdb.ServiceBase.ErrorHandling.Filters
                 });
 
             context.HttpContext.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
-            context.Result= response;
+            context.Result = response;
         }
     }
 }

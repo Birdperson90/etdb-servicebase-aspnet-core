@@ -10,11 +10,11 @@ namespace Etdb.ServiceBase.TestInfrastructure.EntityFramework.Entities
         {
             this.Todos = new List<TodoEntity>();
         }
-        
+
         public Guid Id { get; set; }
 
         public string Titel { get; set; }
-        
+
         public ICollection<TodoEntity> Todos { get; set; }
     }
 }

@@ -11,8 +11,8 @@ namespace Etdb.ServiceBase.TestInfrastructure.Mocks
     {
         public ExceptionContextMock()
         {
-            this.ExceptionContext = new ExceptionContext(new ActionContext(new DefaultHttpContext(), 
-                    new RouteData(), new ActionDescriptor()), 
+            this.ExceptionContext = new ExceptionContext(new ActionContext(new DefaultHttpContext(),
+                    new RouteData(), new ActionDescriptor()),
                 new List<IFilterMetadata>())
             {
                 HttpContext = new DefaultHttpContext()

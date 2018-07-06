@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Etdb.ServiceBase.ErrorHandling.Abstractions.Exceptions;
+using Etdb.ServiceBase.Exceptions;
 using FluentValidation.Results;
 
 namespace Etdb.ServiceBase.Extensions

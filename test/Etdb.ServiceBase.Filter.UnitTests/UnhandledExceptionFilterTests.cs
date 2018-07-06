@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Net;
-using Etdb.ServiceBase.ErrorHandling.Filters;
 using Etdb.ServiceBase.TestInfrastructure.Mocks;
 using Xunit;
 
-namespace Etdb.ServiceBase.ErrorHandling.UnitTests.Filters
+namespace Etdb.ServiceBase.Filter.UnitTests
 {
     public class UnhandledExceptionFilterTests
     {
@@ -12,7 +11,7 @@ namespace Etdb.ServiceBase.ErrorHandling.UnitTests.Filters
         private readonly HostingEnvironmentMock environmentMock;
         private readonly LoggerMock<UnhandledExceptionFilter> loggerMock;
         private readonly UnhandledExceptionFilter filter;
-        
+
         public UnhandledExceptionFilterTests()
         {
             this.contextMock = new ExceptionContextMock();
@@ -20,20 +19,21 @@ namespace Etdb.ServiceBase.ErrorHandling.UnitTests.Filters
             this.loggerMock = new LoggerMock<UnhandledExceptionFilter>();
             this.filter = new UnhandledExceptionFilter(this.loggerMock.Logger, this.environmentMock.Environment);
         }
-        
+
         [Fact]
         public void UnhandledExceptionFilter_InputValidException_ExpectInternalServerError()
         {
             var exception = new Exception();
 
             this.contextMock.ExceptionContext.Exception = exception;
-            
+
             this.filter.OnException(this.contextMock.ExceptionContext);
-            
+
             Assert.True(this.contextMock.ExceptionContext.ExceptionHandled);
-            Assert.Equal((int) HttpStatusCode.InternalServerError, this.contextMock.ExceptionContext.HttpContext.Response.StatusCode);
+            Assert.Equal((int) HttpStatusCode.InternalServerError,
+                this.contextMock.ExceptionContext.HttpContext.Response.StatusCode);
         }
-        
+
         [Fact]
         public void UnhandledExceptionFilter_InputHandledExceptionContext_ExpectNoChanges()
         {
@@ -42,9 +42,9 @@ namespace Etdb.ServiceBase.ErrorHandling.UnitTests.Filters
             this.contextMock.ExceptionContext.Exception = exception;
             this.contextMock.ExceptionContext.ExceptionHandled = true;
             var initialStatusCode = this.contextMock.ExceptionContext.HttpContext.Response.StatusCode;
-            
+
             this.filter.OnException(this.contextMock.ExceptionContext);
-            
+
             Assert.True(this.contextMock.ExceptionContext.ExceptionHandled);
             Assert.Equal(initialStatusCode, this.contextMock.ExceptionContext.HttpContext.Response.StatusCode);
         }

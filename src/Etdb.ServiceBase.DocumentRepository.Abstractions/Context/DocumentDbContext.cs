@@ -10,14 +10,14 @@ namespace Etdb.ServiceBase.DocumentRepository.Abstractions.Context
         protected DocumentDbContext(IOptions<DocumentDbContextOptions> options)
         {
             var client = new MongoClient(options.Value.ConnectionString);
-            
+
             this.Database = client.GetDatabase(options.Value.DatabaseName);
         }
-        
+
         public IMongoDatabase Database { get; }
-        
+
         public abstract void Configure();
-        
+
         protected static void UseImmutableConvention()
         {
             ConventionRegistry.Register(nameof(ImmutableTypeClassMapConvention), new ConventionPack
@@ -28,8 +28,8 @@ namespace Etdb.ServiceBase.DocumentRepository.Abstractions.Context
 
         protected static void UseCamelCaseConvention()
         {
-            ConventionRegistry.Register(nameof(CamelCaseElementNameConvention), 
-                new ConventionPack { new CamelCaseElementNameConvention() }, 
+            ConventionRegistry.Register(nameof(CamelCaseElementNameConvention),
+                new ConventionPack {new CamelCaseElementNameConvention()},
                 type => true);
         }
 
@@ -48,14 +48,6 @@ namespace Etdb.ServiceBase.DocumentRepository.Abstractions.Context
         protected void CreateCollection(string collectionName, CreateCollectionOptions options = null)
         {
             this.Database.CreateCollection(collectionName, options);
-        }
-
-        protected static CreateCollectionOptions AutoIndexIdCollectionOptions()
-        {
-            return new CreateCollectionOptions
-            {
-                AutoIndexId = true
-            };
         }
     }
 }

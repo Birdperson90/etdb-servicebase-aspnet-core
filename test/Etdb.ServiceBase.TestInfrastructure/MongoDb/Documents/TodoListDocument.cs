@@ -11,12 +11,11 @@ namespace Etdb.ServiceBase.TestInfrastructure.MongoDb.Documents
         {
             this.Todos = new List<TodoDocument>();
         }
-        
-        [BsonId]
-        public Guid Id { get; set; }
-        
+
+        [BsonId] public Guid Id { get; set; }
+
         public string Titel { get; set; }
-        
+
         public ICollection<TodoDocument> Todos { get; set; }
     }
 }

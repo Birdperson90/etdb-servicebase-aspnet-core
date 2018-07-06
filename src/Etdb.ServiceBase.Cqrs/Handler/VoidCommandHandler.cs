@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Etdb.ServiceBase.Cqrs.Abstractions.Commands;
 using Etdb.ServiceBase.Cqrs.Abstractions.Handler;
 using Etdb.ServiceBase.Cqrs.Abstractions.Validation;
+using MediatR;
 
 namespace Etdb.ServiceBase.Cqrs.Handler
 {
@@ -16,6 +17,6 @@ namespace Etdb.ServiceBase.Cqrs.Handler
             this.CommandValidation = commandValidation;
         }
 
-        public abstract Task Handle(TVoidCommand request, CancellationToken cancellationToken);
+        public abstract Task<Unit> Handle(TVoidCommand request, CancellationToken cancellationToken);
     }
 }

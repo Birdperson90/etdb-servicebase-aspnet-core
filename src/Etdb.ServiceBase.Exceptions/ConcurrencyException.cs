@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Etdb.ServiceBase.ErrorHandling.Abstractions.Exceptions
+namespace Etdb.ServiceBase.Exceptions
 {
     public class ConcurrencyException : Exception
     {

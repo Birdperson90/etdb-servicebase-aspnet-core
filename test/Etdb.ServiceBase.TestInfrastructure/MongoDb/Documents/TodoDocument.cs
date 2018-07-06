@@ -6,8 +6,7 @@ namespace Etdb.ServiceBase.TestInfrastructure.MongoDb.Documents
 {
     public class TodoDocument : IDocument<Guid>
     {
-        [BsonId]
-        public Guid Id { get; set; }
+        [BsonId] public Guid Id { get; set; }
 
         public string Title { get; set; }
 

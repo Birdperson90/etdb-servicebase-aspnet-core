@@ -20,12 +20,13 @@ using Etdb.ServiceBase.TestInfrastructure.MongoDb.Context;
 using Etdb.ServiceBase.TestInfrastructure.MongoDb.Documents;
 using Etdb.ServiceBase.TestInfrastructure.MongoDb.Repositories;
 using MediatR;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.Extensions.Options;
 using Xunit;
+using HostingEnvironmentExtensions = Microsoft.AspNetCore.Hosting.HostingEnvironmentExtensions;
 
 namespace Etdb.ServiceBase.Builder.IntegrationTests
 {
@@ -34,13 +35,13 @@ namespace Etdb.ServiceBase.Builder.IntegrationTests
         private readonly ServiceContainerBuilder containerBuilder;
         private readonly IServiceCollection services;
         private IContainer container;
-        
+
         public ServiceContainerBuilderTests()
         {
             this.containerBuilder = new ServiceContainerBuilder(new ContainerBuilder());
             this.services = new ServiceCollection();
         }
-        
+
         [Fact]
         public void ServiceContainerBuilder_UseConfigurationAndResolve_ExpectInstances()
         {
@@ -49,16 +50,16 @@ namespace Etdb.ServiceBase.Builder.IntegrationTests
 
             this.containerBuilder.UseConfiguration(configuration);
             this.BuildContainer();
-            
+
             Assert.True(this.container.IsRegistered<IConfigurationRoot>(), "IConfigurationRoot not registered!");
             Assert.True(this.container.IsRegistered<IConfiguration>(), "IConfiguration not registered!");
 
             var resolvedConfigurationRoot = this.container.Resolve<IConfigurationRoot>();
-            
+
             Assert.Equal(configuration, resolvedConfigurationRoot);
 
             var resolvedConfiguration = this.container.Resolve<IConfiguration>();
-            
+
             Assert.Equal(configuration, resolvedConfiguration);
         }
 
@@ -68,66 +69,73 @@ namespace Etdb.ServiceBase.Builder.IntegrationTests
             var environment = new HostingEnvironment();
 
             this.containerBuilder.UseEnvironment(environment);
-            
+
             this.BuildContainer();
 
             Assert.True(this.container.IsRegistered<IHostingEnvironment>(), "IHostingEnvironment not registered!");
-            
+
             var resolvedEnv = this.container.Resolve<IHostingEnvironment>();
-            
+
             Assert.Equal(environment, resolvedEnv);
         }
-        
+
         [Fact]
         public void ServiceContainerBuilder_UseGenericDocumentRepositoryPatternValidInput_ExpectInstances()
         {
             this.services.AddOptions();
-            
+
             this.services.Configure<DocumentDbContextOptions>(options =>
             {
                 options.ConnectionString = "mongodb://admin:admin@localhost:27017";
                 options.DatabaseName = "Etdb_ServiceBase_Tests";
             });
-            
-            this.containerBuilder.UseGenericDocumentRepositoryPattern<TestDocumentDbContext>(typeof(TestDocumentDbContext).Assembly);
-            
+
+            this.containerBuilder.UseGenericDocumentRepositoryPattern<TestDocumentDbContext>(
+                typeof(TestDocumentDbContext).Assembly);
+
             this.BuildContainer();
-            
-            Assert.True(this.container.IsRegistered<IOptions<DocumentDbContextOptions>>(), "DbContextOptions not registered!");
+
+            Assert.True(this.container.IsRegistered<IOptions<DocumentDbContextOptions>>(),
+                "DbContextOptions not registered!");
             Assert.True(this.container.IsRegistered<TestDocumentDbContext>(), "DbContext not registered!");
-            Assert.True(this.container.IsRegistered<IDocumentRepository<TodoListDocument, Guid>>(), "Base repository not registered!");
-            Assert.True(this.container.IsRegistered<ITodoListDocumentRepository>(), "Implemented repository interface not registered!");
+            Assert.True(this.container.IsRegistered<IDocumentRepository<TodoListDocument, Guid>>(),
+                "Base repository not registered!");
+            Assert.True(this.container.IsRegistered<ITodoListDocumentRepository>(),
+                "Implemented repository interface not registered!");
 
             var genericRepository = this.container.Resolve<IDocumentRepository<TodoListDocument, Guid>>();
             var implementedInterfaceRepository = this.container.Resolve<ITodoListDocumentRepository>();
 
             Assert.Equal(genericRepository, implementedInterfaceRepository);
         }
-        
+
         [Fact]
         public void ServiceContainerBuilder_UseGenericDocumentRepositoryPatternInvalidInput_ExpectException()
         {
             Assert.Throws<ArgumentException>(() => this.containerBuilder
                 .UseGenericDocumentRepositoryPattern<TestDocumentDbContext>());
         }
-        
+
         [Fact]
         public void ServiceContainerBuilder_UseGenericEntityRepositoryPatternValidInput_ExpectInstances()
         {
-            this.containerBuilder.UseGenericEntityRepositoryPattern<InMemoryEntityDbContext>(typeof(InMemoryEntityDbContext).Assembly);
-            
+            this.containerBuilder.UseGenericEntityRepositoryPattern<InMemoryEntityDbContext>(
+                typeof(InMemoryEntityDbContext).Assembly);
+
             this.BuildContainer();
-            
+
             Assert.True(this.container.IsRegistered<InMemoryEntityDbContext>(), "DbContext not registered!");
-            Assert.True(this.container.IsRegistered<IEntityRepository<TodoListEntity, Guid>>(), "Base repository not registered!");
-            Assert.True(this.container.IsRegistered<ITodoListEntityRepository>(), "Implemented repository interface not registered!");
+            Assert.True(this.container.IsRegistered<IEntityRepository<TodoListEntity, Guid>>(),
+                "Base repository not registered!");
+            Assert.True(this.container.IsRegistered<ITodoListEntityRepository>(),
+                "Implemented repository interface not registered!");
 
             var genericRepository = this.container.Resolve<IEntityRepository<TodoListEntity, Guid>>();
             var implementedInterfaceRepository = this.container.Resolve<ITodoListEntityRepository>();
 
             Assert.Equal(genericRepository, implementedInterfaceRepository);
         }
-        
+
         [Fact]
         public void ServiceContainerBuilder_UseGenericEntityRepositoryPatternInvalidInput_ExpectException()
         {
@@ -140,7 +148,7 @@ namespace Etdb.ServiceBase.Builder.IntegrationTests
         {
             this.containerBuilder.UseAutoMapper(typeof(TodoProfile).Assembly);
             this.BuildContainer();
-            
+
             Assert.True(this.container.IsRegistered<IMapper>());
             Assert.True(this.container.IsRegistered<MapperConfiguration>());
             Assert.True(this.container.IsRegistered<TodoDtoIdResolver>());
@@ -155,20 +163,20 @@ namespace Etdb.ServiceBase.Builder.IntegrationTests
         {
             this.containerBuilder.UseCqrs(typeof(SimpleVoidCommand).Assembly);
             this.BuildContainer();
-            
+
             Assert.True(this.container.IsRegistered<IMediator>());
-            Assert.True(this.container.IsRegistered<IMediatorHandler>());
-            
+            Assert.True(this.container.IsRegistered<IBus>());
+
             Assert.True(this.container.IsRegistered<ICommandValidation<ComplexVoidCommand>>());
             Assert.True(this.container.IsRegistered<ICommandValidation<ComplexResponseCommand>>());
-            
+
             Assert.True(this.container.IsRegistered<IResponseCommandHandler<SimpleResponseCommand, int>>());
             Assert.True(this.container.IsRegistered<IVoidCommandHandler<SimpleVoidCommand>>());
-            
+
             Assert.True(this.container.IsRegistered<IResponseCommandHandler<ComplexResponseCommand, int>>());
             Assert.True(this.container.IsRegistered<IVoidCommandHandler<ComplexVoidCommand>>());
         }
-        
+
         [Fact]
         public void ServiceContainerBuilder_UseCqrsInvalidInput_ExpectException()
         {
@@ -180,7 +188,7 @@ namespace Etdb.ServiceBase.Builder.IntegrationTests
         {
             this.containerBuilder.RegisterTypeAsSingleton<SomeClass, ISomeInterface>();
             this.BuildContainer();
-            
+
             Assert.True(this.container.IsRegistered<ISomeInterface>());
 
             ISomeInterface firstInstance = null;
@@ -195,16 +203,16 @@ namespace Etdb.ServiceBase.Builder.IntegrationTests
             {
                 secondInstance = scope.Resolve<ISomeInterface>();
             }
-            
+
             Assert.Equal(firstInstance, secondInstance);
         }
-        
+
         [Fact]
         public void ServiceContainerBuilder_RegisterTypePerDependency_ExpectInstances()
         {
             this.containerBuilder.RegisterTypePerDependency<SomeClass, ISomeInterface>();
             this.BuildContainer();
-            
+
             Assert.True(this.container.IsRegistered<ISomeInterface>());
 
             ISomeInterface firstInstance = null;
@@ -219,16 +227,16 @@ namespace Etdb.ServiceBase.Builder.IntegrationTests
             {
                 secondInstance = scope.Resolve<ISomeInterface>();
             }
-            
+
             Assert.NotEqual(firstInstance, secondInstance);
         }
-        
+
         [Fact]
         public void ServiceContainerBuilder_RegisterTypePerLifetimeScope_ExpectInstances()
         {
             this.containerBuilder.RegisterTypePerLifetimeScope<SomeClass, ISomeInterface>();
             this.BuildContainer();
-            
+
             Assert.True(this.container.IsRegistered<ISomeInterface>());
 
             ISomeInterface firstScopeInstanceOne = null;
@@ -247,18 +255,18 @@ namespace Etdb.ServiceBase.Builder.IntegrationTests
                 secondScopeInstanceOne = scope.Resolve<ISomeInterface>();
                 secondScopeInstanceTwo = scope.Resolve<ISomeInterface>();
             }
-            
+
             Assert.NotEqual(firstScopeInstanceOne, secondScopeInstanceOne);
             Assert.Equal(firstScopeInstanceOne, firstScopeInstanceTwo);
             Assert.Equal(secondScopeInstanceOne, secondScopeInstanceTwo);
         }
-        
+
         [Fact]
         public void ServiceContainerBuilder_RegisterInstance_ExpectInstances()
         {
             this.containerBuilder.RegisterInstance<ISomeInterface>(new SomeClass());
             this.BuildContainer();
-            
+
             Assert.True(this.container.IsRegistered<ISomeInterface>());
 
             ISomeInterface firstInstance = null;
@@ -273,10 +281,10 @@ namespace Etdb.ServiceBase.Builder.IntegrationTests
             {
                 secondInstance = scope.Resolve<ISomeInterface>();
             }
-            
+
             Assert.Equal(firstInstance, secondInstance);
         }
-        
+
 
         private void BuildContainer()
         {

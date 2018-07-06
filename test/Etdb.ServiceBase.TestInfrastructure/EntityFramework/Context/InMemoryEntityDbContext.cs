@@ -15,7 +15,7 @@ namespace Etdb.ServiceBase.TestInfrastructure.EntityFramework.Context
         {
             {
                 var builder = modelBuilder.Entity<TodoListEntity>();
-                
+
                 builder.HasKey(tl => tl.Id);
 
                 builder.HasMany(tl => tl.Todos)
