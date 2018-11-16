@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Etdb.ServiceBase.Domain.Abstractions.Documents;
 using MongoDB.Driver.Linq;
 
-namespace Etdb.ServiceBase.DocumentRepository.Abstractions.Generics
+namespace Etdb.ServiceBase.DocumentRepository.Abstractions
 {
     public interface IDocumentRepository<TDocument, in TId> : IReadDocumentRepository<TDocument, TId>,
         IWriteDocumentRepository<TDocument, TId> where TDocument : class, IDocument<TId> where TId : IEquatable<TId>

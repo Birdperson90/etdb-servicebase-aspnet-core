@@ -1,4 +1,5 @@
-﻿using Etdb.ServiceBase.DocumentRepository.Abstractions.Context;
+﻿using Etdb.ServiceBase.DocumentRepository;
+using Etdb.ServiceBase.DocumentRepository.Abstractions;
 using Etdb.ServiceBase.TestInfrastructure.MongoDb.Documents;
 using Microsoft.Extensions.Options;
 

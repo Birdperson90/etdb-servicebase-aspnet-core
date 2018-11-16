@@ -4,13 +4,12 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
-using Etdb.ServiceBase.DocumentRepository.Abstractions.Context;
-using Etdb.ServiceBase.DocumentRepository.Abstractions.Generics;
+using Etdb.ServiceBase.DocumentRepository.Abstractions;
 using Etdb.ServiceBase.Domain.Abstractions.Documents;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 
-namespace Etdb.ServiceBase.DocumentRepository.Generics
+namespace Etdb.ServiceBase.DocumentRepository
 {
     public abstract class GenericDocumentRepository<TDocument, TId> : IDocumentRepository<TDocument, TId>, IDisposable
         where TDocument : class, IDocument<TId>

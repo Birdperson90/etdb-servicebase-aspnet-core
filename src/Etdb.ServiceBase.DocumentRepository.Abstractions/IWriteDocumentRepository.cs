@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Etdb.ServiceBase.Domain.Abstractions.Documents;
 
-namespace Etdb.ServiceBase.DocumentRepository.Abstractions.Generics
+namespace Etdb.ServiceBase.DocumentRepository.Abstractions
 {
     public interface IWriteDocumentRepository<TDocument, in TId>
         where TDocument : class, IDocument<TId> where TId : IEquatable<TId>

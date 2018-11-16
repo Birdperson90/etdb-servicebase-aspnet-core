@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Etdb.ServiceBase.DocumentRepository.Abstractions.Context;
+using Etdb.ServiceBase.DocumentRepository.Abstractions;
 using Etdb.ServiceBase.TestInfrastructure.MongoDb.Context;
 using Etdb.ServiceBase.TestInfrastructure.MongoDb.Documents;
 using Etdb.ServiceBase.TestInfrastructure.MongoDb.Repositories;

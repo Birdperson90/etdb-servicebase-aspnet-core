@@ -1,6 +1,5 @@
 ﻿using System;
-using Etdb.ServiceBase.DocumentRepository.Abstractions.Context;
-using Etdb.ServiceBase.DocumentRepository.Generics;
+using Etdb.ServiceBase.DocumentRepository;
 using Etdb.ServiceBase.TestInfrastructure.MongoDb.Documents;
 
 namespace Etdb.ServiceBase.TestInfrastructure.MongoDb.Repositories

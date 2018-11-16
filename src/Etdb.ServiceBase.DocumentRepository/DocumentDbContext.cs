@@ -1,9 +1,10 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Etdb.ServiceBase.DocumentRepository.Abstractions;
+using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 
-namespace Etdb.ServiceBase.DocumentRepository.Abstractions.Context
+namespace Etdb.ServiceBase.DocumentRepository
 {
     public abstract class DocumentDbContext
     {

@@ -1,4 +1,4 @@
-﻿namespace Etdb.ServiceBase.DocumentRepository.Abstractions.Context
+﻿namespace Etdb.ServiceBase.DocumentRepository.Abstractions
 {
     public class DocumentDbContextOptions
     {
