@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>0.0.6</Version>
-    <FileVersion>0.0.6.0</FileVersion>
+    <Version>1.0.0</Version>
+    <FileVersion>0.1.0.0</FileVersion>
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="8.0.100" />
-    <PackageReference Include="MediatR" Version="5.1.0" />
+    <PackageReference Include="FluentValidation" Version="8.1.1" />
+    <PackageReference Include="MediatR" Version="6.0.0" />
   </ItemGroup>
 </Project>
