@@ -3,7 +3,12 @@ language: csharp
 solution: etdb-servicebase-aspnet-core.sln
 mono: none
 dotnet: 2.2.105
-script:
-  - dotnet restore
-  - dotnet build
+jobs:
+  include:
+    - stage build
+      name: build solution
+      script: dotnet restore && dotnet build
+    - stage test
+      name: run-tests
+      script: ./run-tests.sh
 
