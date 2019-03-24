@@ -5,10 +5,10 @@ mono: none
 dotnet: 2.2.105
 jobs:
   include:
-    - stage build
+    - stage: build
       name: build solution
       script: dotnet restore && dotnet build
-    - stage test
+    - stage: test
       name: run-tests
       script: ./run-tests.sh
 
