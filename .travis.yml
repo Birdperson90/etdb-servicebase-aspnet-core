@@ -5,15 +5,18 @@ mono: none
 dotnet: 2.2.105
 jobs:
   include:
-    - stage: blub
-      script: echo $TRAVIS_TAG && echo $ETDB_NUGET_APIKEY
     - stage: build
       name: build solution
       script: dotnet restore && dotnet build
+      if: tag IS present
     - stage: test
       name: run-tests
+      services: mongodb
+      before_script:
+        - sh setup-mongodb-user.sh "$MONGODB_USERNAME" "$MONGODB_PASSWORD"
       script: ./run-tests.sh
     - stage: publish
       name: publish-packages
-      script: echo $TRAVIS_TAG
+      if: tag IS present
+      script: ./publish-packages.sh
 
