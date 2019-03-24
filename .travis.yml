@@ -3,12 +3,19 @@ language: csharp
 solution: etdb-servicebase-aspnet-core.sln
 mono: none
 dotnet: 2.2.105
+env:
+  global:
+    - DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
+    - DOTNET_CLI_TELEMETRY_OPTOUT=true
+stages:
+  - build
+  - test
+  - publish
 jobs:
   include:
     - stage: build
       name: build solution
       script: dotnet restore && dotnet build
-      if: tag IS present
     - stage: test
       name: run-tests
       services: mongodb
@@ -18,5 +25,5 @@ jobs:
     - stage: publish
       name: publish-packages
       if: tag IS present
-      script: ./publish-packages.sh
+      script: ./publish-packages.sh "$NUGET_SOURCE" "$ETDB_NUGET_APIKEY" "$TRAVIS_TAG"
 

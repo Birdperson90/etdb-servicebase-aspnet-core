@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
-for directory in src/*; do 
+cd src
+for directory in *; do 
     if [[ -d ${directory} ]]; then
         cd ${directory}
-        dotnet pack *.csproj --include-symbols --output "../../publish"
-        cd .. && cd ..;
-        cd publish
-        dotnet nuget push "${directory}.${GIT_TAG}.symbols.nupkg"
+        dotnet pack *.csproj --include-symbols --output "."
+        dotnet nuget push -s ${1} -k ${2} "${directory}.${3}.symbols.nupkg"
+        if [[ ${?} != 0  ]]
+        then
+            exit -1
+        fi
+        cd ..
     fi
 done
