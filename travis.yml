@@ -1,0 +1,7 @@
+language: csharp
+solution: etdb-servicebase-aspnet-core.sln
+mono: none
+dotnet: 2.2.105
+script:
+  - dotnet restore
+  - dotnet build
