@@ -15,7 +15,7 @@
     <RepositoryUrl>git://github.com/alsami/etdb-servicebase-aspnet-core</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="8.1.3" />
+    <PackageReference Include="FluentValidation" Version="8.2.0" />
     <PackageReference Include="MediatR" Version="6.0.0" />
   </ItemGroup>
 </Project>
