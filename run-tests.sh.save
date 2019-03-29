@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-cd test
-for d in .; 
-    do 
-        if [[ ${d} == *Tests ]]; then
-            cd ${d} && dotnet xunit && cd ../../ && sleep 2s;
-        fi 
-done
