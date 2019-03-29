@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Etdb.ServiceBase.Services.Abstractions;
 using Xunit;
 
-namespace Etdb.ServiceBase.Services.IntegrationTests
+namespace Etdb.ServiceBase.Services.Tests
 {
     public class FileServiceTests
     {

@@ -4,7 +4,7 @@ using Etdb.ServiceBase.Exceptions;
 using Etdb.ServiceBase.TestInfrastructure.Mocks;
 using Xunit;
 
-namespace Etdb.ServiceBase.Filter.UnitTests
+namespace Etdb.ServiceBase.Filter.Tests
 {
     public class AccessDeniedExceptionFilterTests
     {

@@ -3,7 +3,7 @@ using Etdb.ServiceBase.Cryptography.Abstractions.Hashing;
 using Etdb.ServiceBase.Cryptography.Hashing;
 using Xunit;
 
-namespace Etdb.ServiceBase.Cryptography.UnitTests.Hashing
+namespace Etdb.ServiceBase.Cryptography.Tests.Hashing
 {
     public class HasherTests
     {
@@ -20,9 +20,9 @@ namespace Etdb.ServiceBase.Cryptography.UnitTests.Hashing
         {
             var salt = this.hasher.GenerateSalt();
 
-            var hashOne = this.hasher.CreateSaltedHash(SamplePassword, salt);
+            var hashOne = this.hasher.CreateSaltedHash(HasherTests.SamplePassword, salt);
 
-            var hashTwo = this.hasher.CreateSaltedHash(SamplePassword, salt);
+            var hashTwo = this.hasher.CreateSaltedHash(HasherTests.SamplePassword, salt);
 
             Assert.Equal(hashOne, hashTwo);
         }
@@ -33,9 +33,9 @@ namespace Etdb.ServiceBase.Cryptography.UnitTests.Hashing
             var saltOne = this.hasher.GenerateSalt();
             var saltTwo = this.hasher.GenerateSalt();
 
-            var hashOne = this.hasher.CreateSaltedHash(SamplePassword, saltOne);
+            var hashOne = this.hasher.CreateSaltedHash(HasherTests.SamplePassword, saltOne);
 
-            var hashTwo = this.hasher.CreateSaltedHash(SamplePassword, saltTwo);
+            var hashTwo = this.hasher.CreateSaltedHash(HasherTests.SamplePassword, saltTwo);
 
             Assert.NotEqual(hashOne, hashTwo);
         }
@@ -47,7 +47,7 @@ namespace Etdb.ServiceBase.Cryptography.UnitTests.Hashing
 
             Assert.Throws<ArgumentException>(() => this.hasher.CreateSaltedHash(null, salt));
             Assert.Throws<ArgumentException>(() => this.hasher.CreateSaltedHash(string.Empty, salt));
-            Assert.Throws<ArgumentNullException>(() => this.hasher.CreateSaltedHash(SamplePassword, null));
+            Assert.Throws<ArgumentNullException>(() => this.hasher.CreateSaltedHash(HasherTests.SamplePassword, null));
         }
 
         [Fact]

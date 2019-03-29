@@ -4,37 +4,37 @@ using Etdb.ServiceBase.Exceptions;
 using Etdb.ServiceBase.TestInfrastructure.Mocks;
 using Xunit;
 
-namespace Etdb.ServiceBase.Filter.UnitTests
+namespace Etdb.ServiceBase.Filter.Tests
 {
-    public class ResourceNotFoundExceptionFilterTests
+    public class ConcurrencyExceptionFilterTests
     {
         private readonly ExceptionContextMock contextMock;
-        private readonly LoggerMock<ResourceNotFoundExceptionFilter> loggerMock;
-        private readonly ResourceNotFoundExceptionFilter filter;
+        private readonly LoggerMock<ConcurrencyExceptionFilter> loggerMock;
+        private readonly ConcurrencyExceptionFilter filter;
 
-        public ResourceNotFoundExceptionFilterTests()
+        public ConcurrencyExceptionFilterTests()
         {
             this.contextMock = new ExceptionContextMock();
-            this.loggerMock = new LoggerMock<ResourceNotFoundExceptionFilter>();
-            this.filter = new ResourceNotFoundExceptionFilter(this.loggerMock.Logger);
+            this.loggerMock = new LoggerMock<ConcurrencyExceptionFilter>();
+            this.filter = new ConcurrencyExceptionFilter(this.loggerMock.Logger);
         }
 
         [Fact]
-        public void ResourceNotFoundExceptionFilter_InputValidException_ExpectNotFoundResponse()
+        public void ConcurrencyExceptionFilter_InputValidException_ExpectConflictResponse()
         {
-            var exception = new ResourceNotFoundException();
+            var exception = new ConcurrencyException("XY has already been updated", new {SomeNewValue = 123});
 
             this.contextMock.ExceptionContext.Exception = exception;
 
             this.filter.OnException(this.contextMock.ExceptionContext);
 
             Assert.True(this.contextMock.ExceptionContext.ExceptionHandled);
-            Assert.Equal((int) HttpStatusCode.NotFound,
+            Assert.Equal((int) HttpStatusCode.Conflict,
                 this.contextMock.ExceptionContext.HttpContext.Response.StatusCode);
         }
 
         [Fact]
-        public void ResourceNotFoundExceptionFilter_InputInvalidException_ExpectNoChanges()
+        public void ConcurrencyExceptionFilter_InputInvalidException_ExpectNoChanges()
         {
             var exception = new InvalidOperationException();
 

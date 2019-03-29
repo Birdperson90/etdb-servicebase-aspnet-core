@@ -10,7 +10,7 @@ using Etdb.ServiceBase.TestInfrastructure.MongoDb.Repositories;
 using Microsoft.Extensions.Options;
 using Xunit;
 
-namespace Etdb.ServiceBase.DocumentRepository.IntegrationTests.Generics
+namespace Etdb.ServiceBase.DocumentRepository.Tests.Generics
 {
     public class GenericDocumentRepositoryTests
     {

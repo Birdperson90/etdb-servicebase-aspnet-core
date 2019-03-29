@@ -1,49 +1,51 @@
 ﻿using System;
 using System.Net;
-using Etdb.ServiceBase.Exceptions;
 using Etdb.ServiceBase.TestInfrastructure.Mocks;
 using Xunit;
 
-namespace Etdb.ServiceBase.Filter.UnitTests
+namespace Etdb.ServiceBase.Filter.Tests
 {
-    public class GeneralValidationExceptionFilterTests
+    public class UnhandledExceptionFilterTests
     {
         private readonly ExceptionContextMock contextMock;
-        private readonly LoggerMock<GeneralValidationExceptionFilter> loggerMock;
-        private readonly GeneralValidationExceptionFilter filter;
+        private readonly HostingEnvironmentMock environmentMock;
+        private readonly LoggerMock<UnhandledExceptionFilter> loggerMock;
+        private readonly UnhandledExceptionFilter filter;
 
-        public GeneralValidationExceptionFilterTests()
+        public UnhandledExceptionFilterTests()
         {
             this.contextMock = new ExceptionContextMock();
-            this.loggerMock = new LoggerMock<GeneralValidationExceptionFilter>();
-            this.filter = new GeneralValidationExceptionFilter(this.loggerMock.Logger);
+            this.environmentMock = new HostingEnvironmentMock();
+            this.loggerMock = new LoggerMock<UnhandledExceptionFilter>();
+            this.filter = new UnhandledExceptionFilter(this.loggerMock.Logger, this.environmentMock.Environment);
         }
 
         [Fact]
-        public void GeneralValidationExceptionFilter_InputValidException_ExpectBadRequestResponse()
+        public void UnhandledExceptionFilter_InputValidException_ExpectInternalServerError()
         {
-            var exception = new GeneralValidationException("Some validation failed!", new string[] { });
+            var exception = new Exception();
 
             this.contextMock.ExceptionContext.Exception = exception;
 
             this.filter.OnException(this.contextMock.ExceptionContext);
 
             Assert.True(this.contextMock.ExceptionContext.ExceptionHandled);
-            Assert.Equal((int) HttpStatusCode.BadRequest,
+            Assert.Equal((int) HttpStatusCode.InternalServerError,
                 this.contextMock.ExceptionContext.HttpContext.Response.StatusCode);
         }
 
         [Fact]
-        public void GeneralValidationExceptionFilter_InputInvalidException_ExpectNoChanges()
+        public void UnhandledExceptionFilter_InputHandledExceptionContext_ExpectNoChanges()
         {
             var exception = new InvalidOperationException();
 
             this.contextMock.ExceptionContext.Exception = exception;
+            this.contextMock.ExceptionContext.ExceptionHandled = true;
             var initialStatusCode = this.contextMock.ExceptionContext.HttpContext.Response.StatusCode;
 
             this.filter.OnException(this.contextMock.ExceptionContext);
 
-            Assert.False(this.contextMock.ExceptionContext.ExceptionHandled);
+            Assert.True(this.contextMock.ExceptionContext.ExceptionHandled);
             Assert.Equal(initialStatusCode, this.contextMock.ExceptionContext.HttpContext.Response.StatusCode);
         }
     }

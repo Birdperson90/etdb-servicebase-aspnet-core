@@ -8,10 +8,9 @@ using Etdb.ServiceBase.Exceptions;
 using Etdb.ServiceBase.TestInfrastructure.Cqrs.Commands;
 using Etdb.ServiceBase.TestInfrastructure.Cqrs.Validation;
 using MediatR.Extensions.Autofac.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace Etdb.ServiceBase.Cqrs.IntegrationTests
+namespace Etdb.ServiceBase.Cqrs.Tests
 {
     public class BusTests : IDisposable
     {
