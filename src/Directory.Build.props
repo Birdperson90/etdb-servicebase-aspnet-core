@@ -1,0 +1,16 @@
+<Project>
+    <PropertyGroup>
+        <LangVersion>7.2</LangVersion>
+        <IsPackable>true</IsPackable>
+        <Copyright>2019©Sami Al Khatib</Copyright>
+        <Authors>Sami Al Khatib</Authors>
+        <Title>ETDB-Library</Title>
+        <PackageProjectUrl>https://github.com/alsami/etdb-servicebase-aspnet-core</PackageProjectUrl>
+        <PackageIconUrl>https://raw.githubusercontent.com/alsami/etdb-servicebase-aspnet-core/master/assets/images/etdb.png</PackageIconUrl>
+        <PackageTags>ETDB ASPNETCORE LIBRARY</PackageTags>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>git://github.com/alsami/etdb-servicebase-aspnet-core</RepositoryUrl>
+        <Version>1.2.1</Version>
+        <FileVersion>1.2.1.0</FileVersion>
+    </PropertyGroup>
+</Project>

@@ -18,6 +18,7 @@ ProjectSection(SolutionItems) = preProject
 	run-tests.sh = run-tests.sh
 	.travis.yml = .travis.yml
 	setup-mongodb-user.sh = setup-mongodb-user.sh
+	src\Directory.Build.props = src\Directory.Build.props
 EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.Cqrs.Abstractions", "src\Etdb.ServiceBase.Cqrs.Abstractions\Etdb.ServiceBase.Cqrs.Abstractions.csproj", "{30A8E080-3BF1-4093-A3C3-3A701F35A10D}"
