@@ -44,18 +44,6 @@ namespace Etdb.ServiceBase.Cqrs.Tests
         }
 
         [Fact]
-        public void Bus_SendSimpleVoidCommandSync_ExpectNoError()
-        {
-            var command = new SimpleVoidCommand();
-
-            var task = this.bus.SendCommand(command);
-
-            Task.WaitAll(task);
-
-            Assert.Equal(5, command.Value);
-        }
-
-        [Fact]
         public async Task Bus_SendSimpleResponseCommandAsync_ExpectNoError()
         {
             var command = new SimpleResponseCommand();
@@ -74,24 +62,6 @@ namespace Etdb.ServiceBase.Cqrs.Tests
         }
 
         [Fact]
-        public void Bus_SendSimpleResponseCommandSync_ExpectNoError()
-        {
-            var command = new SimpleResponseCommand();
-
-            var result = this.bus.SendCommand<SimpleResponseCommand, int>(command).Result;
-
-            Assert.Equal(5, command.Value);
-            Assert.Equal(10, result);
-
-            command.Value = 22;
-
-            result = this.bus.SendCommand<SimpleResponseCommand, int>(command).Result;
-
-            Assert.Equal(5, command.Value);
-            Assert.Equal(10, result);
-        }
-
-        [Fact]
         public async Task Bus_SendComplexVoidCommandAsync_ExpectNoError()
         {
             var command = new ComplexVoidCommand();
@@ -103,26 +73,6 @@ namespace Etdb.ServiceBase.Cqrs.Tests
             command.Value = 0;
 
             var task = this.bus.SendCommandAsync(command);
-
-            Task.WaitAll(task);
-
-            Assert.Equal(5, command.Value);
-        }
-
-        [Fact]
-        public void Bus_SendComplexVoidCommandSync_ExpectNoError()
-        {
-            var command = new ComplexVoidCommand();
-
-            var task = this.bus.SendCommand(command);
-
-            Task.WaitAll(task);
-
-            Assert.Equal(5, command.Value);
-
-            command.Value = 0;
-
-            task = this.bus.SendCommand(command);
 
             Task.WaitAll(task);
 
@@ -148,24 +98,6 @@ namespace Etdb.ServiceBase.Cqrs.Tests
         }
 
         [Fact]
-        public void Bus_SendComplexResponseCommandSync_ExpectNoError()
-        {
-            var command = new ComplexResponseCommand();
-
-            var result = this.bus.SendCommand<ComplexResponseCommand, int>(command).Result;
-
-            Assert.Equal(5, command.Value);
-            Assert.Equal(10, result);
-
-            command.Value = 0;
-
-            result = this.bus.SendCommand<ComplexResponseCommand, int>(command).Result;
-
-            Assert.Equal(5, command.Value);
-            Assert.Equal(10, result);
-        }
-
-        [Fact]
         public async Task Bus_SendComplexVoidCommandAsyncInvalidInput_ExpectValidationException()
         {
             var command = new ComplexVoidCommand
@@ -174,17 +106,6 @@ namespace Etdb.ServiceBase.Cqrs.Tests
             };
 
             await Assert.ThrowsAsync<GeneralValidationException>(() => this.bus.SendCommandAsync(command));
-        }
-
-        [Fact]
-        public async Task Bus_SendComplexVoidCommandSyncInvalidInput_ExpectValidationException()
-        {
-            var command = new ComplexVoidCommand
-            {
-                Value = 5
-            };
-
-            await Assert.ThrowsAsync<GeneralValidationException>(() => this.bus.SendCommand(command));
         }
 
         [Fact]
@@ -197,18 +118,6 @@ namespace Etdb.ServiceBase.Cqrs.Tests
 
             await Assert.ThrowsAsync<GeneralValidationException>(() =>
                 this.bus.SendCommandAsync<ComplexResponseCommand, int>(command));
-        }
-
-        [Fact]
-        public async Task Bus_SendComplexResponseCommandSyncInvalidInput_ExpectValidationException()
-        {
-            var command = new ComplexResponseCommand
-            {
-                Value = 5
-            };
-
-            await Assert.ThrowsAsync<GeneralValidationException>(() =>
-                this.bus.SendCommand<ComplexResponseCommand, int>(command));
         }
 
         public void Dispose()

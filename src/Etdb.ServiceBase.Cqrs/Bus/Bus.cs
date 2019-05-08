@@ -29,28 +29,10 @@ namespace Etdb.ServiceBase.Cqrs.Bus
             await this.mediator.Send(command, ctx).ConfigureAwait(false);
         }
 
-        public async Task NotifyAsync<TMessage>(TMessage notifier, CancellationToken ctx = default)
-            where TMessage : IMessage
+        public async Task RaiseEventAsync<TMessage>(TMessage @event, CancellationToken ctx = default)
+            where TMessage : IEvent
         {
-            await this.mediator.Publish(notifier, ctx).ConfigureAwait(false);
-        }
-
-        public Task<TResponse> SendCommand<TResponseCommand, TResponse>(TResponseCommand command,
-            CancellationToken ctx = default)
-            where TResponseCommand : IResponseCommand<TResponse>
-        {
-            return this.mediator.Send(command, ctx);
-        }
-
-        public Task SendCommand<TVoidCommand>(TVoidCommand command, CancellationToken ctx = default)
-            where TVoidCommand : IVoidCommand
-        {
-            return this.mediator.Send(command, ctx);
-        }
-
-        public Task Notify<TMessage>(TMessage notifier, CancellationToken ctx = default) where TMessage : IMessage
-        {
-            return this.mediator.Publish(notifier, ctx);
+            await this.mediator.Publish(@event, ctx).ConfigureAwait(false);
         }
     }
 }

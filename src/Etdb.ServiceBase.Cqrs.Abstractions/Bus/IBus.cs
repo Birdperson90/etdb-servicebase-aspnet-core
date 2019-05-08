@@ -14,15 +14,6 @@ namespace Etdb.ServiceBase.Cqrs.Abstractions.Bus
         Task SendCommandAsync<TVoidCommand>(TVoidCommand command, CancellationToken ctx = default)
             where TVoidCommand : IVoidCommand;
 
-        Task NotifyAsync<TNotifier>(TNotifier notifier, CancellationToken ctx = default) where TNotifier : IMessage;
-
-        Task<TResponse> SendCommand<TResponseCommand, TResponse>(TResponseCommand command,
-            CancellationToken ctx = default)
-            where TResponseCommand : IResponseCommand<TResponse>;
-
-        Task SendCommand<TVoidCommand>(TVoidCommand command, CancellationToken ctx = default)
-            where TVoidCommand : IVoidCommand;
-
-        Task Notify<TNotifier>(TNotifier notifier, CancellationToken ctx = default) where TNotifier : IMessage;
+        Task RaiseEventAsync<TEvent>(TEvent @event, CancellationToken ctx = default) where TEvent : IEvent;
     }
 }
