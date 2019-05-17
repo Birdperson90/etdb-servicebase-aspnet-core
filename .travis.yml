@@ -1,6 +1,6 @@
 dist: bionic
 language: csharp
-solution: etdb-servicebase-aspnet-core.sln
+solution: Etdb.ServiceBase.AspNetCore.sln
 mono: none
 dotnet: 2.2.105
 env:
