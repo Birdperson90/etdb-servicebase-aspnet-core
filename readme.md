@@ -1,1 +1,1 @@
-[![Build Status](https://travis-ci.com/alsami/etdb-servicebase-aspnet-core.svg?branch=master)](https://travis-ci.com/alsami/etdb-servicebase-aspnet-core)
+[![Build Status](https://travis-ci.com/alsami/Etdb.ServiceBase.AspNetCore.svg?branch=master)](https://travis-ci.com/alsami/Etdb.ServiceBase.AspNetCore)
