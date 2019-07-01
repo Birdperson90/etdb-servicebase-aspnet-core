@@ -1,4 +1,5 @@
 dist: bionic
+sudo: required
 language: csharp
 solution: Etdb.ServiceBase.AspNetCore.sln
 mono: none
@@ -16,7 +17,11 @@ jobs:
       name: run-tests
       services: mongodb
       before_script:
+        - sh install_link_libgdiplus.sh
         - sh setup-mongodb-user.sh "$MONGODB_USERNAME" "$MONGODB_PASSWORD"
+      addons: 
+        apt:
+          update: true
       script: ./run-tests.sh
     - stage: publish
       name: publish-packages
