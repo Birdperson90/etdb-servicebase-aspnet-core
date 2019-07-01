@@ -16,11 +16,7 @@ namespace Etdb.ServiceBase.Services
             {
                 var image = Image.FromStream(memoryStream);
 
-                var encoder = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-                    ? Encoder.Quality
-                    : Encoder.Compression;
-
-                var encoderParameter = new EncoderParameter(encoder, encodeValue);
+                var encoderParameter = new EncoderParameter(Encoder.Compression, encodeValue);
 
                 return Compress(image, GetImageCodecInfo(mimeType), encoderParameter);
             }
