@@ -10,13 +10,17 @@ namespace Etdb.ServiceBase.Services
 {
     public class ImageCompressionService : IImageCompressionService
     {
-        public byte[] Compress(byte[] bytes, string mimeType, byte encodeValue = 75)
+        public byte[] Compress(byte[] bytes, string mimeType, long encodeValue = 75)
         {
             using (var memoryStream = new MemoryStream(bytes))
             {
                 var image = Image.FromStream(memoryStream);
 
-                var encoderParameter = new EncoderParameter(Encoder.Compression, encodeValue);
+                var encoder = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+                    ? Encoder.Quality
+                    : Encoder.Compression;
+
+                var encoderParameter = new EncoderParameter(encoder, encodeValue);
 
                 return Compress(image, GetImageCodecInfo(mimeType), encoderParameter);
             }
