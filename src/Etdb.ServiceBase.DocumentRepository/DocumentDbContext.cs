@@ -19,9 +19,9 @@ namespace Etdb.ServiceBase.DocumentRepository
         protected DocumentDbContext(MongoClientSettings mongoClientSettings, string databaseName)
         {
             if (mongoClientSettings == null) throw new ArgumentNullException(nameof(mongoClientSettings));
-            
+
             if (string.IsNullOrWhiteSpace(databaseName)) throw new ArgumentNullException(nameof(databaseName));
-            
+
             var client = new MongoClient(mongoClientSettings);
 
             this.Database = client.GetDatabase(databaseName);

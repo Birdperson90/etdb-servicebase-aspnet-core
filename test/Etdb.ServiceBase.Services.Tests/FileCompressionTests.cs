@@ -18,7 +18,7 @@ namespace Etdb.ServiceBase.Services.Tests
             this.imageCompressionService = new ImageCompressionService();
             this.fileService = new FileService();
         }
-        
+
         [Theory]
         [InlineData("kitten.jpg")]
         [InlineData("largeimage.jpg")]
@@ -26,9 +26,9 @@ namespace Etdb.ServiceBase.Services.Tests
         {
             var originalBytes = File.ReadAllBytes(Path.Combine(this.basePath, fileName));
             var compressedBytes = this.imageCompressionService.Compress(originalBytes, "image/jpeg");
-            
+
             Assert.NotEqual(originalBytes, compressedBytes);
-            
+
             await this.fileService.StoreBinaryAsync(this.basePath, $"compressed_{fileName}_{DateTime.UtcNow.Ticks}.jpg",
                 compressedBytes);
         }

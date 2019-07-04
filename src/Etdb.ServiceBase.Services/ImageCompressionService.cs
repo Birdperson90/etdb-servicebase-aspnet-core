@@ -16,9 +16,12 @@ namespace Etdb.ServiceBase.Services
             {
                 var image = Image.FromStream(memoryStream);
 
-                var encoder = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-                    ? Encoder.Quality
-                    : Encoder.Compression;
+                var encoder =
+                    RuntimeInformation.OSDescription.IndexOf("Windows", StringComparison.InvariantCultureIgnoreCase) >
+                    -1 || RuntimeInformation.OSDescription.IndexOf("Microsoft",
+                        StringComparison.InvariantCultureIgnoreCase) > -1
+                        ? Encoder.Quality
+                        : Encoder.Compression;
 
                 var encoderParameter = new EncoderParameter(encoder, encodeValue);
 
@@ -43,7 +46,20 @@ namespace Etdb.ServiceBase.Services
         }
 
         private static ImageCodecInfo GetImageCodecInfo(string mimeType)
-            => ImageCodecInfo.GetImageEncoders().First(codec =>
+        {
+            var codecInfos = ImageCodecInfo.GetImageEncoders();
+
+            var codedcInfo = codecInfos.FirstOrDefault(codec =>
                 codec.MimeType.Equals(mimeType, StringComparison.InvariantCultureIgnoreCase));
+
+            if (codedcInfo != null) return codedcInfo;
+
+            return codecInfos.FirstOrDefault(codec =>
+                codec.MimeType.Equals("image/jpeg", StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        private static bool IsWindowsPlatform() =>
+            RuntimeInformation.OSDescription.IndexOf("Windows", StringComparison.InvariantCultureIgnoreCase) > -1 ||
+            RuntimeInformation.OSDescription.IndexOf("Microsoft", StringComparison.InvariantCultureIgnoreCase) > -1;
     }
 }

@@ -19,11 +19,13 @@ namespace Etdb.ServiceBase.Cqrs.Tests
 
         public BusTests()
         {
-            this.container = new AutofacFluentBuilder(new ContainerBuilder().AddMediatR(typeof(SimpleVoidCommand).Assembly))
-                .AddClosedTypeAsScoped(typeof(ICommandValidation<>), new[] { typeof(ComplexCommandValidation).Assembly })
-                .RegisterTypeAsScoped<Bus.Bus, IBus>()
-                .Build();
-            
+            this.container =
+                new AutofacFluentBuilder(new ContainerBuilder().AddMediatR(typeof(SimpleVoidCommand).Assembly))
+                    .AddClosedTypeAsScoped(typeof(ICommandValidation<>),
+                        new[] {typeof(ComplexCommandValidation).Assembly})
+                    .RegisterTypeAsScoped<Bus.Bus, IBus>()
+                    .Build();
+
             this.bus = this.container.Resolve<IBus>();
         }
 
