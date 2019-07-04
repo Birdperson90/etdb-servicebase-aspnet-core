@@ -14,18 +14,26 @@ namespace Etdb.ServiceBase.Services
         {
             using (var memoryStream = new MemoryStream(bytes))
             {
-                var image = Image.FromStream(memoryStream);
+                Image image;
+                try
+                {
+                    image = Image.FromStream(memoryStream);
+                }
+                catch (Exception)
+                {
+                    // this means it's an SVG or some other vector-graphic!
+                    return bytes;
+                }
 
-                var encoder =
-                    RuntimeInformation.OSDescription.IndexOf("Windows", StringComparison.InvariantCultureIgnoreCase) >
-                    -1 || RuntimeInformation.OSDescription.IndexOf("Microsoft",
-                        StringComparison.InvariantCultureIgnoreCase) > -1
-                        ? Encoder.Quality
-                        : Encoder.Compression;
+                var encoder = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+                    ? Encoder.Quality
+                    : Encoder.Compression;
 
                 var encoderParameter = new EncoderParameter(encoder, encodeValue);
 
-                return Compress(image, GetImageCodecInfo(mimeType), encoderParameter);
+                var codecInfo = GetImageCodecInfo(mimeType);
+
+                return Compress(image, codecInfo, encoderParameter);
             }
         }
 
@@ -57,9 +65,5 @@ namespace Etdb.ServiceBase.Services
             return codecInfos.FirstOrDefault(codec =>
                 codec.MimeType.Equals("image/jpeg", StringComparison.InvariantCultureIgnoreCase));
         }
-
-        private static bool IsWindowsPlatform() =>
-            RuntimeInformation.OSDescription.IndexOf("Windows", StringComparison.InvariantCultureIgnoreCase) > -1 ||
-            RuntimeInformation.OSDescription.IndexOf("Microsoft", StringComparison.InvariantCultureIgnoreCase) > -1;
     }
 }
