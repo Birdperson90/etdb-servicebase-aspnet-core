@@ -44,5 +44,31 @@ namespace Etdb.ServiceBase.Services.Tests
             await this.fileService.StoreBinaryAsync(this.basePath, $"uncompressed_googlesvg_{DateTime.UtcNow.Ticks}.jpg",
                 compressedBytes);
         }
+        
+        [Theory]
+        [InlineData("kitten.jpg")]
+        [InlineData("largeimage.jpg")]
+        public async Task ImageCompressionService_CreateThumbnail_Size_120_120_Succeeds(string fileName)
+        {
+            var originalBytes = File.ReadAllBytes(Path.Combine(this.basePath, fileName));
+            var compressedBytes = this.imageCompressionService.CreateThumbnail(originalBytes, "image/jpeg");
+
+            Assert.NotEqual(originalBytes, compressedBytes);
+
+            await this.fileService.StoreBinaryAsync(this.basePath, $"thumbnail_{fileName}_{DateTime.UtcNow.Ticks}.jpg",
+                compressedBytes);
+        }
+        
+        [Fact]
+        public async Task ImageCompressionService_CreateThumbnail_Vector_Returns_Same_Size_Array()
+        {
+            var originalBytes = File.ReadAllBytes(Path.Combine(this.basePath, "google.svg"));
+            var compressedBytes = this.imageCompressionService.Compress(originalBytes, "image/svg+xml");
+
+            Assert.Equal(originalBytes, compressedBytes);
+
+            await this.fileService.StoreBinaryAsync(this.basePath, $"uncompressed_googlesvg_{DateTime.UtcNow.Ticks}.jpg",
+                compressedBytes);
+        }
     }
 }

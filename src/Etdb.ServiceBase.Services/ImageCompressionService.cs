@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
@@ -34,6 +35,40 @@ namespace Etdb.ServiceBase.Services
                 var codecInfo = GetImageCodecInfo(mimeType);
 
                 return Compress(image, codecInfo, encoderParameter);
+            }
+        }
+
+        public byte[] CreateThumbnail(byte[] bytes, string mimeType)
+        {
+            using (var memoryStream = new MemoryStream(bytes))
+            {
+                Image image;
+
+                try
+                {
+                    image = Image.FromStream(memoryStream);
+                }
+                catch (Exception)
+                {
+                    // this means it's an SVG or some other vector-graphic!
+                    return bytes;
+                }
+
+                var codecInfo = GetImageCodecInfo(mimeType);
+
+                return CreateThumbnail(image, codecInfo);
+            }
+        }
+
+        private static byte[] CreateThumbnail(Image image, ImageCodecInfo codecInfo)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                var ratio = image.Width / image.Height;
+                ratio = ratio != 0 ? ratio : image.Height / image.Width;
+                var thumbnail = image.GetThumbnailImage(160, 160 * ratio, () => false, IntPtr.Zero);
+                thumbnail.Save(memoryStream, new ImageFormat(codecInfo.FormatID));
+                return memoryStream.ToArray();
             }
         }
 
