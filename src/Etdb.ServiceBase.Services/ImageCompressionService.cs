@@ -11,7 +11,7 @@ namespace Etdb.ServiceBase.Services
 {
     public class ImageCompressionService : IImageCompressionService
     {
-        public byte[] Compress(byte[] bytes, string mimeType, long encodeValue = 75)
+        public byte[] Compress(byte[] bytes, string mimeType, long compressionValue = 75)
         {
             using (var memoryStream = new MemoryStream(bytes))
             {
@@ -22,15 +22,12 @@ namespace Etdb.ServiceBase.Services
                 }
                 catch (Exception)
                 {
-                    // this means it's an SVG or some other vector-graphic!
                     return bytes;
                 }
 
-                var encoder = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-                    ? Encoder.Quality
-                    : Encoder.Compression;
+                var encoder = GetMatchingPlatformEncoder();
 
-                var encoderParameter = new EncoderParameter(encoder, encodeValue);
+                var encoderParameter = new EncoderParameter(encoder, compressionValue);
 
                 var codecInfo = GetImageCodecInfo(mimeType);
 
@@ -38,38 +35,61 @@ namespace Etdb.ServiceBase.Services
             }
         }
 
-        public byte[] CreateThumbnail(byte[] bytes, string mimeType)
+        public byte[] Resize(byte[] bytes, string mimeType, int width = 256, int height = 256, long compressionValue = 75)
         {
+            Image image;
+
             using (var memoryStream = new MemoryStream(bytes))
             {
-                Image image;
-
                 try
                 {
                     image = Image.FromStream(memoryStream);
                 }
                 catch (Exception)
                 {
-                    // this means it's an SVG or some other vector-graphic!
                     return bytes;
                 }
+            }
 
-                var codecInfo = GetImageCodecInfo(mimeType);
+            RotateImage(image);
 
-                return CreateThumbnail(image, codecInfo);
+            var (dimensionX, dimensionY) = CalculateDimensions(width, height, image);
+
+            var resizedImage = new Bitmap(dimensionX, dimensionY);
+            
+            const float dpi = 72;
+
+            resizedImage.SetResolution(dpi, dpi);
+
+            DrawGraphics(resizedImage, image, dimensionX, dimensionY);
+
+            return Compress(resizedImage, GetImageCodecInfo(mimeType),
+                new EncoderParameter(GetMatchingPlatformEncoder(), compressionValue));
+        }
+
+        private static void DrawGraphics(Image resizedImage, Image image, int dimensionX, int dimensionY)
+        {
+            using (var graphics = Graphics.FromImage(resizedImage))
+            {
+                graphics.CompositingMode = CompositingMode.SourceCopy;
+                graphics.CompositingQuality = CompositingQuality.HighQuality;
+                graphics.SmoothingMode = SmoothingMode.HighQuality;
+                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                graphics.DrawImage(image, 0, 0, dimensionX, dimensionY);
             }
         }
 
-        private static byte[] CreateThumbnail(Image image, ImageCodecInfo codecInfo)
+        private static void RotateImage(Image image)
         {
-            using (var memoryStream = new MemoryStream())
-            {
-                var ratio = image.Width / image.Height;
-                ratio = ratio != 0 ? ratio : image.Height / image.Width;
-                var thumbnail = image.GetThumbnailImage(160, 160 * ratio, () => false, IntPtr.Zero);
-                thumbnail.Save(memoryStream, new ImageFormat(codecInfo.FormatID));
-                return memoryStream.ToArray();
-            }
+            var orientationImageProperty = image.PropertyItems.FirstOrDefault(prop => prop.Id == 0x0112);
+
+            if (orientationImageProperty == null) return;
+            
+            int orientationValue = image.GetPropertyItem(orientationImageProperty.Id).Value[0];
+            var rotateFlipType = GetRotateFlipType(orientationValue);
+            image.RotateFlip(rotateFlipType);
         }
 
         private static byte[] Compress(Image image, ImageCodecInfo codecInfo, EncoderParameter encoderParameter)
@@ -100,5 +120,46 @@ namespace Etdb.ServiceBase.Services
             return codecInfos.FirstOrDefault(codec =>
                 codec.MimeType.Equals("image/jpeg", StringComparison.InvariantCultureIgnoreCase));
         }
+
+        private static (int newWidth, int newHeight) CalculateDimensions(int width, int height, Image image)
+        {
+            if (image.Width <= width && image.Height <= height) return (width, height);
+
+            var ratioX = (double) width / image.Width;
+            var ratioY = (double) height / image.Height;
+            var ratio = Math.Min(ratioX, ratioY);
+
+            return ((int) (image.Width * ratio), (int) (image.Height * ratio));
+        }
+
+        private static RotateFlipType GetRotateFlipType(int rotateValue)
+        {
+            switch (rotateValue)
+            {
+                case 1:
+                    return RotateFlipType.RotateNoneFlipNone;
+                case 2:
+                    return RotateFlipType.RotateNoneFlipX;
+                case 3:
+                    return RotateFlipType.Rotate180FlipNone;
+                case 4:
+                    return RotateFlipType.Rotate180FlipX;
+                case 5:
+                    return RotateFlipType.Rotate90FlipX;
+                case 6:
+                    return RotateFlipType.Rotate90FlipNone;
+                case 7:
+                    return RotateFlipType.Rotate270FlipX;
+                case 8:
+                    return RotateFlipType.Rotate270FlipNone;
+                default:
+                    return RotateFlipType.RotateNoneFlipNone;
+            }
+        }
+
+        private static Encoder GetMatchingPlatformEncoder()
+            => RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+                ? Encoder.Quality
+                : Encoder.Compression;
     }
 }

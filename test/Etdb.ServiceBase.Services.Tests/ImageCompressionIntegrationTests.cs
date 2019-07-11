@@ -8,7 +8,7 @@ namespace Etdb.ServiceBase.Services.Tests
 {
     public class ImageCompressionIntegrationTests
     {
-        private readonly IImageCompressionService imageCompressionService;
+        private readonly ImageCompressionService imageCompressionService;
         private const string FileName = "kitten.jpg";
         private readonly string basePath = Path.Combine(AppContext.BaseDirectory, "Files");
         private readonly IFileService fileService;
@@ -41,33 +41,35 @@ namespace Etdb.ServiceBase.Services.Tests
 
             Assert.Equal(originalBytes, compressedBytes);
 
-            await this.fileService.StoreBinaryAsync(this.basePath, $"uncompressed_googlesvg_{DateTime.UtcNow.Ticks}.jpg",
+            await this.fileService.StoreBinaryAsync(this.basePath,
+                $"uncompressed_googlesvg_{DateTime.UtcNow.Ticks}.svg",
                 compressedBytes);
         }
         
         [Theory]
         [InlineData("kitten.jpg")]
         [InlineData("largeimage.jpg")]
-        public async Task ImageCompressionService_CreateThumbnail_Size_120_120_Succeeds(string fileName)
+        public async Task ImageCompressionService_Resize_Lowers_Image_Size(string fileName)
         {
             var originalBytes = File.ReadAllBytes(Path.Combine(this.basePath, fileName));
-            var compressedBytes = this.imageCompressionService.CreateThumbnail(originalBytes, "image/jpeg");
+            var resizedBytes = this.imageCompressionService.Resize(originalBytes, "image/jpeg", 256, 256);
 
-            Assert.NotEqual(originalBytes, compressedBytes);
+            Assert.NotEqual(originalBytes, resizedBytes);
 
-            await this.fileService.StoreBinaryAsync(this.basePath, $"thumbnail_{fileName}_{DateTime.UtcNow.Ticks}.jpg",
-                compressedBytes);
+            await this.fileService.StoreBinaryAsync(this.basePath,
+                $"resized_{fileName}_{DateTime.UtcNow.Ticks}.jpg",
+                resizedBytes);
         }
-        
+
         [Fact]
-        public async Task ImageCompressionService_CreateThumbnail_Vector_Returns_Same_Size_Array()
+        public async Task ImageCompressionService_Resize_Vector_Returns_Same_Size_Array()
         {
             var originalBytes = File.ReadAllBytes(Path.Combine(this.basePath, "google.svg"));
-            var compressedBytes = this.imageCompressionService.Compress(originalBytes, "image/svg+xml");
+            var compressedBytes = this.imageCompressionService.Resize(originalBytes, "image/svg+xml", 256, 256);
 
             Assert.Equal(originalBytes, compressedBytes);
 
-            await this.fileService.StoreBinaryAsync(this.basePath, $"uncompressed_googlesvg_{DateTime.UtcNow.Ticks}.jpg",
+            await this.fileService.StoreBinaryAsync(this.basePath, $"not_resized_googlesvg_{DateTime.UtcNow.Ticks}.svg",
                 compressedBytes);
         }
     }
