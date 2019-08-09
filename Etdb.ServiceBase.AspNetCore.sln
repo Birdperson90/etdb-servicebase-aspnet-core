@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29201.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EC9EFBE9-B329-4C2D-935B-B2E2BEE02807}"
 EndProject
@@ -10,53 +10,54 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.Domain.Abstractions", "src\Etdb.ServiceBase.Domain.Abstractions\Etdb.ServiceBase.Domain.Abstractions.csproj", "{9C5C5DB8-A4F0-45FD-A37A-0A6096E9C303}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{2A1FE43E-188D-4319-8DC5-E0A7BA6B0427}"
-ProjectSection(SolutionItems) = preProject
-	.gitignore = .gitignore
-	publish-packages.sh = publish-packages.sh
-	licence.md = licence.md
-	readme.md = readme.md
-	run-tests.sh = run-tests.sh
-	.travis.yml = .travis.yml
-	setup-mongodb-user.sh = setup-mongodb-user.sh
-	src\Directory.Build.props = src\Directory.Build.props
-	install_link_libgdiplus.sh = install_link_libgdiplus.sh
-EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		.travis.yml = .travis.yml
+		.travis.yml.bak = .travis.yml.bak
+		src\Directory.Build.props = src\Directory.Build.props
+		install_link_libgdiplus.sh = install_link_libgdiplus.sh
+		licence.md = licence.md
+		publish-packages.sh = publish-packages.sh
+		readme.md = readme.md
+		run-tests.sh = run-tests.sh
+		setup-mongodb-user.sh = setup-mongodb-user.sh
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.Cqrs.Abstractions", "src\Etdb.ServiceBase.Cqrs.Abstractions\Etdb.ServiceBase.Cqrs.Abstractions.csproj", "{30A8E080-3BF1-4093-A3C3-3A701F35A10D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.Cqrs.Abstractions", "src\Etdb.ServiceBase.Cqrs.Abstractions\Etdb.ServiceBase.Cqrs.Abstractions.csproj", "{30A8E080-3BF1-4093-A3C3-3A701F35A10D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.Cqrs", "src\Etdb.ServiceBase.Cqrs\Etdb.ServiceBase.Cqrs.csproj", "{1B1B9508-0CE2-471A-B79F-0DC4CEF82BEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.Cqrs", "src\Etdb.ServiceBase.Cqrs\Etdb.ServiceBase.Cqrs.csproj", "{1B1B9508-0CE2-471A-B79F-0DC4CEF82BEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.DocumentRepository", "src\Etdb.ServiceBase.DocumentRepository\Etdb.ServiceBase.DocumentRepository.csproj", "{42664379-4016-4EBB-BBA4-D5772767D063}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.DocumentRepository", "src\Etdb.ServiceBase.DocumentRepository\Etdb.ServiceBase.DocumentRepository.csproj", "{42664379-4016-4EBB-BBA4-D5772767D063}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.Cryptography.Abstractions", "src\Etdb.ServiceBase.Cryptography.Abstractions\Etdb.ServiceBase.Cryptography.Abstractions.csproj", "{3F480D92-7744-4050-AF03-8CC998CCA5C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.Cryptography.Abstractions", "src\Etdb.ServiceBase.Cryptography.Abstractions\Etdb.ServiceBase.Cryptography.Abstractions.csproj", "{3F480D92-7744-4050-AF03-8CC998CCA5C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.Cryptography", "src\Etdb.ServiceBase.Cryptography\Etdb.ServiceBase.Cryptography.csproj", "{480A03B8-3DCE-47A8-AF33-3E479C5A3CF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.Cryptography", "src\Etdb.ServiceBase.Cryptography\Etdb.ServiceBase.Cryptography.csproj", "{480A03B8-3DCE-47A8-AF33-3E479C5A3CF2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.Exceptions", "src\Etdb.ServiceBase.Exceptions\Etdb.ServiceBase.Exceptions.csproj", "{DDE816E4-B055-4462-A2F5-5A82C6274216}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.Exceptions", "src\Etdb.ServiceBase.Exceptions\Etdb.ServiceBase.Exceptions.csproj", "{DDE816E4-B055-4462-A2F5-5A82C6274216}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.Filter", "src\Etdb.ServiceBase.Filter\Etdb.ServiceBase.Filter.csproj", "{EAC58FE0-397D-432F-BE23-16FD373BD8A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.Filter", "src\Etdb.ServiceBase.Filter\Etdb.ServiceBase.Filter.csproj", "{EAC58FE0-397D-432F-BE23-16FD373BD8A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.Constants", "src\Etdb.ServiceBase.Constants\Etdb.ServiceBase.Constants.csproj", "{26ACE912-951C-4731-A787-582D28909B7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.Constants", "src\Etdb.ServiceBase.Constants\Etdb.ServiceBase.Constants.csproj", "{26ACE912-951C-4731-A787-582D28909B7F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.TestInfrastructure", "test\Etdb.ServiceBase.TestInfrastructure\Etdb.ServiceBase.TestInfrastructure.csproj", "{4B930CCF-F9C5-4C50-B442-AF642515CEDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.TestInfrastructure", "test\Etdb.ServiceBase.TestInfrastructure\Etdb.ServiceBase.TestInfrastructure.csproj", "{4B930CCF-F9C5-4C50-B442-AF642515CEDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.Cryptography.Tests", "test\Etdb.ServiceBase.Cryptography.Tests\Etdb.ServiceBase.Cryptography.Tests.csproj", "{6E030688-296F-426D-992E-1F8EABE10364}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.Cryptography.Tests", "test\Etdb.ServiceBase.Cryptography.Tests\Etdb.ServiceBase.Cryptography.Tests.csproj", "{6E030688-296F-426D-992E-1F8EABE10364}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.DocumentRepository.Abstractions", "src\Etdb.ServiceBase.DocumentRepository.Abstractions\Etdb.ServiceBase.DocumentRepository.Abstractions.csproj", "{4F8AD230-8EE8-4B4F-B1BE-47A26F801A8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.DocumentRepository.Abstractions", "src\Etdb.ServiceBase.DocumentRepository.Abstractions\Etdb.ServiceBase.DocumentRepository.Abstractions.csproj", "{4F8AD230-8EE8-4B4F-B1BE-47A26F801A8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.Cqrs.Tests", "test\Etdb.ServiceBase.Cqrs.Tests\Etdb.ServiceBase.Cqrs.Tests.csproj", "{4EC8CC39-98DF-4378-938B-CBADC273F53C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.Cqrs.Tests", "test\Etdb.ServiceBase.Cqrs.Tests\Etdb.ServiceBase.Cqrs.Tests.csproj", "{4EC8CC39-98DF-4378-938B-CBADC273F53C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.Filter.Tests", "test\Etdb.ServiceBase.Filter.Tests\Etdb.ServiceBase.Filter.Tests.csproj", "{54542902-0C6C-49BF-9701-3B5F8883A771}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.Filter.Tests", "test\Etdb.ServiceBase.Filter.Tests\Etdb.ServiceBase.Filter.Tests.csproj", "{54542902-0C6C-49BF-9701-3B5F8883A771}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.DocumentRepository.Tests", "test\Etdb.ServiceBase.DocumentRepository.Tests\Etdb.ServiceBase.DocumentRepository.Tests.csproj", "{8C9667A5-D8AE-40D1-B5C8-CC412F2F4E49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.DocumentRepository.Tests", "test\Etdb.ServiceBase.DocumentRepository.Tests\Etdb.ServiceBase.DocumentRepository.Tests.csproj", "{8C9667A5-D8AE-40D1-B5C8-CC412F2F4E49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.Extensions", "src\Etdb.ServiceBase.Extensions\Etdb.ServiceBase.Extensions.csproj", "{3C2841FA-EECA-4E06-9359-85F06CFBC5DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.Extensions", "src\Etdb.ServiceBase.Extensions\Etdb.ServiceBase.Extensions.csproj", "{3C2841FA-EECA-4E06-9359-85F06CFBC5DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.Services", "src\Etdb.ServiceBase.Services\Etdb.ServiceBase.Services.csproj", "{A11066D1-F6DE-449D-936F-A9E70E2D29F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.Services", "src\Etdb.ServiceBase.Services\Etdb.ServiceBase.Services.csproj", "{A11066D1-F6DE-449D-936F-A9E70E2D29F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.Services.Abstractions", "src\Etdb.ServiceBase.Services.Abstractions\Etdb.ServiceBase.Services.Abstractions.csproj", "{AD6A94AF-82E4-41BF-9B29-8DF281640C85}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.Services.Abstractions", "src\Etdb.ServiceBase.Services.Abstractions\Etdb.ServiceBase.Services.Abstractions.csproj", "{AD6A94AF-82E4-41BF-9B29-8DF281640C85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etdb.ServiceBase.Services.Tests", "test\Etdb.ServiceBase.Services.Tests\Etdb.ServiceBase.Services.Tests.csproj", "{CCE0BAEC-4EAA-455B-9D2B-054C1EC8B212}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.Services.Tests", "test\Etdb.ServiceBase.Services.Tests\Etdb.ServiceBase.Services.Tests.csproj", "{CCE0BAEC-4EAA-455B-9D2B-054C1EC8B212}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
