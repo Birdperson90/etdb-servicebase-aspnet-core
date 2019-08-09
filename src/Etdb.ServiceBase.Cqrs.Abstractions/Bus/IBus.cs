@@ -7,9 +7,9 @@ namespace Etdb.ServiceBase.Cqrs.Abstractions.Bus
 {
     public interface IBus
     {
-        Task<TResponse> SendCommandAsync<TResponseCommand, TResponse>(TResponseCommand command,
+        Task<TResponse?> SendCommandAsync<TResponseCommand, TResponse>(TResponseCommand command,
             CancellationToken ctx = default)
-            where TResponseCommand : IResponseCommand<TResponse>;
+            where TResponseCommand : IResponseCommand<TResponse> where TResponse : class;
 
         Task SendCommandAsync<TVoidCommand>(TVoidCommand command, CancellationToken ctx = default)
             where TVoidCommand : IVoidCommand;
