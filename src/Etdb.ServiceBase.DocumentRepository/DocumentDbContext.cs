@@ -58,7 +58,7 @@ namespace Etdb.ServiceBase.DocumentRepository
             return collections.Any();
         }
 
-        protected void CreateCollection(string collectionName, CreateCollectionOptions options = null)
+        protected void CreateCollection(string collectionName, CreateCollectionOptions? options = null)
         {
             this.Database.CreateCollection(collectionName, options);
         }
