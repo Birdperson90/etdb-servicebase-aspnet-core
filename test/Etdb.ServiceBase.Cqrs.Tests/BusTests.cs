@@ -50,17 +50,18 @@ namespace Etdb.ServiceBase.Cqrs.Tests
         {
             var command = new SimpleResponseCommand();
 
-            var result = await this.bus.SendCommandAsync<SimpleResponseCommand, int>(command);
+            var result = await this.bus.SendCommandAsync<SimpleResponseCommand, SimpleResponse?>(command);
 
             Assert.Equal(5, command.Value);
-            Assert.Equal(10, result);
+            Assert.NotNull(result);
+            Assert.Equal(10, result.ResponseValue);
 
             command.Value = 22;
 
-            result = this.bus.SendCommandAsync<SimpleResponseCommand, int>(command).Result;
+            result = this.bus.SendCommandAsync<SimpleResponseCommand, SimpleResponse?>(command).Result;
 
             Assert.Equal(5, command.Value);
-            Assert.Equal(10, result);
+            Assert.Equal(10, result.ResponseValue);
         }
 
         [Fact]
@@ -86,17 +87,17 @@ namespace Etdb.ServiceBase.Cqrs.Tests
         {
             var command = new ComplexResponseCommand();
 
-            var result = await this.bus.SendCommandAsync<ComplexResponseCommand, int>(command);
+            var result = await this.bus.SendCommandAsync<ComplexResponseCommand, ComplexResponse>(command);
 
             Assert.Equal(5, command.Value);
-            Assert.Equal(10, result);
+            Assert.Equal(10, result.Value);
 
             command.Value = 0;
 
-            result = this.bus.SendCommandAsync<ComplexResponseCommand, int>(command).Result;
+            result = this.bus.SendCommandAsync<ComplexResponseCommand, ComplexResponse>(command).Result;
 
             Assert.Equal(5, command.Value);
-            Assert.Equal(10, result);
+            Assert.Equal(10, result.Value);
         }
 
         [Fact]
@@ -119,7 +120,7 @@ namespace Etdb.ServiceBase.Cqrs.Tests
             };
 
             await Assert.ThrowsAsync<GeneralValidationException>(() =>
-                this.bus.SendCommandAsync<ComplexResponseCommand, int>(command));
+                this.bus.SendCommandAsync<ComplexResponseCommand, ComplexResponse>(command));
         }
 
         public void Dispose()

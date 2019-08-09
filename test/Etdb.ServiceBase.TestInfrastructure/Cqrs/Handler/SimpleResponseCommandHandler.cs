@@ -5,13 +5,13 @@ using Etdb.ServiceBase.TestInfrastructure.Cqrs.Commands;
 
 namespace Etdb.ServiceBase.TestInfrastructure.Cqrs.Handler
 {
-    public class SimpleResponseCommandHandler : IResponseCommandHandler<SimpleResponseCommand, int>
+    public class SimpleResponseCommandHandler : IResponseCommandHandler<SimpleResponseCommand, SimpleResponse>
     {
-        public Task<int> Handle(SimpleResponseCommand request, CancellationToken cancellationToken)
+        public Task<SimpleResponse?> Handle(SimpleResponseCommand request, CancellationToken cancellationToken)
         {
             request.Value = 5;
 
-            return Task.FromResult(10);
+            return Task.FromResult(new SimpleResponse(10));
         }
     }
 }

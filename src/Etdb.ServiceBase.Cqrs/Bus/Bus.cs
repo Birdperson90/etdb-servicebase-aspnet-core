@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Etdb.ServiceBase.Cqrs.Abstractions.Bus;
 using Etdb.ServiceBase.Cqrs.Abstractions.Commands;
@@ -16,9 +17,9 @@ namespace Etdb.ServiceBase.Cqrs.Bus
             this.mediator = mediator;
         }
 
-        public async Task<TResponse> SendCommandAsync<TResponseCommand, TResponse>(TResponseCommand command,
+        public async Task<TResponse?> SendCommandAsync<TResponseCommand, TResponse>(TResponseCommand command,
             CancellationToken ctx = default)
-            where TResponseCommand : IResponseCommand<TResponse>
+            where TResponseCommand : IResponseCommand<TResponse?> where TResponse : class
         {
             return await this.mediator.Send(command, ctx).ConfigureAwait(false);
         }

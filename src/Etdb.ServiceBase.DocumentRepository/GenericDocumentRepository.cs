@@ -22,7 +22,7 @@ namespace Etdb.ServiceBase.DocumentRepository
             this.context = context;
         }
 
-        public virtual async Task<int> CountAsync(string collectionName = null, string partitionKey = null)
+        public virtual async Task<int> CountAsync(string? collectionName = null, string? partitionKey = null)
         {
             return await this.GetCollection(collectionName, partitionKey)
                 .AsQueryable()
@@ -30,7 +30,7 @@ namespace Etdb.ServiceBase.DocumentRepository
                 .CountAsync();
         }
 
-        public virtual int Count(string collectionName = null, string partitionKey = null)
+        public virtual int Count(string? collectionName = null, string? partitionKey = null)
         {
             return this.GetCollection(collectionName, partitionKey)
                 .AsQueryable()
@@ -38,8 +38,8 @@ namespace Etdb.ServiceBase.DocumentRepository
                 .Count();
         }
 
-        public virtual async Task<IEnumerable<TDocument>> GetAllAsync(string collectionName = null,
-            string partitionKey = null)
+        public virtual async Task<IEnumerable<TDocument>> GetAllAsync(string? collectionName = null,
+            string? partitionKey = null)
         {
             return await this.GetCollection(collectionName, partitionKey)
                 .AsQueryable()
@@ -47,7 +47,7 @@ namespace Etdb.ServiceBase.DocumentRepository
                 .ConfigureAwait(false);
         }
 
-        public virtual IEnumerable<TDocument> GetAll(string collectionName = null, string partitionKey = null)
+        public virtual IEnumerable<TDocument> GetAll(string? collectionName = null, string? partitionKey = null)
         {
             return this.GetCollection(collectionName, partitionKey)
                 .AsQueryable()
@@ -55,7 +55,7 @@ namespace Etdb.ServiceBase.DocumentRepository
         }
 
         public virtual async Task<IEnumerable<TDocument>> FindAllAsync(Expression<Func<TDocument, bool>> predicate,
-            string collectionName = null, string partitionKey = null)
+            string? collectionName = null, string? partitionKey = null)
         {
             var qursor = await this.GetCollection(collectionName, partitionKey)
                 .FindAsync(predicate)
@@ -65,7 +65,7 @@ namespace Etdb.ServiceBase.DocumentRepository
         }
 
         public virtual IEnumerable<TDocument> FindAll(Expression<Func<TDocument, bool>> predicate,
-            string collectionName = null, string partitionKey = null)
+            string? collectionName = null, string? partitionKey = null)
         {
             var qursor = this.GetCollection(collectionName, partitionKey)
                 .Find(predicate);
@@ -73,7 +73,7 @@ namespace Etdb.ServiceBase.DocumentRepository
             return qursor.ToList();
         }
 
-        public virtual async Task<TDocument> FindAsync(TId id, string collectionName = null, string partitionKey = null)
+        public virtual async Task<TDocument?> FindAsync(TId id, string? collectionName = null, string? partitionKey = null)
         {
             return await this.GetCollection(collectionName, partitionKey)
                 .Find(document => document.Id.Equals(id))
@@ -81,15 +81,15 @@ namespace Etdb.ServiceBase.DocumentRepository
                 .ConfigureAwait(false);
         }
 
-        public virtual TDocument Find(TId id, string collectionName = null, string partitionKey = null)
+        public virtual TDocument? Find(TId id, string? collectionName = null, string? partitionKey = null)
         {
             return this.GetCollection(collectionName, partitionKey)
                 .Find(document => document.Id.Equals(id))
                 .SingleOrDefault();
         }
 
-        public virtual async Task<TDocument> FindAsync(Expression<Func<TDocument, bool>> predicate,
-            string collectionName = null, string partitionKey = null)
+        public virtual async Task<TDocument?> FindAsync(Expression<Func<TDocument, bool>> predicate,
+            string? collectionName = null, string? partitionKey = null)
         {
             return await this.GetCollection(collectionName, partitionKey)
                 .Find(predicate)
@@ -97,44 +97,44 @@ namespace Etdb.ServiceBase.DocumentRepository
                 .ConfigureAwait(false);
         }
 
-        public virtual TDocument Find(Expression<Func<TDocument, bool>> predicate, string collectionName = null,
-            string partitionKey = null)
+        public virtual TDocument? Find(Expression<Func<TDocument, bool>> predicate, string? collectionName = null,
+            string? partitionKey = null)
         {
             return this.GetCollection(collectionName, partitionKey)
                 .Find(predicate)
                 .SingleOrDefault();
         }
 
-        public virtual async Task AddAsync(TDocument document, string collectionName = null, string partitionKey = null)
+        public virtual async Task AddAsync(TDocument document, string? collectionName = null, string? partitionKey = null)
         {
             await this.GetCollection(collectionName, partitionKey)
                 .InsertOneAsync(document)
                 .ConfigureAwait(false);
         }
 
-        public virtual async Task AddManyAsync(IEnumerable<TDocument> documents, string collectionName = null,
-            string partitionKey = null)
+        public virtual async Task AddManyAsync(IEnumerable<TDocument> documents, string? collectionName = null,
+            string? partitionKey = null)
         {
             await this.GetCollection(collectionName, partitionKey)
                 .InsertManyAsync(documents)
                 .ConfigureAwait(false);
         }
 
-        public virtual void Add(TDocument document, string collectionName = null, string partitionKey = null)
+        public virtual void Add(TDocument document, string? collectionName = null, string? partitionKey = null)
         {
             this.GetCollection(collectionName, partitionKey)
                 .InsertOne(document);
         }
 
-        public virtual void AddMany(IEnumerable<TDocument> documents, string collectionName = null,
-            string partitionKey = null)
+        public virtual void AddMany(IEnumerable<TDocument> documents, string? collectionName = null,
+            string? partitionKey = null)
         {
             this.GetCollection(collectionName, partitionKey)
                 .InsertMany(documents);
         }
 
-        public virtual async Task<bool> EditAsync(TDocument document, string collectionName = null,
-            string partitionKey = null)
+        public virtual async Task<bool> EditAsync(TDocument document, string? collectionName = null,
+            string? partitionKey = null)
         {
             var editResult = await this.GetCollection(collectionName, partitionKey)
                 .ReplaceOneAsync(existingDocument => existingDocument.Id.Equals(document.Id), document)
@@ -143,7 +143,7 @@ namespace Etdb.ServiceBase.DocumentRepository
             return editResult.ModifiedCount == 1;
         }
 
-        public bool Edit(TDocument document, string collectionName = null, string partitionKey = null)
+        public bool Edit(TDocument document, string? collectionName = null, string? partitionKey = null)
         {
             var editResult = this.GetCollection(collectionName, partitionKey)
                 .ReplaceOne(existingDocument => existingDocument.Id.Equals(document.Id), document);
@@ -151,7 +151,7 @@ namespace Etdb.ServiceBase.DocumentRepository
             return editResult.ModifiedCount == 1;
         }
 
-        public virtual async Task<bool> DeleteAsync(TId id, string collectionName = null, string partitionKey = null)
+        public virtual async Task<bool> DeleteAsync(TId id, string? collectionName = null, string? partitionKey = null)
         {
             var deleteResult = await this.GetCollection(collectionName, partitionKey)
                 .DeleteOneAsync(document => document.Id.Equals(id))
@@ -161,8 +161,8 @@ namespace Etdb.ServiceBase.DocumentRepository
         }
 
         public virtual async Task<bool> DeleteManyAsync(Expression<Func<TDocument, bool>> predicate,
-            string collectionName = null,
-            string partitionKey = null)
+            string? collectionName = null,
+            string? partitionKey = null)
         {
             var deleteResult = await this.GetCollection(collectionName, partitionKey)
                 .DeleteManyAsync(predicate)
@@ -171,7 +171,7 @@ namespace Etdb.ServiceBase.DocumentRepository
             return deleteResult.DeletedCount > 0;
         }
 
-        public bool Delete(TId id, string collectionName = null, string partitionKey = null)
+        public bool Delete(TId id, string? collectionName = null, string? partitionKey = null)
         {
             var deleteResult = this.GetCollection(collectionName, partitionKey)
                 .DeleteOne(document => document.Id.Equals(id));
@@ -179,8 +179,8 @@ namespace Etdb.ServiceBase.DocumentRepository
             return deleteResult.DeletedCount == 1;
         }
 
-        public virtual bool DeleteMany(Expression<Func<TDocument, bool>> predicate, string collectionName = null,
-            string partitionKey = null)
+        public virtual bool DeleteMany(Expression<Func<TDocument, bool>> predicate, string? collectionName = null,
+            string? partitionKey = null)
         {
             var deleteResult = this.GetCollection(collectionName, partitionKey)
                 .DeleteMany(predicate);
@@ -188,7 +188,7 @@ namespace Etdb.ServiceBase.DocumentRepository
             return deleteResult.DeletedCount > 0;
         }
 
-        public virtual IMongoQueryable<TDocument> Query(string collectionName = null, string partitionKey = null)
+        public virtual IMongoQueryable<TDocument> Query(string? collectionName = null, string? partitionKey = null)
         {
             return this.GetCollection(collectionName, partitionKey)
                 .AsQueryable();
@@ -200,7 +200,7 @@ namespace Etdb.ServiceBase.DocumentRepository
         }
 
         // ReSharper disable once MemberCanBePrivate.Global
-        protected IMongoCollection<TDocument> GetCollection(string collectionName = null, string partitionKey = null)
+        protected IMongoCollection<TDocument> GetCollection(string? collectionName = null, string? partitionKey = null)
         {
             var possibleCollectionName = string.IsNullOrWhiteSpace(collectionName)
                 ? $"{typeof(TDocument).GetTypeInfo().Name.ToLower()}s"
