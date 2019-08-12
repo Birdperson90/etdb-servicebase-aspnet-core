@@ -7,7 +7,7 @@ namespace Etdb.ServiceBase.TestInfrastructure.Cqrs.Handler
 {
     public class SimpleResponseCommandHandler : IResponseCommandHandler<SimpleResponseCommand, SimpleResponse>
     {
-        public Task<SimpleResponse?> Handle(SimpleResponseCommand request, CancellationToken cancellationToken)
+        public Task<SimpleResponse> Handle(SimpleResponseCommand request, CancellationToken cancellationToken)
         {
             request.Value = 5;
 

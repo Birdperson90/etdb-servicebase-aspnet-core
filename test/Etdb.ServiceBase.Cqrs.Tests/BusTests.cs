@@ -50,7 +50,7 @@ namespace Etdb.ServiceBase.Cqrs.Tests
         {
             var command = new SimpleResponseCommand();
 
-            var result = await this.bus.SendCommandAsync<SimpleResponseCommand, SimpleResponse?>(command);
+            var result = await this.bus.SendCommandAsync<SimpleResponseCommand, SimpleResponse>(command);
 
             Assert.Equal(5, command.Value);
             Assert.NotNull(result);
@@ -58,7 +58,7 @@ namespace Etdb.ServiceBase.Cqrs.Tests
 
             command.Value = 22;
 
-            result = this.bus.SendCommandAsync<SimpleResponseCommand, SimpleResponse?>(command).Result;
+            result = this.bus.SendCommandAsync<SimpleResponseCommand, SimpleResponse>(command).Result;
 
             Assert.Equal(5, command.Value);
             Assert.Equal(10, result.ResponseValue);

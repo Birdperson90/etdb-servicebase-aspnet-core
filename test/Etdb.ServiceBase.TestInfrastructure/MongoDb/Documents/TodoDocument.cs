@@ -8,13 +8,13 @@ namespace Etdb.ServiceBase.TestInfrastructure.MongoDb.Documents
     {
         [BsonId] public Guid Id { get; set; }
 
-        public string Title { get; set; }
+        public string Title { get; set; } = null!;
 
         public int Prio { get; set; }
 
         public bool Done { get; set; }
 
-        public TodoListDocument List { get; set; }
+        public TodoListDocument List { get; set; } = null!;
 
         public Guid ListId { get; set; }
     }

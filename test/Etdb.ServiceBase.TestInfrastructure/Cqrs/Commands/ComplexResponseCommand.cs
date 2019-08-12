@@ -2,7 +2,7 @@
 
 namespace Etdb.ServiceBase.TestInfrastructure.Cqrs.Commands
 {
-    public class ComplexResponseCommand : IResponseCommand<ComplexResponse?>
+    public class ComplexResponseCommand : IResponseCommand<ComplexResponse>
     {
         public int Value { get; set; }
     }

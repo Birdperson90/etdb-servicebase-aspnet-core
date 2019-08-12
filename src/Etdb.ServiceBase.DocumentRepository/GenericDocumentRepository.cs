@@ -73,7 +73,8 @@ namespace Etdb.ServiceBase.DocumentRepository
             return qursor.ToList();
         }
 
-        public virtual async Task<TDocument?> FindAsync(TId id, string? collectionName = null, string? partitionKey = null)
+        public virtual async Task<TDocument?> FindAsync(TId id, string? collectionName = null,
+            string? partitionKey = null)
         {
             return await this.GetCollection(collectionName, partitionKey)
                 .Find(document => document.Id.Equals(id))
@@ -105,7 +106,8 @@ namespace Etdb.ServiceBase.DocumentRepository
                 .SingleOrDefault();
         }
 
-        public virtual async Task AddAsync(TDocument document, string? collectionName = null, string? partitionKey = null)
+        public virtual async Task AddAsync(TDocument document, string? collectionName = null,
+            string? partitionKey = null)
         {
             await this.GetCollection(collectionName, partitionKey)
                 .InsertOneAsync(document)

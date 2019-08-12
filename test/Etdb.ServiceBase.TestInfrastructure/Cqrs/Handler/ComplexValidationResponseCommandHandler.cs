@@ -8,14 +8,18 @@ using Etdb.ServiceBase.TestInfrastructure.Cqrs.Commands;
 
 namespace Etdb.ServiceBase.TestInfrastructure.Cqrs.Handler
 {
-    public class ComplexValidationResponseCommandHandler : ValidationResponseCommandHandler<ComplexResponseCommand, ComplexResponse?>
+    public class
+        ComplexValidationResponseCommandHandler : ValidationResponseCommandHandler<ComplexResponseCommand,
+            ComplexResponse>
     {
-        public ComplexValidationResponseCommandHandler(ICommandValidation<ComplexResponseCommand> commandValidation) : base(
-            commandValidation)
+        public ComplexValidationResponseCommandHandler(ICommandValidation<ComplexResponseCommand> commandValidation) :
+            base(
+                commandValidation)
         {
         }
 
-        public override async Task<ComplexResponse?> Handle(ComplexResponseCommand request, CancellationToken cancellationToken)
+        public override async Task<ComplexResponse> Handle(ComplexResponseCommand request,
+            CancellationToken cancellationToken)
         {
             var validationResult = await this.CommandValidation.ValidateCommandAsync(request);
 

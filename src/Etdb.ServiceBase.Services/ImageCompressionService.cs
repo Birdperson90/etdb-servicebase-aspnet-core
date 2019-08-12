@@ -35,7 +35,8 @@ namespace Etdb.ServiceBase.Services
             }
         }
 
-        public byte[] Resize(byte[] bytes, string mimeType, int width = 256, int height = 256, long compressionValue = 75)
+        public byte[] Resize(byte[] bytes, string mimeType, int width = 256, int height = 256,
+            long compressionValue = 75)
         {
             Image image;
 
@@ -56,7 +57,7 @@ namespace Etdb.ServiceBase.Services
             var (dimensionX, dimensionY) = CalculateDimensions(width, height, image);
 
             var resizedImage = new Bitmap(dimensionX, dimensionY);
-            
+
             const float dpi = 72;
 
             resizedImage.SetResolution(dpi, dpi);
@@ -86,7 +87,7 @@ namespace Etdb.ServiceBase.Services
             var orientationImageProperty = image.PropertyItems.FirstOrDefault(prop => prop.Id == 0x0112);
 
             if (orientationImageProperty == null) return;
-            
+
             int orientationValue = image.GetPropertyItem(orientationImageProperty.Id).Value[0];
             var rotateFlipType = GetRotateFlipType(orientationValue);
             image.RotateFlip(rotateFlipType);

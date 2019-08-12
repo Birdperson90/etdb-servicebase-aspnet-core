@@ -45,7 +45,7 @@ namespace Etdb.ServiceBase.Services.Tests
                 $"uncompressed_googlesvg_{DateTime.UtcNow.Ticks}.svg",
                 compressedBytes);
         }
-        
+
         [Theory]
         [InlineData("kitten.jpg")]
         [InlineData("largeimage.jpg")]

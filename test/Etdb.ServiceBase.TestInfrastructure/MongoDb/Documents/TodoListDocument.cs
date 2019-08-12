@@ -14,7 +14,7 @@ namespace Etdb.ServiceBase.TestInfrastructure.MongoDb.Documents
 
         [BsonId] public Guid Id { get; set; }
 
-        public string Titel { get; set; }
+        public string Titel { get; set; } = null!;
 
         public ICollection<TodoDocument> Todos { get; set; }
     }

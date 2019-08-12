@@ -7,7 +7,7 @@ namespace Etdb.ServiceBase.Cqrs.Abstractions.Bus
 {
     public interface IBus
     {
-        Task<TResponse?> SendCommandAsync<TResponseCommand, TResponse>(TResponseCommand command,
+        Task<TResponse> SendCommandAsync<TResponseCommand, TResponse>(TResponseCommand command,
             CancellationToken ctx = default)
             where TResponseCommand : IResponseCommand<TResponse> where TResponse : class;
 

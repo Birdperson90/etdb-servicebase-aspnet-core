@@ -7,8 +7,9 @@ using Etdb.ServiceBase.Cqrs.Abstractions.Validation;
 namespace Etdb.ServiceBase.Cqrs.Handler
 {
     public abstract class
-        ValidationResponseCommandHandler<TResponseCommand, TResponse> : IResponseCommandHandler<TResponseCommand, TResponse?>
-        where TResponseCommand : class, IResponseCommand<TResponse> where TResponse: class
+        ValidationResponseCommandHandler<TResponseCommand, TResponse> : IResponseCommandHandler<TResponseCommand,
+            TResponse>
+        where TResponseCommand : class, IResponseCommand<TResponse> where TResponse : class
     {
         protected readonly ICommandValidation<TResponseCommand> CommandValidation;
 
