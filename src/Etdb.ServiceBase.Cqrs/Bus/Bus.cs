@@ -19,7 +19,7 @@ namespace Etdb.ServiceBase.Cqrs.Bus
 
         public async Task<TResponse> SendCommandAsync<TResponseCommand, TResponse>(TResponseCommand command,
             CancellationToken ctx = default)
-            where TResponseCommand : IResponseCommand<TResponse?> where TResponse: class =>
+            where TResponseCommand : IResponseCommand<TResponse> where TResponse: class =>
             await this.mediator.Send(command, ctx).ConfigureAwait(false);
 
         public async Task SendCommandAsync<TVoidCommand>(TVoidCommand command, CancellationToken ctx = default)

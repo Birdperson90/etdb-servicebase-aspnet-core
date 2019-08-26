@@ -17,8 +17,8 @@ namespace Etdb.ServiceBase.Services
             this.httpContextAccessor = httpContextAccessor;
         }
 
-        public Guid Id => GetUserId();
-        public string UserName => GetUserName();
+        public Guid Id => this.GetUserId();
+        public string UserName => this.GetUserName();
 
         private string GetUserName()
         {
@@ -35,15 +35,12 @@ namespace Etdb.ServiceBase.Services
 
         private Guid GetUserId()
         {
-            if (!this.IsAuthenticated())
-            {
-                return Guid.Empty;
-            }
+            if (!this.IsAuthenticated()) return Guid.Empty;
 
-            var idClaimValue = this.httpContextAccessor.HttpContext.User.Claims
-                .First(claim => claim.Type == JwtClaimTypes.Subject).Value;
-
-            return Guid.Parse(idClaimValue);
+            var idClaim = this.httpContextAccessor.HttpContext.User.Claims
+                .First(claim => claim.Type == JwtClaimTypes.Subject);
+                
+            return Guid.Parse(idClaim.Value);
         }
     }
 }
