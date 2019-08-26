@@ -10,7 +10,7 @@
         <PackageTags>ETDB ASPNETCORE LIBRARY</PackageTags>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>git://github.com/alsami/etdb-servicebase-aspnet-core</RepositoryUrl>
-        <Version>3.0.0-preview.2</Version>
+        <Version>3.0.0-preview.3</Version>
         <FileVersion>3.0.0.0</FileVersion>
         <Nullable>enable</Nullable>
     </PropertyGroup>
