@@ -45,9 +45,9 @@ namespace Etdb.ServiceBase.Cryptography.Tests.Hashing
         {
             var salt = this.hasher.GenerateSalt();
 
-            Assert.Throws<ArgumentException>(() => this.hasher.CreateSaltedHash(null, salt));
+            Assert.Throws<ArgumentException>(() => this.hasher.CreateSaltedHash(null!, salt));
             Assert.Throws<ArgumentException>(() => this.hasher.CreateSaltedHash(string.Empty, salt));
-            Assert.Throws<ArgumentNullException>(() => this.hasher.CreateSaltedHash(HasherTests.SamplePassword, null));
+            Assert.Throws<ArgumentNullException>(() => this.hasher.CreateSaltedHash(HasherTests.SamplePassword, null!));
         }
 
         [Fact]

@@ -21,6 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{2A1FE43E-1
 		readme.md = readme.md
 		run-tests.sh = run-tests.sh
 		setup-mongodb-user.sh = setup-mongodb-user.sh
+		test\Directory.Build.props = test\Directory.Build.props
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Etdb.ServiceBase.Cqrs.Abstractions", "src\Etdb.ServiceBase.Cqrs.Abstractions\Etdb.ServiceBase.Cqrs.Abstractions.csproj", "{30A8E080-3BF1-4093-A3C3-3A701F35A10D}"

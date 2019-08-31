@@ -44,7 +44,7 @@ namespace Etdb.ServiceBase.DocumentRepository.Tests.Generics
                     await this.repository.FindAsync(todoList => todoList.Id == id);
 
                 Assert.NotNull(readList);
-                Assert.True(readList.Todos.Count == 3);
+                Assert.True(readList!.Todos.Count == 3);
 
                 var newTitle = $"NewTitle_{id}";
 
@@ -57,7 +57,7 @@ namespace Etdb.ServiceBase.DocumentRepository.Tests.Generics
                 readList =
                     await this.repository.FindAsync(todoList => todoList.Id == id);
 
-                Assert.Equal(newTitle, readList.Titel);
+                Assert.Equal(newTitle, readList!.Titel);
                 Assert.True(readList.Todos.First().Done);
             }
 
@@ -92,7 +92,7 @@ namespace Etdb.ServiceBase.DocumentRepository.Tests.Generics
 
                 Assert.NotNull(readList);
 
-                var deleted = await this.repository.DeleteAsync(readList.Id);
+                var deleted = await this.repository.DeleteAsync(readList!.Id);
 
                 Assert.True(deleted);
             }
@@ -124,7 +124,7 @@ namespace Etdb.ServiceBase.DocumentRepository.Tests.Generics
                 var readList = this.repository.Find(todoList => todoList.Id == id);
 
                 Assert.NotNull(readList);
-                Assert.True(readList.Todos.Count == 3);
+                Assert.True(readList!.Todos!.Count == 3);
 
                 var newTitle = $"NewTitle_{id}";
 
@@ -136,7 +136,7 @@ namespace Etdb.ServiceBase.DocumentRepository.Tests.Generics
 
                 readList = this.repository.Find(todoList => todoList.Id == id);
 
-                Assert.Equal(newTitle, readList.Titel);
+                Assert.Equal(newTitle, readList!.Titel);
                 Assert.True(readList.Todos.First().Done);
             }
 
@@ -172,7 +172,7 @@ namespace Etdb.ServiceBase.DocumentRepository.Tests.Generics
 
                 Assert.NotNull(readList);
 
-                var deleted = this.repository.Delete(readList.Id);
+                var deleted = this.repository.Delete(readList!.Id);
 
                 Assert.True(deleted);
             }
