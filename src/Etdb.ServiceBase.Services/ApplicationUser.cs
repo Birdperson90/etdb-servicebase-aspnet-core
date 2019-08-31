@@ -18,7 +18,19 @@ namespace Etdb.ServiceBase.Services
         }
 
         public Guid Id => this.GetUserId();
-        public string UserName => this.GetUserName();
+        public string? UserName => this.GetUserName();
+
+        public string? ImageUrl => this.GetImageUrl();
+
+        private string? GetImageUrl()
+        {
+            if (!this.IsAuthenticated()) return null;
+
+            var profileClaim = this.httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(claim =>
+                claim.Type == JwtClaimTypes.Profile);
+
+            return profileClaim?.Value;
+        }
 
         private string GetUserName()
         {
