@@ -5,14 +5,15 @@
         <Copyright>2019©Sami Al Khatib</Copyright>
         <Authors>Sami Al Khatib</Authors>
         <Title>ETDB-Library</Title>
-        <PackageProjectUrl>https://github.com/alsami/etdb-servicebase-aspnet-core</PackageProjectUrl>
-        <PackageIconUrl>https://raw.githubusercontent.com/alsami/etdb-servicebase-aspnet-core/master/assets/images/etdb.png</PackageIconUrl>
+        <PackageProjectUrl>https://github.com/entertainment-database/Etdb.ServiceBase.AspNetCore</PackageProjectUrl>
+        <PackageIconUrl>https://raw.githubusercontent.com/entertainment-database/Etdb.ServiceBase.AspNetCore/master/assets/images/etdb.png</PackageIconUrl>
         <PackageTags>ETDB ASPNETCORE LIBRARY</PackageTags>
         <RepositoryType>git</RepositoryType>
-        <RepositoryUrl>git://github.com/alsami/etdb-servicebase-aspnet-core</RepositoryUrl>
-        <Version>3.0.0-preview.4</Version>
+        <RepositoryUrl>git://github.com/entertainment-database/Etdb.ServiceBase.AspNetCore</RepositoryUrl>
+        <Version>3.0.0-preview.5</Version>
         <FileVersion>3.0.0.0</FileVersion>
         <Nullable>enable</Nullable>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-18618-05">
