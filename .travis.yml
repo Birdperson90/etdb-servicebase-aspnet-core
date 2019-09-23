@@ -3,11 +3,7 @@ dist: bionic
 language: csharp
 solution: Etdb.ServiceBase.AspNetCore.sln
 mono: none
-addons:
-  snaps:
-    - name: dotnet-sdk
-      classic: true
-      channel: latest/beta
+dotnet: 3.0.100
 stages:
   - build
   - test
@@ -16,21 +12,16 @@ jobs:
   include:
     - stage: build
       name: build solution
-      before_script:
-        - sudo snap alias dotnet-sdk.dotnet dotnet
       script: dotnet restore && dotnet build
     - stage: test
       name: run-tests
       services: mongodb
       before_script:
-        - sudo snap alias dotnet-sdk.dotnet dotnet
         - sh install_link_libgdiplus.sh
         - sh setup-mongodb-user.sh "$MONGODB_USERNAME" "$MONGODB_PASSWORD"
       script: ./run-tests.sh
     - stage: publish
       name: publish-packages
       if: tag IS present
-      before_script:
-        - sudo snap alias dotnet-sdk.dotnet dotnet
       script: ./publish-packages.sh "$NUGET_SOURCE" "$ETDB_NUGET_APIKEY" "$TRAVIS_TAG"
 
