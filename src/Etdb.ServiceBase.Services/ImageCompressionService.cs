@@ -69,6 +69,7 @@ namespace Etdb.ServiceBase.Services
         private static void DrawGraphics(Image resizedImage, Image image, int dimensionX, int dimensionY)
         {
             using var graphics = Graphics.FromImage(resizedImage);
+            
             graphics.CompositingMode = CompositingMode.SourceCopy;
             graphics.CompositingQuality = CompositingQuality.HighQuality;
             graphics.SmoothingMode = SmoothingMode.HighQuality;
@@ -85,13 +86,16 @@ namespace Etdb.ServiceBase.Services
             if (orientationImageProperty == null) return;
 
             int orientationValue = image.GetPropertyItem(orientationImageProperty.Id).Value[0];
+            
             var rotateFlipType = GetRotateFlipType(orientationValue);
+            
             image.RotateFlip(rotateFlipType);
         }
 
         private static byte[] Compress(Image image, ImageCodecInfo codecInfo, EncoderParameter encoderParameter)
         {
             using var stream = new MemoryStream();
+            
             image.Save(stream, codecInfo, new EncoderParameters
             {
                 Param =
@@ -128,29 +132,18 @@ namespace Etdb.ServiceBase.Services
         }
 
         private static RotateFlipType GetRotateFlipType(int rotateValue)
-        {
-            switch (rotateValue)
+            => rotateValue switch
             {
-                case 1:
-                    return RotateFlipType.RotateNoneFlipNone;
-                case 2:
-                    return RotateFlipType.RotateNoneFlipX;
-                case 3:
-                    return RotateFlipType.Rotate180FlipNone;
-                case 4:
-                    return RotateFlipType.Rotate180FlipX;
-                case 5:
-                    return RotateFlipType.Rotate90FlipX;
-                case 6:
-                    return RotateFlipType.Rotate90FlipNone;
-                case 7:
-                    return RotateFlipType.Rotate270FlipX;
-                case 8:
-                    return RotateFlipType.Rotate270FlipNone;
-                default:
-                    return RotateFlipType.RotateNoneFlipNone;
-            }
-        }
+                1 => RotateFlipType.RotateNoneFlipNone,
+                2 => RotateFlipType.RotateNoneFlipX,
+                3 => RotateFlipType.Rotate180FlipNone,
+                4 => RotateFlipType.Rotate180FlipX,
+                5 => RotateFlipType.Rotate90FlipX,
+                6 => RotateFlipType.Rotate90FlipNone,
+                7 => RotateFlipType.Rotate270FlipX,
+                8 => RotateFlipType.Rotate270FlipNone,
+                _ => RotateFlipType.RotateNoneFlipNone
+            };
 
         private static Encoder GetMatchingPlatformEncoder()
             => RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
