@@ -9,7 +9,7 @@ namespace Etdb.ServiceBase.Services.Abstractions
         Guid Id { get; }
 
         string? UserName { get; }
-        
+
         string? ImageUrl { get; }
 
         bool IsAuthenticated();

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace Etdb.ServiceBase.Services.Abstractions
 {
@@ -8,9 +9,13 @@ namespace Etdb.ServiceBase.Services.Abstractions
 
         Task<byte[]> ReadBinaryAsync(string fullPath);
 
-        Task StoreBinaryAsync(string basePath, string fileName, byte[] bytes);
+        Task StoreBinaryAsync(string basePath, string fileName, byte[] fileBytes);
+
+        ValueTask StoreBinaryAsync(string basePath, string fileName, ReadOnlyMemory<byte> fileBytes);
 
         Task StoreBinaryAsync(string fullPath, byte[] fileBytes);
+
+        ValueTask StoreBinaryAsync(string fullPath, ReadOnlyMemory<byte> fileBytes);
 
         void DeleteBinary(string basePath, string fileName);
 

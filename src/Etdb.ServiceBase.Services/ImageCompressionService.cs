@@ -13,26 +13,24 @@ namespace Etdb.ServiceBase.Services
     {
         public byte[] Compress(byte[] bytes, string mimeType, long compressionValue = 75)
         {
-            using (var memoryStream = new MemoryStream(bytes))
+            using var memoryStream = new MemoryStream(bytes);
+            Image image;
+            try
             {
-                Image image;
-                try
-                {
-                    image = Image.FromStream(memoryStream);
-                }
-                catch (Exception)
-                {
-                    return bytes;
-                }
-
-                var encoder = GetMatchingPlatformEncoder();
-
-                var encoderParameter = new EncoderParameter(encoder, compressionValue);
-
-                var codecInfo = GetImageCodecInfo(mimeType);
-
-                return Compress(image, codecInfo, encoderParameter);
+                image = Image.FromStream(memoryStream);
             }
+            catch (Exception)
+            {
+                return bytes;
+            }
+
+            var encoder = GetMatchingPlatformEncoder();
+
+            var encoderParameter = new EncoderParameter(encoder, compressionValue);
+
+            var codecInfo = GetImageCodecInfo(mimeType);
+
+            return Compress(image, codecInfo, encoderParameter);
         }
 
         public byte[] Resize(byte[] bytes, string mimeType, int width = 256, int height = 256,
@@ -70,16 +68,14 @@ namespace Etdb.ServiceBase.Services
 
         private static void DrawGraphics(Image resizedImage, Image image, int dimensionX, int dimensionY)
         {
-            using (var graphics = Graphics.FromImage(resizedImage))
-            {
-                graphics.CompositingMode = CompositingMode.SourceCopy;
-                graphics.CompositingQuality = CompositingQuality.HighQuality;
-                graphics.SmoothingMode = SmoothingMode.HighQuality;
-                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+            using var graphics = Graphics.FromImage(resizedImage);
+            graphics.CompositingMode = CompositingMode.SourceCopy;
+            graphics.CompositingQuality = CompositingQuality.HighQuality;
+            graphics.SmoothingMode = SmoothingMode.HighQuality;
+            graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-                graphics.DrawImage(image, 0, 0, dimensionX, dimensionY);
-            }
+            graphics.DrawImage(image, 0, 0, dimensionX, dimensionY);
         }
 
         private static void RotateImage(Image image)
@@ -95,18 +91,16 @@ namespace Etdb.ServiceBase.Services
 
         private static byte[] Compress(Image image, ImageCodecInfo codecInfo, EncoderParameter encoderParameter)
         {
-            using (var stream = new MemoryStream())
+            using var stream = new MemoryStream();
+            image.Save(stream, codecInfo, new EncoderParameters
             {
-                image.Save(stream, codecInfo, new EncoderParameters
+                Param =
                 {
-                    Param =
-                    {
-                        [0] = encoderParameter
-                    }
-                });
+                    [0] = encoderParameter
+                }
+            });
 
-                return stream.ToArray();
-            }
+            return stream.ToArray();
         }
 
         private static ImageCodecInfo GetImageCodecInfo(string mimeType)

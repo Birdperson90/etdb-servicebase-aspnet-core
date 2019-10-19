@@ -51,7 +51,7 @@ namespace Etdb.ServiceBase.Services
 
             var idClaim = this.httpContextAccessor.HttpContext.User.Claims
                 .First(claim => claim.Type == JwtClaimTypes.Subject);
-                
+
             return Guid.Parse(idClaim.Value);
         }
     }

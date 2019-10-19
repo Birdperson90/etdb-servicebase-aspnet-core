@@ -16,20 +16,20 @@ namespace Etdb.ServiceBase.Services.Tests
         public void ApplicationUser_IsAuthenticated_User_Authenticated_True()
         {
             var mock = new Mock<IHttpContextAccessor>();
-            
+
             mock.Setup(context => context.HttpContext.User.Identity.IsAuthenticated)
                 .Returns(true);
-            
+
             var applicationUser = new ApplicationUser(mock.Object);
-            
+
             Assert.True(applicationUser.IsAuthenticated());
         }
-        
+
         [Fact]
         public void ApplicationUser_GetUserId_User_Authenticated_Returns_Id()
         {
             var mock = new Mock<IHttpContextAccessor>();
-            
+
             mock.Setup(context => context.HttpContext.User.Identity.IsAuthenticated)
                 .Returns(true);
 
@@ -40,19 +40,19 @@ namespace Etdb.ServiceBase.Services.Tests
                 {
                     new Claim(JwtClaimTypes.Subject, wantedUserId.ToString())
                 });
-            
+
             var applicationUser = new ApplicationUser(mock.Object);
 
-            var receivedUserId = applicationUser.Id; 
-            
+            var receivedUserId = applicationUser.Id;
+
             Assert.Equal(wantedUserId, receivedUserId);
         }
-        
+
         [Fact]
         public void ApplicationUser_GetUserName_User_Authenticated_Returns_UserName()
         {
             var mock = new Mock<IHttpContextAccessor>();
-            
+
             mock.Setup(context => context.HttpContext.User.Identity.IsAuthenticated)
                 .Returns(true);
 
@@ -63,11 +63,11 @@ namespace Etdb.ServiceBase.Services.Tests
                 {
                     new Claim(JwtClaimTypes.PreferredUserName, wantedUserName)
                 });
-            
+
             var applicationUser = new ApplicationUser(mock.Object);
 
-            var receivedUserName = applicationUser.UserName; 
-            
+            var receivedUserName = applicationUser.UserName;
+
             Assert.Equal(wantedUserName, receivedUserName);
         }
 
@@ -75,12 +75,12 @@ namespace Etdb.ServiceBase.Services.Tests
         public void ApplicationUser_GetUserId_User_Not_Authenticated_Empty_Guid()
         {
             var mock = new Mock<IHttpContextAccessor>();
-            
+
             mock.Setup(context => context.HttpContext.User.Identity.IsAuthenticated)
                 .Returns(false);
-            
+
             var applicationUser = new ApplicationUser(mock.Object);
-            
+
             Assert.Equal(Guid.Empty, applicationUser.Id);
         }
 
@@ -97,12 +97,12 @@ namespace Etdb.ServiceBase.Services.Tests
                 {
                     new Claim(JwtClaimTypes.Profile, "https://someurl")
                 });
-            
+
             var applicationUser = new ApplicationUser(mock.Object);
-            
+
             Assert.NotNull(applicationUser.ImageUrl);
         }
-        
+
         [Fact]
         public void ApplicationUser_GetImageUrl_User_Authenticted_Has_No_Image_Returns_Null()
         {
@@ -113,12 +113,12 @@ namespace Etdb.ServiceBase.Services.Tests
 
             mock.Setup(context => context.HttpContext.User.Claims)
                 .Returns(new List<Claim>());
-            
+
             var applicationUser = new ApplicationUser(mock.Object);
-            
+
             Assert.Null(applicationUser.ImageUrl);
         }
-        
+
         [Fact]
         public void ApplicationUser_GetImageUrl_User_Not_Authenticted_Returns_Null()
         {
@@ -126,9 +126,9 @@ namespace Etdb.ServiceBase.Services.Tests
 
             mock.Setup(context => context.HttpContext.User.Identity.IsAuthenticated)
                 .Returns(false);
-            
+
             var applicationUser = new ApplicationUser(mock.Object);
-            
+
             Assert.Null(applicationUser.ImageUrl);
         }
     }
