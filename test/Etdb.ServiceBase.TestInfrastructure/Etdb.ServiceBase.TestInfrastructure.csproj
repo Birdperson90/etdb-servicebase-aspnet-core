@@ -1,10 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.FluentBuilder" Version="2.0.1" />
-    <PackageReference Include="MediatR.Extensions.Autofac.DependencyInjection" Version="3.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Etdb.ServiceBase.Cqrs\Etdb.ServiceBase.Cqrs.csproj" />
     <ProjectReference Include="..\..\src\Etdb.ServiceBase.Cryptography\Etdb.ServiceBase.Cryptography.csproj" />
     <ProjectReference Include="..\..\src\Etdb.ServiceBase.DocumentRepository\Etdb.ServiceBase.DocumentRepository.csproj" />
     <ProjectReference Include="..\..\src\Etdb.ServiceBase.Filter\Etdb.ServiceBase.Filter.csproj" />
