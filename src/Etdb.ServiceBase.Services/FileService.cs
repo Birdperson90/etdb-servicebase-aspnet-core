@@ -31,7 +31,7 @@ namespace Etdb.ServiceBase.Services
             if (string.IsNullOrWhiteSpace(basePath)) throw new ArgumentNullException(nameof(basePath));
 
             if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentNullException(nameof(fileName));
-            
+
             if (!Directory.Exists(basePath)) Directory.CreateDirectory(basePath);
 
             var fullPath = Path.Combine(basePath, fileName);
@@ -44,7 +44,7 @@ namespace Etdb.ServiceBase.Services
             if (string.IsNullOrWhiteSpace(basePath)) throw new ArgumentNullException(nameof(basePath));
 
             if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentNullException(nameof(fileName));
-            
+
             if (!Directory.Exists(basePath)) Directory.CreateDirectory(basePath);
 
             var fullPath = Path.Combine(basePath, fileName);
@@ -166,7 +166,7 @@ namespace Etdb.ServiceBase.Services
             var wantedDirectory = fullPath.Substring(0, lastIndex - 1);
 
             if (Directory.Exists(wantedDirectory)) return;
-            
+
             Directory.CreateDirectory(wantedDirectory);
         }
     }

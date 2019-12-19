@@ -69,7 +69,7 @@ namespace Etdb.ServiceBase.Services
         private static void DrawGraphics(Image resizedImage, Image image, int dimensionX, int dimensionY)
         {
             using var graphics = Graphics.FromImage(resizedImage);
-            
+
             graphics.CompositingMode = CompositingMode.SourceCopy;
             graphics.CompositingQuality = CompositingQuality.HighQuality;
             graphics.SmoothingMode = SmoothingMode.HighQuality;
@@ -86,16 +86,16 @@ namespace Etdb.ServiceBase.Services
             if (orientationImageProperty == null) return;
 
             int orientationValue = image.GetPropertyItem(orientationImageProperty.Id).Value[0];
-            
+
             var rotateFlipType = GetRotateFlipType(orientationValue);
-            
+
             image.RotateFlip(rotateFlipType);
         }
 
         private static byte[] Compress(Image image, ImageCodecInfo codecInfo, EncoderParameter encoderParameter)
         {
             using var stream = new MemoryStream();
-            
+
             image.Save(stream, codecInfo, new EncoderParameters
             {
                 Param =

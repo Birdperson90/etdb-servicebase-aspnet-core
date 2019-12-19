@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Etdb.ServiceBase.Services.Abstractions;
 using IdentityModel;
 using Microsoft.AspNetCore.Http;

@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using IdentityModel;
 using Microsoft.AspNetCore.Http;
 using Moq;
-using Moq.Protected;
 using Xunit;
 
 namespace Etdb.ServiceBase.Services.Tests

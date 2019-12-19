@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Hosting;
@@ -14,9 +15,9 @@ namespace Etdb.ServiceBase.Filter
     public class UnhandledExceptionFilter : IExceptionFilter
     {
         private readonly ILogger<UnhandledExceptionFilter> logger;
-        private readonly IHostingEnvironment environment;
+        private readonly IWebHostEnvironment environment;
 
-        public UnhandledExceptionFilter(ILogger<UnhandledExceptionFilter> logger, IHostingEnvironment environment)
+        public UnhandledExceptionFilter(ILogger<UnhandledExceptionFilter> logger, IWebHostEnvironment environment)
         {
             this.logger = logger;
             this.environment = environment;

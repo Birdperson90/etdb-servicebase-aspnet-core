@@ -30,7 +30,7 @@ namespace Etdb.ServiceBase.Services.Tests
 
             Assert.Equal(binary, secondBinary);
         }
-        
+
         [Fact]
         public async Task FileService_StoreBinaryAsync_Using_ReadOnlyMemory_Succeeds()
         {

@@ -1,19 +1,19 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Moq;
 
 namespace Etdb.ServiceBase.TestInfrastructure.Mocks
 {
     public class HostingEnvironmentMock
     {
-        private readonly IMock<IHostingEnvironment> mock;
+        private readonly IMock<IWebHostEnvironment> mock;
 
         public HostingEnvironmentMock()
         {
-            this.mock = new Mock<IHostingEnvironment>(MockBehavior.Default);
+            this.mock = new Mock<IWebHostEnvironment>(MockBehavior.Default);
         }
 
-        public Mock<IHostingEnvironment> Mock => (Mock<IHostingEnvironment>) this.mock;
+        public Mock<IWebHostEnvironment> Mock => (Mock<IWebHostEnvironment>) this.mock;
 
-        public IHostingEnvironment Environment => this.mock.Object;
+        public IWebHostEnvironment Environment => this.mock.Object;
     }
 }
