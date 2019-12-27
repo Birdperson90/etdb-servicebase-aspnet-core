@@ -11,5 +11,6 @@ namespace Etdb.ServiceBase.Constants
         public const string IndexService = "IndexService";
         public const string StorageService = "StorageService";
         public const string MessagingService = "MessagingService";
+        public const string ReportingService = "ReportingService";
     }
 }
