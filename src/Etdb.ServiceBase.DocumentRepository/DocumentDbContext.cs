@@ -4,6 +4,8 @@ using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
+// ReSharper disable UnusedMember.Global
+// ReSharper disable UnusedMemberInSuper.Global
 
 namespace Etdb.ServiceBase.DocumentRepository
 {
@@ -25,6 +27,11 @@ namespace Etdb.ServiceBase.DocumentRepository
             var client = new MongoClient(mongoClientSettings);
 
             this.Database = client.GetDatabase(databaseName);
+        }
+
+        protected DocumentDbContext(Func<IMongoDatabase> databaseComposer)
+        {
+            this.Database = databaseComposer();
         }
 
         public IMongoDatabase Database { get; }
