@@ -14,12 +14,10 @@ namespace Etdb.ServiceBase.TestInfrastructure.MongoDb.Context
 
         public sealed override void Configure()
         {
-            UseCamelCaseConvention();
+            MongoDbConventions.UseCamelCaseConvention();
 
-            if (!this.CollectionExists($"{nameof(TodoListDocument)}s"))
-            {
-                this.CreateCollection($"{nameof(TodoListDocument)}s");
-            }
+            if (!this.Database.CollectionExists($"{nameof(TodoListDocument)}s"))
+                this.Database.CreateCollection($"{nameof(TodoListDocument)}s");
         }
     }
 }
