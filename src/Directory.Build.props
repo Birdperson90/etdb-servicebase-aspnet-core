@@ -2,7 +2,7 @@
     <PropertyGroup>
         <LangVersion>8.0</LangVersion>
         <IsPackable>true</IsPackable>
-        <Copyright>2019©Sami Al Khatib</Copyright>
+        <Copyright>2020©Sami Al Khatib</Copyright>
         <Authors>Sami Al Khatib</Authors>
         <Title>ETDB-Library</Title>
         <PackageProjectUrl>https://github.com/entertainment-database/Etdb.ServiceBase.AspNetCore</PackageProjectUrl>
@@ -10,8 +10,8 @@
         <PackageTags>ETDB ASPNETCORE LIBRARY</PackageTags>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>git://github.com/entertainment-database/Etdb.ServiceBase.AspNetCore</RepositoryUrl>
-        <Version>3.5.0</Version>
-        <FileVersion>3.5.0.0</FileVersion>
+        <Version>4.0.0</Version>
+        <FileVersion>4.0.0.0</FileVersion>
         <Nullable>enable</Nullable>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
